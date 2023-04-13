@@ -11,7 +11,14 @@
  * @return {double}         : latitude
  */
 double TrojanMap::GetLat(const std::string &id) { 
-  return 0;
+  double l=-1;
+  for (auto&i:data){
+    Node at_posi=i.second;
+    if (at_posi.id==id){
+      l=at_posi.lat;
+    }
+  }
+  return l;
 }
 
 /**
@@ -22,7 +29,14 @@ double TrojanMap::GetLat(const std::string &id) {
  * @return {double}         : longitude
  */
 double TrojanMap::GetLon(const std::string &id) {
-  return 0;
+  double l=-1;
+  for (auto&i:data){
+    Node at_posi=i.second;
+    if (at_posi.id==id){
+      l=at_posi.lon;
+    }
+  }
+  return l;
 }
 
 /**
@@ -33,7 +47,14 @@ double TrojanMap::GetLon(const std::string &id) {
  * @return {std::string}    : name
  */
 std::string TrojanMap::GetName(const std::string &id) {
-  return "";
+  std::string name="";
+  for (auto&i:data){
+    Node at_posi=i.second;
+    if (at_posi.id==id){
+      name=at_posi.name;
+    }
+  }
+  return name;
 }
 
 /**
@@ -44,7 +65,14 @@ std::string TrojanMap::GetName(const std::string &id) {
  * @return {std::vector<std::string>}  : neighbor ids
  */
 std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
-  return {};
+  std::vector<std::string> n_id={};
+  for (auto&i:data){
+    Node at_posi=i.second;
+    if (at_posi.id==id){
+      n_id=at_posi.neighbors;
+    }
+  }
+  return n_id;
 }
 
 /**
@@ -57,6 +85,12 @@ std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
  */
 std::string TrojanMap::GetID(const std::string &name) {
   std::string res = "";
+  for (auto&i:data){
+    Node at_posi=i.second;
+    if (at_posi.name==name){
+      res=at_posi.id;
+    }
+  }
   return res;
 }
 
