@@ -357,54 +357,54 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(std::string l
  * @return {std::vector<std::string>}       : path
  */
 std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::string location1_name, std::string location2_name) {
-  std::vector<std::string> path;
-  std::unordered_map<std::string,double> node_dist;
-  std::unordered_map<std::string,std::string> P;
-  std::vector<std::string> curr_node={};
-  std::vector<std::string> next_node={};
-  double dest_prev=std::numeric_limits<double>::infinity();
-  double dest_currr=0;
-  int round=0;
-  for (auto& i:data){
-    std::string id=i.first;
-    P[id]="";
-    node_dist[id]=std::numeric_limits<double>::infinity();
-    if (i.second.name==location1_name) {
-      node_dist[id]=0;
-      curr_node.push_back(id);
-    }
-  }
-  while(curr_node.empty()!=true && round<3){
-    for (auto&curr_id:curr_node){
-      //if (GetName(curr_id)==location2_name && indx==0) indx++;//indx++;
-      for (auto&next_id:data[curr_id].neighbors){
-        double update_dist=node_dist[curr_id]+CalculateDistance(curr_id,next_id);
-        if (update_dist<node_dist[next_id]){
-          node_dist[next_id]=update_dist;
-          P[next_id]=curr_id;
-          next_node.push_back(next_id);
-        }
-      }
-      dest_currr=node_dist[GetID(location2_name)];
-      if (dest_currr!=std::numeric_limits<double>::infinity()){
-        if (dest_currr==dest_prev) round++;
-        else{
-          round=0;
-          dest_prev=dest_currr;
-        }
-      }
-    }
-    curr_node=next_node;
-    next_node={};
-  }
-  std::string u = GetID(location2_name);
-  path.push_back(u);
-  while (P[u] != "") {
-    u = P[u];
-    path.push_back(u);
-  }
-  std::reverse(path.begin(), path.end());
-  return path;
+  // std::vector<std::string> path;
+  // std::unordered_map<std::string,double> node_dist;
+  // std::unordered_map<std::string,std::string> P;
+  // std::vector<std::string> curr_node={};
+  // std::vector<std::string> next_node={};
+  // double dest_prev=std::numeric_limits<double>::infinity();
+  // double dest_currr=0;
+  // int round=0;
+  // for (auto& i:data){
+  //   std::string id=i.first;
+  //   P[id]="";
+  //   node_dist[id]=std::numeric_limits<double>::infinity();
+  //   if (i.second.name==location1_name) {
+  //     node_dist[id]=0;
+  //     curr_node.push_back(id);
+  //   }
+  // }
+  // while(curr_node.empty()!=true && round<3){
+  //   for (auto&curr_id:curr_node){
+  //     //if (GetName(curr_id)==location2_name && indx==0) indx++;//indx++;
+  //     for (auto&next_id:data[curr_id].neighbors){
+  //       double update_dist=node_dist[curr_id]+CalculateDistance(curr_id,next_id);
+  //       if (update_dist<node_dist[next_id]){
+  //         node_dist[next_id]=update_dist;
+  //         P[next_id]=curr_id;
+  //         next_node.push_back(next_id);
+  //       }
+  //     }
+  //     dest_currr=node_dist[GetID(location2_name)];
+  //     if (dest_currr!=std::numeric_limits<double>::infinity()){
+  //       if (dest_currr==dest_prev) round++;
+  //       else{
+  //         round=0;
+  //         dest_prev=dest_currr;
+  //       }
+  //     }
+  //   }
+  //   curr_node=next_node;
+  //   next_node={};
+  // }
+  // std::string u = GetID(location2_name);
+  // path.push_back(u);
+  // while (P[u] != "") {
+  //   u = P[u];
+  //   path.push_back(u);
+  // }
+  // std::reverse(path.begin(), path.end());
+  // return path;
 }
 
 /**
