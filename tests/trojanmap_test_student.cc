@@ -50,6 +50,12 @@ TEST(GetLocationRegex, Test1) {
   EXPECT_EQ(output_set, result);
 }
 
+// TEST(GetSubgraph, Test1){
+//   TrojanMap m;
+//   std::vector<double> square1 = {-118.299, -118.264, 34.032, 34.011};
+//   auto sub1 = m.GetSubgraph(square1);
+// }
+
 
 
 

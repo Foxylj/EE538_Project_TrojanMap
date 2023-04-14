@@ -469,6 +469,15 @@ bool TrojanMap::inSquare(std::string id, std::vector<double> &square) {
 std::vector<std::string> TrojanMap::GetSubgraph(std::vector<double> &square) {
   // include all the nodes in subgraph
   std::vector<std::string> subgraph;
+  for(auto &x:data){
+    double lon = x.second.lon;
+    double lat = x.second.lat;
+    if(lon >= square.at(0) && lon <= square.at(1)){
+      if(lat <= square.at(2) && lat >= square.at(3)){
+        subgraph.push_back(x.second.id);
+      }
+    }
+  }
   return subgraph;
 }
 
@@ -482,6 +491,21 @@ std::vector<std::string> TrojanMap::GetSubgraph(std::vector<double> &square) {
  * @return {bool}: whether there is a cycle or not
  */
 bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<double> &square) {
+  // std::vector<std::pair<double,double>> pos;
+  // for(int i=0;i<subgraph.size();i++){
+  //   std::string name = subgraph.at(i);
+  //   pos.push_back(GetPosition(name));
+  // }
+  if(subgraph.size()>2){
+    // for(int i=0;i<pos.size()-1;i++){
+    //   for(int j=i+1;j<pos.size();j++){
+    //     if(pos.at(i).first == pos.at(j).first || pos.at(i).second == pos.at(j).second){
+    //       return false;
+    //     }
+    //   }
+    // }
+    return true;
+  }
   return false;
 }
 
