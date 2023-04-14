@@ -362,7 +362,9 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   std::unordered_map<std::string,std::string> P;
   std::vector<std::string> curr_node={};
   std::vector<std::string> next_node={};
-  int indx=0;
+  double dest_prev=std::numeric_limits<double>::infinity();
+  double dest_currr=0;
+  int round=0;
   for (auto& i:data){
     std::string id=i.first;
     P[id]="";
@@ -372,19 +374,23 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
       curr_node.push_back(id);
     }
   }
-  bool X=true;
-  while(curr_node.empty()!=true && X){
-    //if (indx<5) indx++; // Give it five more round to see is there a shorter path
-    //else break;
+  while(curr_node.empty()!=true && round<3){
     for (auto&curr_id:curr_node){
-      if (GetName(curr_id)==location2_name && indx==0) X=false;//indx++;
+      //if (GetName(curr_id)==location2_name && indx==0) indx++;//indx++;
       for (auto&next_id:data[curr_id].neighbors){
         double update_dist=node_dist[curr_id]+CalculateDistance(curr_id,next_id);
-
         if (update_dist<node_dist[next_id]){
           node_dist[next_id]=update_dist;
           P[next_id]=curr_id;
           next_node.push_back(next_id);
+        }
+      }
+      dest_currr=node_dist[GetID(location2_name)];
+      if (dest_currr!=std::numeric_limits<double>::infinity()){
+        if (dest_currr==dest_prev) round++;
+        else{
+          round=0;
+          dest_prev=dest_currr;
         }
       }
     }
