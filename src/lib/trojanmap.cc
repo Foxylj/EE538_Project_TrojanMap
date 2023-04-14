@@ -356,9 +356,48 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(std::string l
  * @param  {std::string} location2_name     : goal
  * @return {std::vector<std::string>}       : path
  */
-std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(
-    std::string location1_name, std::string location2_name) {
+std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::string location1_name, std::string location2_name) {
   std::vector<std::string> path;
+  std::unordered_map<std::string,double> node_dist;
+  std::unordered_map<std::string,std::string> P;
+  std::vector<std::string> curr_node={};
+  std::vector<std::string> next_node={};
+  int indx=0;
+  for (auto& i:data){
+    std::string id=i.first;
+    P[id]="";
+    node_dist[id]=std::numeric_limits<double>::infinity();
+    if (i.second.name==location1_name) {
+      node_dist[id]=0;
+      curr_node.push_back(id);
+    }
+  }
+  bool X=true;
+  while(curr_node.empty()!=true && X){
+    //if (indx<5) indx++; // Give it five more round to see is there a shorter path
+    //else break;
+    for (auto&curr_id:curr_node){
+      if (GetName(curr_id)==location2_name && indx==0) X=false;//indx++;
+      for (auto&next_id:data[curr_id].neighbors){
+        double update_dist=node_dist[curr_id]+CalculateDistance(curr_id,next_id);
+
+        if (update_dist<node_dist[next_id]){
+          node_dist[next_id]=update_dist;
+          P[next_id]=curr_id;
+          next_node.push_back(next_id);
+        }
+      }
+    }
+    curr_node=next_node;
+    next_node={};
+  }
+  std::string u = GetID(location2_name);
+  path.push_back(u);
+  while (P[u] != "") {
+    u = P[u];
+    path.push_back(u);
+  }
+  std::reverse(path.begin(), path.end());
   return path;
 }
 
