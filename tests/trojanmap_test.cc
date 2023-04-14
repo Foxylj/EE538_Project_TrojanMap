@@ -122,7 +122,7 @@ TEST(TrojanMapTest, CalculateShortestPath_Dijkstra) {
   EXPECT_EQ(path, gt);
 }
 
-// Test CalculateShortestPath_Bellman_Ford function
+Test CalculateShortestPath_Bellman_Ford function
 TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
   TrojanMap m;
   
