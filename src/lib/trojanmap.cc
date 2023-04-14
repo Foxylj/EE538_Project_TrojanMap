@@ -306,14 +306,44 @@ double TrojanMap::CalculatePathLength(const std::vector<std::string> &path) {
  * @return {std::vector<std::string>}       : path
  */
 std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(std::string location1_name, std::string location2_name) {
-  std::priority_queue<std::pair<double,std::string>,
-  std::vector<std::pair<double,std::string>>,
-  std::greater<std::pair<double,std::string>>> queue;
-
-
-
-
   std::vector<std::string> path;
+  std::unordered_map<std::string,double> node_dist;
+  std::unordered_map<std::string,std::string> P;
+  std::priority_queue<std::pair<double,std::string>,std::vector<std::pair<double,std::string>>,std::greater<std::pair<double,std::string>>> queue;
+
+  for (auto& i:data){
+    std::string id=i.first;
+    P[id]="";
+    node_dist[id]=std::numeric_limits<double>::infinity();
+    if (i.second.name==location1_name){
+      node_dist[id]=0;
+      queue.push(std::make_pair(0,id));
+    } 
+  }
+  while (queue.empty()==false){
+    auto loc=queue.top();
+    queue.pop();
+    std::string loc_id=loc.second;
+
+    if (GetName(loc_id)==location2_name) break;
+    else{
+      for (auto&i:data[loc_id].neighbors){
+        double update_dist=node_dist[loc_id]+CalculateDistance(loc_id,i);
+        if (update_dist<node_dist[i]){
+          node_dist[i]=update_dist;
+          P[i]=loc_id;
+          queue.push(std::make_pair(update_dist,i));
+        }
+      }
+    }
+  }
+  std::string u = GetID(location2_name);
+  path.push_back(u);
+  while (P[u] != "") {
+    u = P[u];
+    path.push_back(u);
+  }
+  std::reverse(path.begin(), path.end());
   return path;
 }
 
