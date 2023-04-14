@@ -49,9 +49,13 @@ double TrojanMap::GetLon(const std::string &id) {
 std::string TrojanMap::GetName(const std::string &id) {
   std::string name="";
   for (auto&i:data){
-    Node at_posi=i.second;
-    if (at_posi.id==id){
-      name=at_posi.name;
+    // Node at_posi=i.second;
+    // if (at_posi.id==id){
+    //   name=at_posi.name;
+    // }
+    if(i.second.id == id){
+      name = i.second.name;
+      return name;
     }
   }
   return name;
@@ -120,7 +124,25 @@ std::pair<double, double> TrojanMap::GetPosition(std::string name) {
  * @return {int}                    : edit distance between two strings
  */
 int TrojanMap::CalculateEditDistance(std::string a, std::string b) {     
-  return 0;
+  int row = a.size();
+  int col = b.size();
+  std::vector<std::vector<int>> de(row+1, std::vector<int>(col+1,0)); 
+  for(int i=0;i<=row;i++){
+    de[i][0] = i;
+  }
+  for(int j=0;j<=col;j++){
+    de[0][j] = j;
+  }
+  for(int i=1;i<=row;i++){
+    for(int j=1;j<=col;j++){
+      if(a[i-1]!=b[j-1]){
+        de[i][j] = std::min({de[i-1][j-1],de[i-1][j],de[i][j-1]})+1;
+      }else{
+        de[i][j] = de[i-1][j-1];
+      }
+    }
+  }
+  return de[row][col];
 }
 
 /**
@@ -131,7 +153,21 @@ int TrojanMap::CalculateEditDistance(std::string a, std::string b) {
  * @return {std::string} tmp           : the closest name
  */
 std::string TrojanMap::FindClosestName(std::string name) {
-  std::string tmp = ""; // Start with a dummy word
+  int distance = -1;
+  std::string id = "";
+  std::string tmp = "";
+  for(auto &x:data){
+    if(distance == -1){
+      distance = CalculateEditDistance(x.second.name,name);
+    }
+    if(!x.second.name.empty()){
+        if(distance >= CalculateEditDistance(x.second.name,name)){
+        distance = CalculateEditDistance(x.second.name,name);
+        id = x.second.id;
+      }
+    }
+  }
+  tmp = GetName(id); // Start with a dummy word
   return tmp;
 }
 
