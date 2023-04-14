@@ -50,6 +50,13 @@ TEST(GetLocationRegex, Test1) {
   EXPECT_EQ(output_set, result);
 }
 
+TEST(GetLocationRegex, Test2) {
+  TrojanMap m;
+  std::set<std::string> result = {"2578244375"};
+  auto output=m.GetLocationRegex(std::regex("R[A-Za-z]l[A-Za-z]hs"));
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, result);
+}
 
 
 
