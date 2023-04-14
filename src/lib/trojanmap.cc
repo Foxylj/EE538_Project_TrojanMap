@@ -375,7 +375,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
       curr_node.push_back(id);
     }
   }
-  while(curr_node.empty()!=true && round<5){
+  while(curr_node.empty()!=true && round<10){
     for (auto&curr_id:curr_node){
       //if (GetName(curr_id)==location2_name && indx==0) indx++;//indx++;
       for (auto&next_id:data[curr_id].neighbors){
