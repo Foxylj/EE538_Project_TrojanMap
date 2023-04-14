@@ -50,14 +50,6 @@ TEST(GetLocationRegex, Test1) {
   EXPECT_EQ(output_set, result);
 }
 
-<<<<<<< HEAD
-// TEST(GetSubgraph, Test1){
-//   TrojanMap m;
-//   std::vector<double> square1 = {-118.299, -118.264, 34.032, 34.011};
-//   auto sub1 = m.GetSubgraph(square1);
-// }
-
-=======
 TEST(GetLocationRegex, Test2) {
   TrojanMap m;
   std::set<std::string> result = {"2578244375"};
@@ -95,7 +87,6 @@ TEST(CalculateShortestPath_Bellman_Ford, Test2) {
   std::set<std::string> output_set(output.begin(), output.end());
   EXPECT_EQ(output_set, result);
 }
->>>>>>> dc34371de3ecfb1b82416a7705599b5f0bf4d322
 
 
 
