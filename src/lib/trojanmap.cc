@@ -363,7 +363,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   std::vector<std::string> curr_node={};
   std::vector<std::string> next_node={};
   double dest_prev=std::numeric_limits<double>::infinity();
-  double dest_currr=std::numeric_limits<double>::infinity();
+  double dest_curr=std::numeric_limits<double>::infinity();
   int round=0;
   std::string u=GetID(location2_name);
   for (auto& i:data){
@@ -375,7 +375,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
       curr_node.push_back(id);
     }
   }
-  while(curr_node.empty()!=true && round<20){
+  while(curr_node.empty()!=true && round<5){
     for (auto&curr_id:curr_node){
       //if (GetName(curr_id)==location2_name && indx==0) indx++;//indx++;
       for (auto&next_id:data[curr_id].neighbors){
@@ -384,20 +384,19 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
           node_dist[next_id]=update_dist;
           P[next_id]=curr_id;
           next_node.push_back(next_id);
-          if (u==next_id) dest_currr=update_dist;
-        }
-      }
-      
-      if (dest_currr!=std::numeric_limits<double>::infinity()){
-        if (dest_currr==dest_prev) round++;
-        else{
-          round=0;
-          dest_prev=dest_currr;
+          if (u==next_id) dest_curr=update_dist;
         }
       }
     }
+    if (dest_curr!=std::numeric_limits<double>::infinity()){
+      if (dest_curr==dest_prev) round++;
+      else{
+        round=0;
+        dest_prev=dest_curr;
+      }
+    }
     curr_node=next_node;
-    next_node={};
+    next_node.clear();
   }
 
   path.push_back(u);
