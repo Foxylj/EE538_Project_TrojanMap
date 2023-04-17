@@ -653,17 +653,17 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
           res.push_back(x.second.id);
           count++;
         }
-      }else if(x.second.lat <= lat + r && x.second.lon <= lon - r){
+      }else if(x.second.lat <= lat + r && x.second.lon >= lon - r){
         if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
           res.push_back(x.second.id);
           count++;
         }
-      }else if(x.second.lat <= lat - r && x.second.lon <= lon - r){
+      }else if(x.second.lat >= lat - r && x.second.lon >= lon - r){
         if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
           res.push_back(x.second.id);
           count++;
         }
-      }else if(x.second.lat <= lat - r && x.second.lon <= lon + r){
+      }else if(x.second.lat >= lat - r && x.second.lon <= lon + r){
         if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
           res.push_back(x.second.id);
           count++;
