@@ -462,6 +462,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
  *   Output: ['Ralphs', 'KFC', 'Chick-fil-A']
  * @param  {std::string} locations_filename     : locations_filename
  * @return {std::vector<std::string>}           : locations
+ * File dir: /Users/lijingyang/Desktop/Course/USC/EE/EE538/Project/spring2023_trojanmap-Foxylj/input/topologicalsort_locations.csv
  */
 std::vector<std::string> TrojanMap::ReadLocationsFromCSVFile(
     std::string locations_filename) {
@@ -491,6 +492,7 @@ std::vector<std::string> TrojanMap::ReadLocationsFromCSVFile(
  *   Output: [['Ralphs', 'Chick-fil-A'], ['Ralphs', 'KFC'], ['Chick-fil-A', 'KFC']]
  * @param  {std::string} dependencies_filename     : dependencies_filename
  * @return {std::vector<std::vector<std::string>>} : dependencies
+ * File dir: /Users/lijingyang/Desktop/Course/USC/EE/EE538/Project/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv
  */
 std::vector<std::vector<std::string>> TrojanMap::ReadDependenciesFromCSVFile(
     std::string dependencies_filename) {
@@ -520,10 +522,23 @@ std::vector<std::vector<std::string>> TrojanMap::ReadDependenciesFromCSVFile(
  * @param  {std::vector<std::vector<std::string>>} dependencies     : prerequisites
  * @return {std::vector<std::string>} results                       : results
  */
-std::vector<std::string> TrojanMap::DeliveringTrojan(
-    std::vector<std::string> &locations,
-    std::vector<std::vector<std::string>> &dependencies) {
-  std::vector<std::string> result;
+std::vector<std::string> TrojanMap::DeliveringTrojan(std::vector<std::string> &locations,std::vector<std::vector<std::string>> &dependencies) {
+  std::vector<std::string> result=locations;
+  bool finish=false;
+  std::string temp;
+
+  while(!finish){
+    finish=true;
+    for (auto&i:dependencies){
+      auto d_1 = std::find(result.begin(), result.end(), i[0])- result.begin();
+      auto d_2 = std::find(result.begin(), result.end(), i[1])- result.begin();
+      if (d_1>d_2){
+        temp=result[d_2];
+        result[d_2]=result[d_1];
+        result[d_1]=temp;
+      }
+    }
+  }
   return result;     
 }
 

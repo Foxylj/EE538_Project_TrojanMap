@@ -275,6 +275,10 @@ void MapUI::PrintMenu() {
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     std::cout << "*************************Results******************************\n";
+    for (int i = 0; i < location_names.size(); i++) {
+        std::cout << location_names.at(i) << ' ';
+    }
+
     if (result.size() > 0) {
       std::cout << "Topological Sorting Results:" << std::endl;
       for (auto x : result) std::cout << x << std::endl;

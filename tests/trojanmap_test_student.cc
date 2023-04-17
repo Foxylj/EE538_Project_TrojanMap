@@ -58,7 +58,7 @@ TEST(GetLocationRegex, Test2) {
   EXPECT_EQ(output_set, result);
 }
 
-TEST(CalculateShortestPath_Dijkstra, Test2) {
+TEST(CalculateShortestPath_Dijkstra, Test1) {
   TrojanMap m;
   std::set<std::string> result = {"9591449441","9559739232","3398574883","6045067409","9559739236","3402917919",
   "3402917921","3872400990","6818390146","6813379456","6807200381","9591449452","6813379408","2783295153","544671962",
@@ -73,7 +73,7 @@ TEST(CalculateShortestPath_Dijkstra, Test2) {
   EXPECT_EQ(output_set, result);
 }
 
-TEST(CalculateShortestPath_Bellman_Ford, Test2) {
+TEST(CalculateShortestPath_Bellman_Ford, Test1) {
   TrojanMap m;
   std::set<std::string> result = {"9591449441","9559739232","3398574883","6045067409","9559739236","3402917919",
   "3402917921","3872400990","6818390146","6813379456","6807200381","9591449452","6813379408","2783295153","544671962",
@@ -88,5 +88,13 @@ TEST(CalculateShortestPath_Bellman_Ford, Test2) {
   EXPECT_EQ(output_set, result);
 }
 
-
+TEST(DeliveringTrojan, Test1) {
+  TrojanMap m;
+  std::set<std::string> result = {"A","B","C","D","E","F"};
+  std::vector<std::string> location={"C","F","A","B","D","E"};
+  std::vector<std::vector<std::string>> dependencie={{"A","B"},{"B","C"},{"C","D"},{"A","C"},{"D","E"},{"E","F"},{"B","E"}};
+  auto output=m.DeliveringTrojan(location,dependencie);
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, result);
+}
 
