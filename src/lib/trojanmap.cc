@@ -127,14 +127,14 @@ int TrojanMap::CalculateEditDistance(std::string a, std::string b) {
   int row = a.size();
   int col = b.size();
   std::vector<std::vector<int>> de(row+1, std::vector<int>(col+1,0)); 
-  for(int i=0;i<=row;i++){
+  for(int i=0;i<row+1;i++){
     de[i][0] = i;
   }
-  for(int j=0;j<=col;j++){
+  for(int j=0;j<col+1;j++){
     de[0][j] = j;
   }
-  for(int i=1;i<=row;i++){
-    for(int j=1;j<=col;j++){
+  for(int i=1;i<row+1;i++){
+    for(int j=1;j<col+1;j++){
       if(a[i-1]!=b[j-1]){
         de[i][j] = std::min({de[i-1][j-1],de[i-1][j],de[i][j-1]})+1;
       }else{
@@ -642,6 +642,19 @@ bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<d
  */
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k) {
   std::vector<std::string> res;
+  int count = 0;
+  double lon = GetPosition(name).second;
+  double lat = GetPosition(name).first;
+  for(auto x:data){
+    if(count < k){
+      if(x.second.lat <= lat + r && x.second.lon <= lon + r){
+        if(x.second.attributes.count(attributesName) && name!=x.second.name){
+          res.push_back(x.second.id);
+          count++;
+        }
+      }
+    }
+  }
   return res;
 }
 
