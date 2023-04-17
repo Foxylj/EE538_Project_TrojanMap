@@ -1,5 +1,6 @@
 #include "trojanmap.h"
 
+
 //-----------------------------------------------------
 // TODO: Students should implement the following:
 //-----------------------------------------------------
@@ -648,7 +649,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   for(auto x:data){
     if(count < k){
       if(x.second.lat < lat + r && x.second.lon < lon + r){
-        if(x.second.attributes.count(attributesName) && name!=x.second.name){
+        if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
           res.push_back(x.second.id);
           count++;
         }
