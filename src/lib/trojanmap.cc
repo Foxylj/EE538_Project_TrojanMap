@@ -642,35 +642,63 @@ bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<d
  * @return {std::vector<std::string>}: location name that meets the requirements
  */
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k) {
+  auto comp = [](const std::pair<std::string, double>& lhs, const std::pair<std::string, double>& rhs) {
+    return lhs.second < rhs.second;
+  };
   std::vector<std::string> res;
-  int count = 0;
+  std::set<std::pair<std::string, double>, decltype(comp)> loc(comp);
   double lon = GetPosition(name).second;
   double lat = GetPosition(name).first;
+  double distance;
   for(auto x:data){
-    if(count < k){
-      if(x.second.lat <= lat + r && x.second.lon <= lon + r){
-        if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
-          res.push_back(x.second.id);
-          count++;
-        }
-      }else if(x.second.lat <= lat + r && x.second.lon >= lon - r){
-        if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
-          res.push_back(x.second.id);
-          count++;
-        }
-      }else if(x.second.lat >= lat - r && x.second.lon >= lon - r){
-        if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
-          res.push_back(x.second.id);
-          count++;
-        }
-      }else if(x.second.lat >= lat - r && x.second.lon <= lon + r){
-        if(x.second.attributes.count(attributesName) && GetID(name)!=x.second.id){
-          res.push_back(x.second.id);
-          count++;
-        }
+    if (x.second.lat <= lat + r && x.second.lon <= lon + r)
+    {
+      if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
+      {
+        distance = (x.second.lat-lat)*(x.second.lat-lat) + (x.second.lon-lon)*(x.second.lon-lon);
+        loc.insert(std::make_pair(x.second.id,distance));
+      }
+    }
+    else if (x.second.lat <= lat + r && x.second.lon >= lon - r)
+    {
+      if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
+      {
+        distance = (x.second.lat-lat)*(x.second.lat-lat) + (x.second.lon-lon)*(x.second.lon-lon);
+        loc.insert(std::make_pair(x.second.id,distance));
+      }
+    }
+    else if (x.second.lat >= lat - r && x.second.lon >= lon - r)
+    {
+      if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
+      {
+        distance = (x.second.lat-lat)*(x.second.lat-lat) + (x.second.lon-lon)*(x.second.lon-lon);
+        loc.insert(std::make_pair(x.second.id,distance));
+      }
+    }
+    else if (x.second.lat >= lat - r && x.second.lon <= lon + r)
+    {
+      if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
+      {
+        distance = (x.second.lat-lat)*(x.second.lat-lat) + (x.second.lon-lon)*(x.second.lon-lon);
+        loc.insert(std::make_pair(x.second.id,distance));
       }
     }
   }
+  if(loc.size()>=k){
+      int index = 0;
+      for(auto it = loc.begin(); it != loc.end() && index < 10; ++it, ++index){
+        auto element = *it;
+        
+        res.push_back(element.first);
+      }
+    }
+    else{
+      for(auto y:loc){
+        // auto element = *it;
+        std::pair<std::string,double> pair_tmp = y;
+        res.push_back(y.first);
+      }
+    }
   return res;
 }
 
