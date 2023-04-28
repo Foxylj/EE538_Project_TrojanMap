@@ -496,22 +496,29 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  // std::sort(location_ids.begin(), location_ids.end());
+  std::sort(location_ids.begin()+1, location_ids.end());
   records.first = 99999999999999;
   std::vector<std::string> compute_locs;
-  
+  std::vector<std::string> test = {"6819019976", "6820935923", "7771782316", "6816180153", "8566227783", "122702233",
+   "8566227656", "1873055993", "6819019976"};
+  std::cout << CalculatePathLength(location_ids)<<std::endl;
   do{
     location_ids.push_back(location_ids[0]);
     std::vector<std::string> tmp_vec;
     double tmp = CalculatePathLength(location_ids);
     if(tmp<records.first){
-      records.second.push_back(location_ids);
+      // records.second.push_back(location_ids);
+      records.second = {location_ids};
       records.first = tmp;
     }
     location_ids.pop_back();
     // location_ids.pop_back();
   }while (std::next_permutation(location_ids.begin(), location_ids.end()));
-
+  std::vector<std::string> tmp;
+  tmp = records.second.back();
+  for (std::string x : tmp) {
+    std::cout << x << ' ';
+  }
   return records;
  
 }
