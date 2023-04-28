@@ -162,7 +162,7 @@ class TrojanMap {
   std::pair<double, std::vector<std::vector<std::string>>> BackTrackingHelper(std::set<std::string> chosenID, std::string begining, 
     double &totaldistance,  std::vector<std::string> record_cities, std::vector<std::string> location_ids);
 
-  std::pair<double, std::vector<std::vector<std::string>>> BackTrackingHelper2(std::vector<std::string> location_ids, int index, double &distance);
+  double BackTrackingHelper2(std::vector<std::string> location_ids, std::string current, double distance, std::unordered_map<std::string,bool> &visited);
 };
 
 #endif
