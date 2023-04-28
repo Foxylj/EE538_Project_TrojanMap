@@ -499,16 +499,18 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   // std::sort(location_ids.begin(), location_ids.end());
   records.first = 99999999999999;
   std::vector<std::string> compute_locs;
-  location_ids.push_back(location_ids[0]);
+  
   do{
+    location_ids.push_back(location_ids[0]);
     std::vector<std::string> tmp_vec;
     double tmp = CalculatePathLength(location_ids);
     if(tmp<records.first){
       records.second.push_back(location_ids);
       records.first = tmp;
     }
+    location_ids.pop_back();
     // location_ids.pop_back();
-  }while (std::next_permutation(location_ids.begin()+1, location_ids.end()-1));
+  }while (std::next_permutation(location_ids.begin(), location_ids.end()));
 
   return records;
  
