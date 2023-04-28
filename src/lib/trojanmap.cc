@@ -501,7 +501,6 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   std::vector<std::string> compute_locs;
   location_ids.push_back(location_ids[0]);
   do{
-    // location_ids.push_back(location_ids[0]);
     std::vector<std::string> tmp_vec;
     double tmp = CalculatePathLength(location_ids);
     if(tmp<records.first){
@@ -612,9 +611,10 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
       distance = tmp;
       loop++;
     }
+    records.second.push_back(location_ids);
   }
   records.first = distance;
-  records.second.push_back(location_ids);
+ 
   return records;
 }
 
