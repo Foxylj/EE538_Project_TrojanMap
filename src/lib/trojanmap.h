@@ -159,12 +159,10 @@ class TrojanMap {
   std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
 
   //----------------------------------------------------- User-defined functions
-  private:
-  struct ComparePairs {
-        bool operator() (const std::pair<double, std::vector<std::string>>& p1, const std::pair<double, std::vector<std::string>>& p2) const {
-            return p1.first < p2.first; // Use greater than operator for descending order
-        }
-    };
+  std::pair<double, std::vector<std::vector<std::string>>> BackTrackingHelper(std::set<std::string> chosenID, std::string begining, 
+    double &totaldistance,  std::vector<std::string> record_cities, std::vector<std::string> location_ids);
+
+  std::pair<double, std::vector<std::vector<std::string>>> BackTrackingHelper2(std::vector<std::string> location_ids, int index, double &distance);
 };
 
 #endif

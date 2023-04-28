@@ -496,33 +496,87 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  // std::queue< std::pair<double,std::vector<std::string>> > q;
-  std::priority_queue<std::pair<double, std::vector<std::string>>, std::vector<std::pair<double, std::vector<std::string>>>, ComparePairs> q;
-  // std::sort(location_ids.begin(),location_ids.end());
+  // std::sort(location_ids.begin(), location_ids.end());
   records.first = 99999999999999;
+  std::vector<std::string> compute_locs;
+  location_ids.push_back(location_ids[0]);
   do{
-    location_ids.push_back(location_ids[0]);
+    // location_ids.push_back(location_ids[0]);
     std::vector<std::string> tmp_vec;
     double tmp = CalculatePathLength(location_ids);
     if(tmp<records.first){
-
       records.second.push_back(location_ids);
       records.first = tmp;
     }
-    location_ids.pop_back();
-  }while (std::next_permutation(location_ids.begin(), location_ids.end()));
+    // location_ids.pop_back();
+  }while (std::next_permutation(location_ids.begin()+1, location_ids.end()-1));
 
-  // std::sort(q.front(),q.back(),cmp);
   return records;
+ 
 }
-//sort function used for above function
 
-
+std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTrackingHelper(std::set<std::string> chosenID, std::string begining,  
+    double &totaldistance, std::vector<std::string> record_cities, std::vector<std::string> location_ids){
+      // std::unordered_map<double, std::string> distance_map;
+      // std::vector<double> dis_collection;
+      std::string chooseID;
+      std::pair<double, std::vector<std::vector<std::string>>> res;
+      double dis = 999999;
+      double d1 = CalculatePathLength({"6819019976","1873055993","8566227656","122702233"});
+      double d2 = CalculatePathLength({"6819019976","1873055993","8566227656","8566227783"});
+      for(int i=0;i<location_ids.size();i++){
+        record_cities.push_back(location_ids[i]);
+        record_cities.push_back(location_ids[location_ids.size()-1]);
+        double tmp = CalculatePathLength(record_cities);
+        record_cities.pop_back();
+        record_cities.pop_back();
+        if(tmp<dis && chosenID.count(location_ids[i])==0){
+          dis = tmp;
+          chooseID = location_ids[i];
+        }
+      }
+      chosenID.insert(chosenID.end(),chooseID);//add the visited shortest path location.
+      totaldistance += dis;
+      record_cities.push_back(chooseID);
+      if(chosenID.size()<location_ids.size()){
+        return BackTrackingHelper(chosenID,chooseID,totaldistance,record_cities,location_ids);
+      }
+      res.first = totaldistance;
+      record_cities.push_back(location_ids[0]);
+      res.second.push_back(record_cities);
+      return res;
+}
+std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTrackingHelper2(std::vector<std::string> location_ids, int index, double &distance){
+  if (index == 0) {
+    distance = CalculatePathLength(location_ids);
+  }
+  if(index == location_ids.size()-1){
+    std::pair<double, std::vector<std::vector<std::string>>> res;
+    res.first = distance;
+    res.second.push_back(location_ids);
+    return res;
+  }
+  for(int i = index;i<location_ids.size()-1;i++){
+    if(i!=index){
+      std::swap(location_ids[i],location_ids[index]);
+      if(CalculatePathLength(location_ids)<distance){
+        distance = CalculatePathLength(location_ids);
+      }
+    }
+    BackTrackingHelper2(location_ids,index+1,distance);
+    if(i!=index){
+      std::swap(location_ids[i],location_ids[index]); 
+    }
+  }
+}
 // Please use backtracking to implement this function
 std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTrojan_Backtracking(
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  double distance = 9999999;
+  location_ids.push_back(location_ids[0]);
+  records = BackTrackingHelper2(location_ids,1,distance);
   return records;
 }
 
