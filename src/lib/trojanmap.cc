@@ -613,6 +613,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  std::sort(location_ids.begin()+1, location_ids.end());
   location_ids.push_back(location_ids[0]);
   double distance = CalculatePathLength(location_ids);
   int loop = 0;
