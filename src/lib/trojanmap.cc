@@ -547,6 +547,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTracking
       return res;
 }
 std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTrackingHelper2(std::vector<std::string> location_ids, int index, double &distance){
+  std::vector<std::string> locs = location_ids;
   if (index == 0) {
     distance = CalculatePathLength(location_ids);
   }
@@ -558,15 +559,16 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTracking
   }
   for(int i = index;i<location_ids.size()-1;i++){
     if(i!=index){
-      std::swap(location_ids[i],location_ids[index]);
-      if(CalculatePathLength(location_ids)<distance){
-        distance = CalculatePathLength(location_ids);
+      std::swap(locs[index],locs[i]);
+      double tmp = CalculatePathLength(locs);
+      if(tmp<distance){
+        distance = tmp;
       }
     }
     BackTrackingHelper2(location_ids,index+1,distance);
-    if(i!=index){
-      std::swap(location_ids[i],location_ids[index]); 
-    }
+    // if(i!=index){
+    //   std::swap(location_ids[i],location_ids[index]); 
+    // }
   }
 }
 // Please use backtracking to implement this function
@@ -574,9 +576,9 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  double distance = 9999999;
-  location_ids.push_back(location_ids[0]);
-  records = BackTrackingHelper2(location_ids,1,distance);
+  // double distance = 9999999;
+  // location_ids.push_back(location_ids[0]);
+  // records = BackTrackingHelper2(location_ids,1,distance);
   return records;
 }
 
@@ -585,6 +587,34 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  location_ids.push_back(location_ids[0]);
+  double distance = CalculatePathLength(location_ids);
+  int loop = 0;
+  int index1 = 0;
+  int index2 = 0;
+  while (loop<50)
+  {
+    index1 = (rand() % (location_ids.size())); 
+    index2 = (rand() % (location_ids.size()));
+    if(index2 != 0 && index2<index1){
+      loop++;
+      continue;
+    }
+    if(index1 >= 1 && index2 <= location_ids.size()-2){
+      std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+    }
+    else if(index1 <= 0 || index2 > location_ids.size()-1){
+      loop++;
+      continue;
+    }
+    double tmp = CalculatePathLength(location_ids);
+    if(tmp <distance){
+      distance = tmp;
+      loop++;
+    }
+  }
+  records.first = distance;
+  records.second = {location_ids};
   return records;
 }
 
