@@ -147,7 +147,7 @@ int TrojanMap::CalculateEditDistance(std::string a, std::string b)
 {
   int row = a.size();
   int col = b.size();
-  int de[row + 1][col + 1] = {0};
+  int de[row + 1][col + 1];
   for (int i = 0; i < row + 1; i++)
   {
     de[i][0] = i;
@@ -912,45 +912,29 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
  * @return {std::vector<std::string> }      : the shortest path
  */
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names){
-  std::vector<std::vector<std::string>> route=FindAllRoute(location_names);
-  for (auto elem : route) {
-    for (auto i : elem)
-        std::cout << i;
-      std::cout << '\n';
-    }
-  /*std::unordered_map<std::string, int> inner_map;
-  std::unordered_map<int, int> path;
-
-  int start_end[1][1];
-  int n = location_names.size();
-  std::vector<std::vector<int>> dist(n,std::vector<int>(n,1e9));
-  std::set<int> visited;
-  int index = 1;
-  for(int k=0;k<location_names.size();k++){
-    std::pair<std::string,int> pair = {location_names[k],index};
-    inner_map.insert(pair);
-    index++;
-  } 
-  for(int i=1;i<n;i++){
-    for(int j=2;j<n;j++){
-      if(j>i){
-        std::vector<std::string> road = CalculateShortestPath_Dijkstra(location_names[i],location_names[j]);
-        dist[i][j] = road.size();
-        std::pair<std::pair<int,int>,std::vector<std::string>> pair;
-        pair.first = {i,j};
-        pair.second = road; 
-        if(dist[i][j]<dist[i-1][j-1]+dist[i-1][j]){
-          dist[i-1][j] = dist[i][j];
-          // path.insert(1,1);
-          std::pair<int, int> map_pair;
-          map_pair.first = j;
-          map_pair.second = i;
-          path.insert(map_pair);//put the shortest path to the map
-        }
+  std::vector<std::vector<std::string>> routes=FindAllRoute(location_names);
+  double mini_len=9999999;
+  std::vector<std::string> result={};
+  for (auto route : routes) {
+    std::vector<std::string> path={};
+    for (int i=0;i<route.size()-1;i++){
+      std::vector<std::string> n_to_n_path=CalculateShortestPath_Dijkstra(route[i],route[i+1]);
+      if (path.empty()){
+        path.insert(path.end(), n_to_n_path.begin(), n_to_n_path.end());
+      }
+      else{
+        n_to_n_path.erase(n_to_n_path.begin());
+        path.insert(path.end(), n_to_n_path.begin(), n_to_n_path.end());
       }
     }
+    double current_len=CalculatePathLength(path);
+    if (current_len<mini_len){
+      mini_len=current_len;
+      std::reverse(path.begin(),path.end()); 
+      result=path;
+    }
   }
-  return res;*/
+  return result;
 }
 
 std::vector<std::vector<std::string>> TrojanMap::FindAllRoute(std::vector<std::string> &location_names){
