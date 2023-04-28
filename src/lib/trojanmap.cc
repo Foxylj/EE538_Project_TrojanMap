@@ -614,7 +614,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     }
   }
   records.first = distance;
-  records.second = {location_ids};
+  records.second.push_back(location_ids);
   return records;
 }
 
