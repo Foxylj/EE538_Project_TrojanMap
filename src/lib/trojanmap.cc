@@ -600,7 +600,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
       loop++;
       continue;
     }
-    if(index1 >= 1 && index2 <= location_ids.size()-2){
+    if(index1 >= 1 && index2 <= location_ids.size()-2 && index2 >=1 && index1< index2){
       std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
     }
     else if(index1 <= 0 || index2 > location_ids.size()-1){
