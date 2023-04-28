@@ -918,11 +918,14 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
  * @param  {std::vector<std::string>} input : a list of locations needs to visit
  * @return {std::vector<std::string> }      : the shortest path
  */
-std::vector<std::string> TrojanMap::TrojanPath(
-    std::vector<std::string> &location_names)
-{
-  std::vector<std::string> res;
-  std::unordered_map<std::string, int> inner_map;
+std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names){
+  std::vector<std::vector<std::string>> route=FindAllRoute(location_names);
+  for (auto elem : route) {
+    for (auto i : elem)
+        std::cout << i;
+      std::cout << '\n';
+    }
+  /*std::unordered_map<std::string, int> inner_map;
   std::unordered_map<int, int> path;
 
   int start_end[1][1];
@@ -954,7 +957,26 @@ std::vector<std::string> TrojanMap::TrojanPath(
       }
     }
   }
-  return res;
+  return res;*/
+}
+
+std::vector<std::vector<std::string>> TrojanMap::FindAllRoute(std::vector<std::string> &location_names){
+  std::vector<std::vector<std::string>> result;
+  if (location_names.size()==1){
+    result.push_back(location_names);
+    return result;
+  }
+  for (int i =0; i<location_names.size();i++){
+    std::vector<std::string> next_location_names=location_names;
+    next_location_names.erase (next_location_names.begin() + i);
+    auto next_result=FindAllRoute(next_location_names);
+
+    for (auto&e:next_result){
+      e.insert(e.begin(),location_names[i]);
+      result.push_back(e);
+    }
+  }
+  return result;
 }
 
 /**
