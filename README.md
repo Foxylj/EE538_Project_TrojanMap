@@ -240,7 +240,6 @@ Time taken by function: 2 ms
 ```
 
 - What is the runtime of your algorithm? 
--- O(n+m) Where n is number of nodes, m is length of input
 - (Optional) Can you do it faster than `O(n)`?
 
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
@@ -371,6 +370,12 @@ Please report and compare the time spent by these algorithms.
 | Point A to Point B      | Dijkstra | Bellman Ford| Bellman Ford optimized|
 | -------------------- | ----------- |-------|-----|
 |                      |  t1         | t2    |   t3  |
+|Chase->KFC             |   370ms      | 55ms     |
+|Chase->Ralphs    |    2851ms       |  559ms   |
+|  Target->Ralphs           |    1783ms      |  129ms   |
+|  KFC->Shell           |      5180ms    |   624ms  |
+|  Chase->Shell           |    1913ms      | 478ms    |
+|  Chase->Honda           |   3291ms       |  858ms   |
 
 Your table should show have at least 15 rows.
 
@@ -771,9 +776,14 @@ Similarly for the TSP problem, please provide various examples that show the run
 
 **Please provide a table like below that compares the runtime of your algorithms for different number of nodes:**
 
-| Number of nodes      | Time with algorithm 1 | Time with algorithm 2|
+| Number of nodes      | Time with algorithm 1 | Time wit6h algorithm 2|
 | -------------------- | ----------- |----|
-|             |  t1        | t2    |
+|Chase->KFC             |   370ms      | 55ms     |
+|Chase->Ralphs    |    2851ms       |  559ms   |
+|  Target->Ralphs           |    1783ms      |  129ms   |
+|  KFC->Shell           |      5180ms    |   624ms  |
+|  Chase->Shell           |    1913ms      | 478ms    |
+|  Chase->Honda           |   3291ms       |  858ms   |
 
 Your table should show have at least 15 rows.
 
@@ -825,6 +835,7 @@ Phase 3: 60 points
 - Item 12 (CheckPath): 10 points. (Phase 3)
    - Return the correct output.
 - Video presentation and report: 10 points. (Phase 3)
+https://youtu.be/_tnvSLdy9gY
 - Creating reasonable unit tests: 10 points.
       - Three different unit tests for each function.
 ## Extra credit items: Maximum of 20 points:
