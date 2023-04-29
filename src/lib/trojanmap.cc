@@ -499,9 +499,6 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   std::sort(location_ids.begin()+1, location_ids.end());
   records.first = 99999999999999;
   std::vector<std::string> compute_locs;
-  std::vector<std::string> test = {"6819019976", "6820935923", "7771782316", "6816180153", "8566227783", "122702233",
-   "8566227656", "1873055993", "6819019976"};
-  std::cout << CalculatePathLength(location_ids)<<std::endl;
   do{
     location_ids.push_back(location_ids[0]);
     std::vector<std::string> tmp_vec;
@@ -514,97 +511,57 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     location_ids.pop_back();
     // location_ids.pop_back();
   }while (std::next_permutation(location_ids.begin(), location_ids.end()));
-  std::vector<std::string> tmp;
-  tmp = records.second.back();
-  for (std::string x : tmp) {
-    std::cout << x << ' ';
-  }
+  // std::vector<std::string> tmp;
+  // tmp = records.second.back();
+  // for (std::string x : tmp) {
+  //   std::cout << x << ' ';
+  // }
   return records;
  
 }
 
-std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::BackTrackingHelper(std::set<std::string> chosenID, std::string begining,  
-    double &totaldistance, std::vector<std::string> record_cities, std::vector<std::string> location_ids){
-      // std::unordered_map<double, std::string> distance_map;
-      // std::vector<double> dis_collection;
-      std::string chooseID;
-      std::pair<double, std::vector<std::vector<std::string>>> res;
-      double dis = 999999;
-      double d1 = CalculatePathLength({"6819019976","1873055993","8566227656","122702233"});
-      double d2 = CalculatePathLength({"6819019976","1873055993","8566227656","8566227783"});
-      for(int i=0;i<location_ids.size();i++){
-        record_cities.push_back(location_ids[i]);
-        record_cities.push_back(location_ids[location_ids.size()-1]);
-        double tmp = CalculatePathLength(record_cities);
-        record_cities.pop_back();
-        record_cities.pop_back();
-        if(tmp<dis && chosenID.count(location_ids[i])==0){
-          dis = tmp;
-          chooseID = location_ids[i];
-        }
-      }
-      chosenID.insert(chosenID.end(),chooseID);//add the visited shortest path location.
-      totaldistance += dis;
-      record_cities.push_back(chooseID);
-      if(chosenID.size()<location_ids.size()){
-        return BackTrackingHelper(chosenID,chooseID,totaldistance,record_cities,location_ids);
-      }
-      res.first = totaldistance;
-      record_cities.push_back(location_ids[0]);
-      res.second.push_back(record_cities);
-      return res;
-}
-double TrojanMap::BackTrackingHelper2(std::vector<std::string> location_ids, 
-    std::string current, double distance, std::unordered_map<std::string,bool> &visited)
+void TrojanMap::BackTrackingHelper(const std::vector<std::string> &location_ids, 
+    std::vector<std::vector<std::string>> &result, double &distance, std::vector<std::string> current_result)
 {
-  std::pair<double, std::vector<std::vector<std::string>>> res;
-  bool if_visited = false;
-  for(const auto& x:visited){
-    if(!x.second){
-      if_visited = false;
-      break;
+  if(current_result.size() == location_ids.size()){
+    // std::reverse(current_result.begin(),current_result.end());
+    // current_result.insert(current_result.begin(),location_ids[location_ids.size()-1]);
+    double tmp = CalculatePathLength(current_result);
+    if(tmp < distance){
+      result.push_back(current_result);
+      distance = tmp;
     }
+    return;  
   }
-  if (if_visited) {
-    distance = distance + CalculateDistance(GetID(current),location_ids[0]);
-    return distance;
-  }
-  double min_distance = 99999999;
-  for(size_t i=0;i<location_ids.size();i++){
-    std::string next_loc = location_ids[i];
-    if(!visited[next_loc]){
-      visited[next_loc] = true;
-      double current_dis = distance + CalculateDistance(GetID(current),GetID(next_loc));
-      double new_dis = BackTrackingHelper2(location_ids,next_loc, current_dis,visited);
-      min_distance = std::min(min_distance,new_dis);
+
+  for(int i = 0; i < location_ids.size(); i++){
+    if(std::find(current_result.begin(), current_result.end(),
+    location_ids[i]) != current_result.end()){
+      continue;
     }
+    std::vector<std::string> nextCurRes = current_result;
+    nextCurRes.push_back(location_ids[i]);
+    BackTrackingHelper(location_ids, result, distance, nextCurRes);
   }
-  return min_distance;  
 }
+
 // Please use backtracking to implement this function
 std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTrojan_Backtracking(
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  double min_distance = 99999999;
-  std::unordered_map<std::string,bool> visited;
-  std::vector<std::string> path(location_ids.size());
-
-  for(auto x:location_ids){
-    visited[x] = false;
-  }
-  
-  for(size_t i=0;i<location_ids.size();++i){
-    visited[location_ids[i]] == true;
-    double new_dis = BackTrackingHelper2(location_ids,location_ids[i],0,visited);
-    if(new_dis < min_distance){
-      min_distance = new_dis;
-      path = location_ids;
-    }
-    visited[location_ids[i]] == true;
-  }
-  records.first = min_distance;
-  records.second.push_back(path);
+  std::vector<std::vector<std::string>> result;
+  std::vector<std::string> current_res;
+  double distance = 9999999;
+  std::sort(location_ids.begin()+1,location_ids.end());
+  // std::reverse(location_ids.begin(),location_ids.end());
+  BackTrackingHelper(location_ids,result,distance,current_res);
+  current_res = result.back();
+  // std::reverse(current_res.begin(),current_res.end());
+  current_res.push_back(location_ids[0]);
+  distance = CalculatePathLength(current_res);
+  records.first = distance;
+  records.second.push_back(current_res);
   return records;
 }
 
@@ -613,36 +570,34 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  std::sort(location_ids.begin()+1, location_ids.end());
+  // std::sort(location_ids.begin()+1, location_ids.end());
   location_ids.push_back(location_ids[0]);
   double distance = CalculatePathLength(location_ids);
   int loop = 0;
   int index1 = 0;
   int index2 = 0;
-  while (loop<50)
+  bool end = true;  
+  while (loop<300)
   {
     index1 = (rand() % (location_ids.size())); 
     index2 = (rand() % (location_ids.size()));
     if(index2 != 0 && index2<index1){
-      loop++;
       continue;
     }
     if(index1 >= 1 && index2 <= location_ids.size()-2 && index2 >=1 && index1< index2){
       std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+      double tmp = CalculatePathLength(location_ids);
+      if(tmp < distance){
+        distance = tmp;
+      } else {
+        // Revert the swap if the new distance is not smaller
+        std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+      }
     }
-    else if(index1 <= 0 || index2 > location_ids.size()-1){
-      loop++;
-      continue;
-    }
-    double tmp = CalculatePathLength(location_ids);
-    if(tmp <distance){
-      distance = tmp;
-      loop++;
-    }
+    loop++;
     records.second.push_back(location_ids);
   }
   records.first = distance;
-
   return records;
 }
 
@@ -651,6 +606,37 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  // std::sort(location_ids.begin()+1, location_ids.end());
+  location_ids.push_back(location_ids[0]);
+  double distance = CalculatePathLength(location_ids);
+  int loop = 0;
+  int index1 = 0;
+  int index2 = 0;
+  int index3 = 0;
+  bool end = true;  
+  while (loop<300)
+  {
+    index1 = (rand() % (location_ids.size()))+1; 
+    index2 = (rand() % (location_ids.size()))+index1+1;
+    index3 = (rand() % (location_ids.size()))+index2+1;
+    if(index3<location_ids.size()-2){
+      std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+      double tmp = CalculatePathLength(location_ids);
+      if(tmp < distance){
+        distance = tmp;
+      } else {
+        // Revert the swap if the new distance is not smaller
+        std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+        std::iter_swap(location_ids.begin()+index2,location_ids.begin()+index3);
+      }
+    }
+    else{
+      continue;
+    }
+    loop++;
+    records.second.push_back(location_ids);
+  }
+  records.first = distance;
   return records;
 }
 
@@ -856,13 +842,15 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   double lon = GetPosition(name).second;
   double lat = GetPosition(name).first;
   double distance;
+  std::string id = GetID(name);
+  
   for (auto x : data)
   {
     if (x.second.lat <= lat + r && x.second.lon <= lon + r)
     {
-      if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
+      if (x.second.attributes.count(attributesName) && id != x.second.id)
       {
-        distance = (x.second.lat - lat) * (x.second.lat - lat) + (x.second.lon - lon) * (x.second.lon - lon);
+        distance = CalculateDistance(x.second.id,id);
         loc.insert(std::make_pair(x.second.id, distance));
       }
     }
@@ -870,7 +858,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
     {
       if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
       {
-        distance = (x.second.lat - lat) * (x.second.lat - lat) + (x.second.lon - lon) * (x.second.lon - lon);
+        distance = CalculateDistance(x.second.id,id);
         loc.insert(std::make_pair(x.second.id, distance));
       }
     }
@@ -878,7 +866,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
     {
       if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
       {
-        distance = (x.second.lat - lat) * (x.second.lat - lat) + (x.second.lon - lon) * (x.second.lon - lon);
+        distance = CalculateDistance(x.second.id,id);
         loc.insert(std::make_pair(x.second.id, distance));
       }
     }
@@ -886,7 +874,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
     {
       if (x.second.attributes.count(attributesName) && GetID(name) != x.second.id)
       {
-        distance = (x.second.lat - lat) * (x.second.lat - lat) + (x.second.lon - lon) * (x.second.lon - lon);
+        distance = CalculateDistance(x.second.id,id);
         loc.insert(std::make_pair(x.second.id, distance));
       }
     }
@@ -894,7 +882,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   if (loc.size() >= k)
   {
     int index = 0;
-    for (auto it = loc.begin(); it != loc.end() && index < 10; ++it, ++index)
+    for (auto it = loc.begin(); it != loc.end() && index < k; ++it, ++index)
     {
       auto element = *it;
       res.push_back(element.first);
