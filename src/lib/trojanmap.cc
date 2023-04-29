@@ -970,13 +970,54 @@ std::vector<std::vector<std::string>> TrojanMap::FindAllRoute(std::vector<std::s
  * @param  {std::vector<std::pair<double, std::vector<std::string>>>} Q : a list of queries
  * @return {std::vector<bool> }      : existence of the path
  */
-std::vector<bool> TrojanMap::Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q)
-{
+std::vector<bool> TrojanMap::Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q){
   std::vector<bool> ans(q.size());
-  
+  std::vector<std::string> location_names;
+  for (int i=0;i<q.size();i++){
+    std::string start=q[i].second[0];
+    std::string dest=q[i].second[1];
+    if (std::find(location_names.begin(),location_names.end(),start)==location_names.end() && GetID(start)!="") location_names.push_back(start);
+    if (std::find(location_names.begin(),location_names.end(),dest)==location_names.end() && GetID(dest)!="") location_names.push_back(dest);
+  }
+  for (int i=0;i<q.size();i++){
+    double volume=q[i].first;
+    std::string start=q[i].second[0];
+    std::string dest=q[i].second[1];
+    if (std::find(location_names.begin(),location_names.end(),start)==location_names.end()&&std::find(location_names.begin(),location_names.end(),dest)==location_names.end()){
+      ans[i]=false;
+      continue;
+    }
+    else{
+      bool result=pathbool(location_names,start,dest,volume);
+      ans[i]=result;
+    }
+  }
   return ans;
 }
 
+bool TrojanMap::pathbool(const std::vector<std::string>& location_names, const std::string& start, const std::string& end, double volume){
+  if (start==end) return true;
+  bool check=false;
+  std::vector<std::string> path = location_names;
+  path.erase(std::find(path.begin(), path.end(), start));
+
+  for (int i =0; i<path.size();i++){
+    double len=CalculatePathLength(CalculateShortestPath_Dijkstra(start,path[i]));
+    for (auto i:path){
+    std::cout<<i;
+    }
+    std::cout<<std::endl;
+    std::cout<<path[i]<<std::endl;
+    std::cout<<end<<std::endl;
+    std::cout<<volume<<std::endl;
+    std::cout<<len<<std::endl;
+    if (len<volume) {
+      check=pathbool(path,path[i],end,volume);
+      if (check==true) return true;
+    }
+  }
+  return false;
+}
 /**
  * CreateGraphFromCSVFile: Read the map data from the csv file
  * We have provided the code for you. Please do not need to change this function.

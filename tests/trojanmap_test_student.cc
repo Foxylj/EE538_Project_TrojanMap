@@ -98,3 +98,13 @@ TEST(DeliveringTrojan, Test1) {
   EXPECT_EQ(output_set, result);
 }
 
+TEST(TrojanMapTest, Queries) {
+  TrojanMap m;
+  std::vector<std::pair<double, std::vector<std::string>>> input {{0.05, {"Target", "Ralphs"}},
+                                                                  {0.01, {"Ralphs", "Target"}},
+                                                                  {0.02, {"KFC", "Target"}},
+                                                                  {999, {"dummy", "dummy"}}};
+  auto actual = m.Queries(input);
+  std::vector<bool> expected {true, false, false, false};
+  EXPECT_EQ(expected, actual);
+}
