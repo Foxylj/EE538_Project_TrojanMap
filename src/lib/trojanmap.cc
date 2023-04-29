@@ -960,47 +960,31 @@ std::vector<std::vector<std::string>> TrojanMap::FindAllRoute(std::vector<std::s
  */
 std::vector<bool> TrojanMap::Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q){
   std::vector<bool> ans(q.size());
-  std::vector<std::string> location_names;
-  for (int i=0;i<q.size();i++){
-    std::string start=q[i].second[0];
-    std::string dest=q[i].second[1];
-    if (std::find(location_names.begin(),location_names.end(),start)==location_names.end() && GetID(start)!="") location_names.push_back(start);
-    if (std::find(location_names.begin(),location_names.end(),dest)==location_names.end() && GetID(dest)!="") location_names.push_back(dest);
-  }
   for (int i=0;i<q.size();i++){
     double volume=q[i].first;
-    std::string start=q[i].second[0];
-    std::string dest=q[i].second[1];
-    if (std::find(location_names.begin(),location_names.end(),start)==location_names.end()&&std::find(location_names.begin(),location_names.end(),dest)==location_names.end()){
+    std::string start_id=GetID(q[i].second[0]);
+    std::string dest_id=GetID(q[i].second[1]);
+    if (start_id==""||dest_id==""){
       ans[i]=false;
       continue;
     }
     else{
-      bool result=pathbool(location_names,start,dest,volume);
+      std::unordered_set<std::string> visited;
+      bool result=pathbool(start_id,dest_id,volume,visited);
       ans[i]=result;
     }
   }
   return ans;
 }
 
-bool TrojanMap::pathbool(const std::vector<std::string>& location_names, const std::string& start, const std::string& end, double volume){
-  if (start==end) return true;
-  bool check=false;
-  std::vector<std::string> path = location_names;
-  path.erase(std::find(path.begin(), path.end(), start));
-
-  for (int i =0; i<path.size();i++){
-    double len=CalculatePathLength(CalculateShortestPath_Dijkstra(start,path[i]));
-    for (auto i:path){
-    std::cout<<i;
-    }
-    std::cout<<std::endl;
-    std::cout<<path[i]<<std::endl;
-    std::cout<<end<<std::endl;
-    std::cout<<volume<<std::endl;
-    std::cout<<len<<std::endl;
-    if (len<volume) {
-      check=pathbool(path,path[i],end,volume);
+bool TrojanMap::pathbool(const std::string& start_id, const std::string& end_id, double volume,std::unordered_set<std::string>& visited){
+  if (start_id==end_id) return true;
+  visited.insert(start_id);
+  std::vector<std::string> neighbor=GetNeighborIDs(start_id);
+  for (int i =0; i<neighbor.size();i++){
+    double len=CalculateDistance(start_id,neighbor[i]);
+    if (len<volume&&visited.count(neighbor[i]) == 0) {
+      bool check=pathbool(neighbor[i],end_id,volume,visited);
       if (check==true) return true;
     }
   }
