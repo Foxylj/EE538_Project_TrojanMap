@@ -69,7 +69,7 @@ std::string TrojanMap::GetName(const std::string &id)
       return name;
     }
   }
-  return name;
+  return "NULL";
 }
 
 /**
@@ -616,22 +616,22 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   bool end = true;  
   while (loop<300)
   {
-    index1 = (rand() % (location_ids.size()))+1; 
-    index2 = (rand() % (location_ids.size()))+index1+1;
-    index3 = (rand() % (location_ids.size()))+index2+1;
-    if(index3<location_ids.size()-2){
+    index1 = (rand() % (location_ids.size())-2); 
+    index2 = (rand() % (location_ids.size())-index1 -1) + index1 +1;
+    index3 = (rand() % (location_ids.size())-index2 -1) + index2 +1;
+    if(index2 != 0 && index2<index1){
+      continue;
+    }
+    if(index1 >= 1 && index2 <= location_ids.size()-2 && index2 >=1 && index1< index2){
       std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
+      std::iter_swap(location_ids.begin()+index2,location_ids.begin()+index3);
       double tmp = CalculatePathLength(location_ids);
       if(tmp < distance){
         distance = tmp;
-      } else {
-        // Revert the swap if the new distance is not smaller
-        std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
-        std::iter_swap(location_ids.begin()+index2,location_ids.begin()+index3);
       }
-    }
-    else{
-      continue;
+      else{
+        continue;
+      }
     }
     loop++;
     records.second.push_back(location_ids);

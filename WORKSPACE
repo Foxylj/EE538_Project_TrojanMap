@@ -39,6 +39,6 @@ new_local_repository(
 
 new_local_repository(
     name = "ncurses",
-    path = "/opt/homebrew/Cellar/ncurses/6.4",
+    path = "/lib/x86_64-linux-gnu/",
     build_file = "ncurses.BUILD",
 )
