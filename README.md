@@ -32,54 +32,227 @@ The project is submitted in different phases. You are required to submit the fol
    - No coding details in the video
 
    Here is a [sample video from the previous semester.](https://www.youtube.com/watch?v=_KDML4Ck3SU&t=4s) 
-// Test case 1: ReadDependenciesFromCSVFileTest1
-TEST(TrojanMapTest, ReadDependenciesFromCSVFileTest1) {
-  TrojanMap m;
 
-  // Prepare data.csv with the following content:
-  // Source,Destination
-  // A,B
-  // B,C
-  // C,D
+3. A final report in the README file of your GitHub submission. The final report should include the questions that are asked in this README file, your tables and plots for the runtime results, and any other detail of your code.
 
-  std::string dependencies_filename = "data.csv";
-  auto result = m.ReadDependenciesFromCSVFile(dependencies_filename);
-  std::vector<std::vector<std::string>> gt = {{"A", "B"}, {"B", "C"}, {"C", "D"}};
-  EXPECT_EQ(result, gt);
-}
+## Due Dates
 
-// Test case 2: ReadDependenciesFromCSVFileTest2
-TEST(TrojanMapTest, ReadDependenciesFromCSVFileTest2) {
-  TrojanMap m;
+- Phase 1: Sunday, April 9, 23:59 pm
+- Phase 2: Friday, April 14, 23:59 pm
+- Phase 3: Friday, April 28, 23:59 pm
+- Video Presentation: Friday, April 28, 23:59 pm
+- Report: Friday, May 5, 23:59 pm
 
-  // Prepare data.csv with the following content:
-  // Source,Destination
-  // A,B
-  // B,C
-  // C,A
+## TrojanMap
 
-  std::string dependencies_filename = "data.csv";
-  auto result = m.ReadDependenciesFromCSVFile(dependencies_filename);
-  std::vector<std::vector<std::string>> gt = {{"A", "B"}, {"B", "C"}, {"C", "A"}};
-  EXPECT_EQ(result, gt);
-}
+This project focuses on using data structures in C++ and implementing various graph algorithms to build a map application.
 
-// Test case 3: ReadDependenciesFromCSVFileTest3
-TEST(TrojanMapTest, ReadDependenciesFromCSVFileTest3) {
-  TrojanMap m;
+<p align="center"><img src="img/TrojanMap.png" alt="Trojan" width="500" /></p>
 
-  // Prepare data.csv with the following content:
-  // Source,Destination
-  // A,B
-  // B,C
-  // A,D
-  // D,E
+- Please clone the repository, read through [README.md](README.md), and implement the functions of the project.
+- Please make sure that your code can run `bazel run` and `bazel test`.
+- You need to fill in [trojanmap.cc](src/lib/trojanmap.cc), [mapui.cc](src/lib/mapui.cc) and maybe [mapui.h](src/lib/mapui.h), and add unit tests in the `tests` directory.
+- We will use the autograder to grade some of the questions
+- We will compare the code similarity between submissions and the previous semester's submissions. Please complete the project within your group.
+---
 
-  std::string dependencies_filename = "data.csv";
-  auto result = m.ReadDependenciesFromCSVFile(dependencies_filename);
-  std::vector<std::vector<std::string>> gt = {{"A", "B"}, {"B", "C"}, {"A", "D"}, {"D", "E"}};
-  EXPECT_EQ(result, gt);
-}
+## The Data Structure
+
+Each point on the map is represented by the class **Node** shown below and defined in [trojanmap.h](src/lib/trojanmap.h).
+
+```cpp
+// A Node is the location of one point in the map.
+class Node {
+ public:
+  Node(){};
+  Node(const Node &n) {
+    id = n.id;
+    lat = n.lat;
+    lon = n.lon;
+    name = n.name;
+    neighbors = n.neighbors;
+    attributes = n.attributes;
+  };
+  std::string id;    // A unique id assigned to each point.
+  double lat;        // Latitude
+  double lon;        // Longitude
+  std::string name;  // Name of the location. E.g. "Bank of America".
+  std::vector<std::string>
+      neighbors;  // List of the ids of all neighbor points.
+  std::unordered_set<std::string>
+      attributes;  // List of the attributes of the location.
+};
+```
+
+---
+
+## Prerequisites
+The details of the environment setup will be reviewed in the discussion session. Please do not miss that class!
+
+### External Libraries Installation
+
+For visualization, we use `OpenCV` library. You will use this library as a black box and don't need to worry about the graphic details. Use the following commands to install OpenCV and other libraries.
+
+#### For macOS Users
+
+Step 1. Type the following three lines in your terminal.
+```shell
+$ brew install cmake
+$ brew install opencv
+$ brew install ncurses
+```
+
+Step 2. Check the installation paths of opencv and ncurses by
+
+```shell
+$ brew info opencv
+```
+
+and
+
+```shell
+$ brew info ncurses
+```
+
+respectively, and update their paths in the `WORKSPACE` file of your project root directory with the actual installation paths.
+
+
+
+#### For Ubuntu users
+Step 1. Type the following lines in your terminal.
+
+```shell
+$ cd **your project folder**
+$ git clone https://github.com/opencv/opencv.git
+$ sudo apt update
+$ sudo apt install cmake libgtk2.0-dev pkg-config
+$ sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
+$ sudo apt install libncurses5-dev libncursesw5-dev
+$ cp ubuntu/* ./
+```
+
+Step 2. Make sure you set the **path_to_install_folder** to be the absolute path to the **install** folder under opencv when running the following commands.
+
+```shell
+$ cd opencv/
+$ mkdir build install
+$ cd build
+$ cmake -D CMAKE_INSTALL_PREFIX=**path_to_install_folder** -D BUILD_LIST=core,highgui,imgcodecs,imgproc,videoio ..
+$ make install
+```
+
+For example, if cloned this repo under `"/Users/ari/github/TrojanMap"`, you should type:
+
+```shell
+$ cd opencv/
+$ mkdir build install
+$ cd build
+$ cmake -D CMAKE_INSTALL_PREFIX=/Users/ari/github/TrojanMap/opencv/install -D BUILD_LIST=core,highgui,imgcodecs,imgproc,videoio ..
+$ make install
+```
+
+## Run the program
+
+For macOS users, run
+
+```shell
+$ bazel run src/main:main
+```
+
+For Ubuntu users, run
+               
+```shell
+$ bazel run --cxxopt='-std=c++17' src/main:main
+```
+
+If everything is correct, a menu similar to this will show up.
+
+```shell
+TrojanMap Menu
+**************************************************************
+* Enter the function number (1-11) to start:                  
+* 1. Autocomplete                                             
+* 2. Find the location                                        
+* 3. Find all location categories                             
+* 4. Get all locations of a category                          
+* 5. Get location matching regular expression                 
+* 6. CalculateShortestPath                                    
+* 7. Cycle Detection                                          
+* 8. Topological Sort                                         
+* 9. Traveling salesman problem                              
+* 10. Find Nearby                                              
+* 11. Find Path to Visit All Places
+* 12. Check Exist of Path with Constrain
+* 13. Exit                                                     
+**************************************************************
+```
+
+## Test The Program
+
+We created some tests for you to test your program, please run
+```shell
+$ bazel test tests:trojanmap_test
+```
+
+> You may also need to add the `--cxxopt='-std=c++17'` flag if you are using Linux.
+
+Please add you test in the [trojanmap_test_student.cc](tests/trojanmap_test_student.cc) and run
+
+```shell
+$ bazel test tests:trojanmap_test_student
+```
+
+## Item 1: Autocomplete The Location Name (Phase 1)
+
+```c++
+std::vector<std::string> Autocomplete(std::string name);
+```
+
+We consider the names of nodes as the locations. Implement a method to type the partial name of the location and return a list of possible locations with the partial name as the prefix. Please treat uppercase and lowercase as the same character. Please return an empty output if the input string is empty.
+
+Example:
+
+Input: "Chi" \
+Output: ["Chick-fil-A", "Chipotle", "Chinese Street Food"]
+
+Example:
+
+```shell
+**************************************************************
+* 1. Autocomplete                                             
+**************************************************************
+
+Please input a partial location:ch
+*************************Results******************************
+Chinese Street Food
+Cheebos Burger
+Chick-fil-A
+Chase
+Chevron 1
+Chipotle
+Chase Plaza Heliport
+Chevron 2
+Church of Christ
+Chucks Chicken & Waffles
+Chevron
+**************************************************************
+Time taken by function: 2 ms
+```
+
+- What is the runtime of your algorithm? 
+- (Optional) Can you do it faster than `O(n)`?
+
+## Item 2-1: Find the place's coordinates in the Map (Phase 1)
+
+```c++
+std::pair<double, double> GetPosition(std::string name);
+```
+
+Given a location name, return the latitude and longitude. There are no duplicated location names. You should mark the given locations on the map. If the location does not exist, return (-1, -1). The algorithm is case-sensitive.
+
+Example:
+
+Input: "Target" \
 Output: (34.0257016, -118.2843512)
 
 ```shell
@@ -197,6 +370,12 @@ Please report and compare the time spent by these algorithms.
 | Point A to Point B      | Dijkstra | Bellman Ford| Bellman Ford optimized|
 | -------------------- | ----------- |-------|-----|
 |                      |  t1         | t2    |   t3  |
+|Chase->KFC             |   370ms      | 55ms     |
+|Chase->Ralphs    |    2851ms       |  559ms   |
+|  Target->Ralphs           |    1783ms      |  129ms   |
+|  KFC->Shell           |      5180ms    |   624ms  |
+|  Chase->Shell           |    1913ms      | 478ms    |
+|  Chase->Honda           |   3291ms       |  858ms   |
 
 Your table should show have at least 15 rows.
 
@@ -599,12 +778,12 @@ Similarly for the TSP problem, please provide various examples that show the run
 
 | Number of nodes      | Time with algorithm 1 | Time wit6h algorithm 2|
 | -------------------- | ----------- |----|
-|Chase->KFC             |    55ms      | 370ms    |
-|Chase->Ralphs    |   559ms       | 2851ms    |
-|  Target->Ralphs           |  129ms        | 1783ms    |
-|  KFC->Shell           |  624ms        | 5180ms    |
-|  Chase->Shell           |  478ms        | 1913ms    |
-|  Chase->Honda           |  858ms        | 3291ms    |
+|Chase->KFC             |   370ms      | 55ms     |
+|Chase->Ralphs    |    2851ms       |  559ms   |
+|  Target->Ralphs           |    1783ms      |  129ms   |
+|  KFC->Shell           |      5180ms    |   624ms  |
+|  Chase->Shell           |    1913ms      | 478ms    |
+|  Chase->Honda           |   3291ms       |  858ms   |
 
 Your table should show have at least 15 rows.
 
@@ -656,6 +835,7 @@ Phase 3: 60 points
 - Item 12 (CheckPath): 10 points. (Phase 3)
    - Return the correct output.
 - Video presentation and report: 10 points. (Phase 3)
+https://youtu.be/_tnvSLdy9gY
 - Creating reasonable unit tests: 10 points.
       - Three different unit tests for each function.
 ## Extra credit items: Maximum of 20 points:
