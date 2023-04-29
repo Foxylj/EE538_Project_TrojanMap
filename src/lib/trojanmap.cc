@@ -851,7 +851,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   if (loc.size() >= k)
   {
     int index = 0;
-    for (auto it = loc.begin(); it != loc.end() && index <= k; ++it, ++index)
+    for (auto it = loc.begin(); it != loc.end() && index < k; ++it, ++index)
     {
       auto element = *it;
       res.push_back(element.first);
