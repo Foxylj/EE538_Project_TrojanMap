@@ -158,6 +158,7 @@ class TrojanMap {
   // Takes in a vector of queries. Each query consists of a pair: <tank_capacity, [source, destination]>.
   // Returns the result of each query in a vector.
   std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
+  bool pathbool(const std::vector<std::string>& location_names, const std::string& start, const std::string& end, double volume);
 
   //----------------------------------------------------- User-defined functions
 

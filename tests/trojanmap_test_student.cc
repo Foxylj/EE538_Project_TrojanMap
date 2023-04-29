@@ -172,6 +172,7 @@ TEST(DeliveringTrojan, Test1) {
   EXPECT_EQ(output_set, result);
 }
 
+<<<<<<< HEAD
 TEST(TrojanMapTest, GetLocationRegex4) {
   TrojanMap m;
   std::set<std::string> expected_set = {"1376467705"};
@@ -426,3 +427,15 @@ TEST(TrojanMapTest, ShortestPath3) {
   
 //   EXPECT_EQ(flag, true);
 // }
+=======
+TEST(TrojanMapTest, Queries) {
+  TrojanMap m;
+  std::vector<std::pair<double, std::vector<std::string>>> input {{0.05, {"Target", "Ralphs"}},
+                                                                  {0.01, {"Ralphs", "Target"}},
+                                                                  {0.02, {"KFC", "Target"}},
+                                                                  {999, {"dummy", "dummy"}}};
+  auto actual = m.Queries(input);
+  std::vector<bool> expected {true, false, false, false};
+  EXPECT_EQ(expected, actual);
+}
+>>>>>>> 8a1c159b5701fba90288be1ab7d022e97ece78cb
