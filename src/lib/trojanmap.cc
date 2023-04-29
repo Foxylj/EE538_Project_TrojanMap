@@ -557,14 +557,11 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   std::vector<std::string> current_res;
   double distance = 9999999;
   std::sort(location_ids.begin()+1,location_ids.end());
-  std::reverse(location_ids.begin(),location_ids.end());
+  // std::reverse(location_ids.begin(),location_ids.end());
   BackTrackingHelper(location_ids,result,distance,current_res);
-  // std::reverse(result.back().begin(),result.back().end());
-  // result.back().push_back(*location_ids.end());
-  // distance = CalculatePathLength(result.back());
   current_res = result.back();
-  std::reverse(current_res.begin(),current_res.end());
-  current_res.push_back(location_ids[location_ids.size()-1]);
+  // std::reverse(current_res.begin(),current_res.end());
+  current_res.push_back(location_ids[0]);
   distance = CalculatePathLength(current_res);
   records.first = distance;
   records.second.push_back(current_res);
