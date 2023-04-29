@@ -160,10 +160,8 @@ class TrojanMap {
   std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
 
   //----------------------------------------------------- User-defined functions
-  std::pair<double, std::vector<std::vector<std::string>>> BackTrackingHelper(std::set<std::string> chosenID, std::string begining, 
-    double &totaldistance,  std::vector<std::string> record_cities, std::vector<std::string> location_ids);
 
-  double BackTrackingHelper2(std::vector<std::string> location_ids, std::string current, double distance, std::unordered_map<std::string,bool> &visited);
+  void BackTrackingHelper(const std::vector<std::string> &location_ids,   std::vector<std::vector<std::string>> &result, double &distance, std::vector<std::string> current_result);
 };
 
 #endif
