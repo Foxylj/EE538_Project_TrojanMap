@@ -961,7 +961,6 @@ std::vector<std::vector<std::string>> TrojanMap::FindAllRoute(std::vector<std::s
 std::vector<bool> TrojanMap::Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q)
 {
   std::vector<bool> ans(q.size());
-<<<<<<< HEAD
   for (int i=0;i<q.size();i++){
     double volume=q[i].first;
     std::string start_id=GetID(q[i].second[0]);
@@ -992,12 +991,6 @@ bool TrojanMap::pathbool(const std::string& start_id, const std::string& end_id,
   }
   return false;
 }
-=======
-  
-  return ans;
-}
-
->>>>>>> 8917b8cf2967f31b315e4ad2914495174ec1ebf3
 /**
  * CreateGraphFromCSVFile: Read the map data from the csv file
  * We have provided the code for you. Please do not need to change this function.
