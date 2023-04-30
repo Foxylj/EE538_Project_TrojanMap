@@ -822,7 +822,7 @@ TEST(Queries, MutipleDirections) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(Queries, UNKNOW_DESTINATION) {
+TEST(Queries, UNKNOW_DESTINATIONS) {
   TrojanMap m;
   std::vector<std::pair<double, std::vector<std::string>>> input {{0.05, {"Target", "Ralphs"}},
                                                                   {0.01, {"Ralphs", "Target"}},
