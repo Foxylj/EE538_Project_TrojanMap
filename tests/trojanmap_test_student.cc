@@ -801,30 +801,34 @@ TEST(TrojanMapTest, ShortestPath3) {
   EXPECT_EQ(expected_output, actual_output);
 }
 
-// TEST(TrojanMapTest, OPT3_TEST) {
-//   TrojanMap m;
-  
-//   std::vector<std::string> input{"6819019976","6820935923","122702233","8566227783","8566227656","6816180153","1873055993","7771782316"}; // Input location ids 
-//   auto result = m.TravelingTrojan_3opt(input);
-//   std::cout << "My path length: "  << result.first << "miles" << std::endl; // Print the result path lengths
-//   std::vector<std::string> gt{"6819019976","1873055993","8566227656","122702233","8566227783","6816180153","7771782316","6820935923","6819019976"}; // Expected order
-//   std::cout << "GT path length: "  << m.CalculatePathLength(gt) << "miles" << std::endl; // Print the gt path lengths
-//   bool flag = false;
-//   if (!result.second.empty() && gt == result.second.back()) // clockwise
-//     flag = true;
-//   std::reverse(gt.begin(),gt.end()); // Reverse the expected order because the counterclockwise result is also correct
-//   if (!result.second.empty() && gt == result.second.back())
-//     flag = true;
-  
-//   EXPECT_EQ(flag, true);
-// }
-TEST(TrojanMapTest, Queries) {
+TEST(Queries, Stay_At_Starting_Point) {
+  TrojanMap m;
+  std::vector<std::pair<double, std::vector<std::string>>> input {
+                                                                  {999, {"Target", "Target"}}};
+  auto actual = m.Queries(input);
+  std::vector<bool> expected {true};
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(Queries, MutipleDirections) {
+  TrojanMap m;
+  std::vector<std::pair<double, std::vector<std::string>>> input {
+                                                                  {0.5, {"Normandie & Exposition 1", "Washington & Westmoreland"}},
+                                                                  {0.1,{"Flower Street & Washington Boulevard","Normandie & Exposition 1"}},
+                                                                  {999,{"Normandie & Exposition 1","Vermont & Jefferson"}}
+                                                                  };
+  auto actual = m.Queries(input);
+  std::vector<bool> expected {true,true,true};
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(Queries, UNKNOW_DESTINATION) {
   TrojanMap m;
   std::vector<std::pair<double, std::vector<std::string>>> input {{0.05, {"Target", "Ralphs"}},
                                                                   {0.01, {"Ralphs", "Target"}},
-                                                                  {0.02, {"KFC", "Target"}},
-                                                                  {999, {"dummy", "dummy"}}};
+                                                                  {999, {"KFC", "Ralphs"}},
+                                                                  {999, {"Target", "Targ"}}};
   auto actual = m.Queries(input);
-  std::vector<bool> expected {true, false, false, false};
+  std::vector<bool> expected {true, false, true, false};
   EXPECT_EQ(expected, actual);
 }
