@@ -636,7 +636,54 @@ TEST(TrojanMapTest, GetLocationRegex7) {
 }
 //-----
 
+TEST(ReadDependenciesFromCSVFileTest, CORRECT_PATH) {
+  TrojanMap m;
+  std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/home/root123/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv");//Linux
+  // std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/Users/lijingyang/Desktop/Course/USC/EE/EE538/Project/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv"); //MacOS
+  std::vector<std::vector<std::string>> expected_dependencies = {{"Chinese Street Food", "City Tacos"},
+    {"City Tacos", "Chase"},
+    {"Chase", "Chevron 2"},
+    {"Chevron 2", "Cognoscenti Coffee Roastery"},
+    {"Cognoscenti Coffee Roastery", "Chucks Chicken & Waffles"},
+    {"Chucks Chicken & Waffles", "Cheebos Burger"},
+    {"Cheebos Burger", "Crosswalk 1"},
+    {"Crosswalk 1", "CAVA"},
+    {"CAVA", "Cosmo Plaza"},
+    {"Cosmo Plaza", "California Family Pharmacy"},
+    {"California Family Pharmacy", "Chick-fil-A"},
+    {"Chick-fil-A", "Chevron 1"},
+    {"Chevron 1", "Cover the Homeless Ministry"},
+    {"Cover the Homeless Ministry", "Church of Christ"},
+    {"Church of Christ", "Callejon All Star"},
+    {"Callejon All Star", "Corwin Denney Research Center"},
+    {"Corwin Denney Research Center", "Crosswalk"},
+    {"Crosswalk", "Carson Center"},
+    {"Carson Center", "Chipotle"},
+    {"Chipotle", "CorePower Yoga"}};
+  EXPECT_EQ(dependencies, expected_dependencies);
+}
 
+TEST(ReadDependenciesFromCSVFileTest, WRONG_PATH) {
+  TrojanMap m;
+  std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/home/root123/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv");//Linux
+  // std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/Users/lijingyang/Desktop/Course/USC/EE/EE538/Project/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv"); //MacOS
+  std::vector<std::vector<std::string>> expected_dependencies = {{"Crosswalk 1", "CAVA"},
+                                                                  {"CAVA", "Cosmo Plaza"},
+                                                                  {"Cosmo Plaza", "California Family Pharmacy"}};
+  EXPECT_NE(dependencies, expected_dependencies);
+}
+
+TEST(ReadDependenciesFromCSVFileTest, WRONG_OUTPUT) {
+  TrojanMap m;
+  std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/home/root123/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv");//Linux
+  // std::vector<std::vector<std::string>> dependencies = m.ReadDependenciesFromCSVFile("/Users/lijingyang/Desktop/Course/USC/EE/EE538/Project/spring2023_trojanmap-Foxylj/input/topologicalsort_dependencies.csv"); //MacOS
+  std::vector<std::vector<std::string>> expected_dependencies = {{"Cover the Homeless Ministry", "Church of Christ"},
+                                                                  {"Church of Christ", "Callejon All Star"},
+                                                                  {"Callejon All Star", "Corwin Denney Research Center"}};
+  
+  EXPECT_NE(dependencies, expected_dependencies);
+  
+}
 
 //-----
 // Test case 1: Valid topological sorting
