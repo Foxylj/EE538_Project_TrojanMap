@@ -627,7 +627,7 @@ TEST(TrojanMapTest, GetLocationRegex5) {
   EXPECT_EQ(expected_set, actual_set);
 }
 
-TEST(TrojanMapTest, GetLocationRegex6) {
+TEST(TrojanMapTest, GetLocationRegex7) {
   TrojanMap m;
   std::set<std::string> expected_set;
   auto actual = m.GetLocationRegex(std::regex(".*building.*"));
