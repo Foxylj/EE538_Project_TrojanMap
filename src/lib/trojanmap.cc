@@ -498,6 +498,16 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   std::pair<double, std::vector<std::vector<std::string>>> records;
   std::sort(location_ids.begin()+1, location_ids.end());
   records.first = 99999999999999;
+  int size = location_ids.size();
+  if(size == 2){
+    records.first = CalculatePathLength(location_ids);
+    records.second.push_back(location_ids);
+    return records;
+  }else if(size <= 1){
+    records.first = 0;
+    records.second.push_back(location_ids);
+    return records;
+  }
   std::vector<std::string> compute_locs;
   do{
     location_ids.push_back(location_ids[0]);
@@ -553,7 +563,18 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   std::vector<std::vector<std::string>> result;
   std::vector<std::string> current_res;
   double distance = 9999999;
+  int size = location_ids.size();
   std::sort(location_ids.begin()+1,location_ids.end());
+  if(size == 2){
+    distance = CalculatePathLength(location_ids);
+    records.first = distance;
+    records.second.push_back(location_ids);
+    return records;
+  }else if(size <= 1){
+    records.first = 0;
+    records.second.push_back(location_ids);
+    return records;
+  }
   // std::reverse(location_ids.begin(),location_ids.end());
   BackTrackingHelper(location_ids,result,distance,current_res);
   current_res = result.back();
@@ -571,12 +592,22 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
   // std::sort(location_ids.begin()+1, location_ids.end());
-  location_ids.push_back(location_ids[0]);
-  double distance = CalculatePathLength(location_ids);
+  double distance = 0;
   int loop = 0;
   int index1 = 0;
   int index2 = 0;
-  bool end = true;  
+  int size = location_ids.size();
+  if(size == 2){
+    records.first = CalculatePathLength(location_ids);
+    records.second.push_back(location_ids);
+    return records;
+  }else if (size <= 1){
+    records.first = 0;
+    records.second.push_back(location_ids);
+    return records;
+  }
+  location_ids.push_back(location_ids[0]);
+  distance = CalculatePathLength(location_ids);
   while (loop<300)
   {
     index1 = (rand() % (location_ids.size())); 
@@ -606,37 +637,63 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
     std::vector<std::string> location_ids)
 {
   std::pair<double, std::vector<std::vector<std::string>>> records;
-  // std::sort(location_ids.begin()+1, location_ids.end());
-  location_ids.push_back(location_ids[0]);
-  double distance = CalculatePathLength(location_ids);
+  std::sort(location_ids.begin()+1, location_ids.end());
+  // location_ids.push_back(location_ids[0]);
+  double distance = 0;
   int loop = 0;
   int index1 = 0;
   int index2 = 0;
   int index3 = 0;
-  bool end = true;  
-  while (loop<300)
+  int size = location_ids.size();
+  if(size == 2){
+    records.first = CalculatePathLength(location_ids);
+    records.second.push_back(location_ids);
+    return records;
+  }else if(size <= 1){
+    records.first = 0;
+    records.second.push_back(location_ids);
+    return records;
+  }
+  distance = CalculatePathLength(location_ids);
+  while (loop < 300)
   {
-    index1 = (rand() % (location_ids.size())-2); 
-    index2 = (rand() % (location_ids.size())-index1 -1) + index1 +1;
-    index3 = (rand() % (location_ids.size())-index2 -1) + index2 +1;
-    if(index2 != 0 && index2<index1){
-      continue;
+    index1 = (rand() % (location_ids.size()));
+    index2 = (rand() % (location_ids.size()));
+    index3 = (rand() % (location_ids.size()));
+    
+    if (index1 > index2)
+    {
+      std::swap(index1, index2);
     }
-    if(index1 >= 1 && index2 <= location_ids.size()-2 && index2 >=1 && index1< index2){
-      std::iter_swap(location_ids.begin()+index1,location_ids.begin()+index2);
-      std::iter_swap(location_ids.begin()+index2,location_ids.begin()+index3);
-      double tmp = CalculatePathLength(location_ids);
-      if(tmp < distance){
+    if (index2 > index3)
+    {
+      std::swap(index2, index3);
+    }
+    if (index1 > index2)
+    {
+      std::swap(index1, index2);
+    }
+
+    if (index1 >= 1 && index2 <= location_ids.size()-2 && index3 <= location_ids.size()-2 &&
+        index2 >= 1 && index1 < index2 && index2 < index3)
+    {
+      std::vector<std::string> new_route = location_ids;
+      std::reverse(new_route.begin() + index1, new_route.begin() + index2);
+      std::reverse(new_route.begin() + index2, new_route.begin() + index3);
+
+      double tmp = CalculatePathLength(new_route);
+      if (tmp < distance)
+      {
         distance = tmp;
-      }
-      else{
-        continue;
+        location_ids = new_route;
       }
     }
     loop++;
-    records.second.push_back(location_ids);
   }
+  location_ids.push_back(location_ids[0]);
+  distance = CalculatePathLength(location_ids);
   records.first = distance;
+  records.second.push_back(location_ids);
   return records;
 }
 
