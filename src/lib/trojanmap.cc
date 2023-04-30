@@ -525,10 +525,9 @@ void TrojanMap::BackTrackingHelper(const std::vector<std::string> &location_ids,
     std::vector<std::vector<std::string>> &result, double &distance, std::vector<std::string> current_result)
 {
   if(current_result.size() == location_ids.size()){
-    // std::reverse(current_result.begin(),current_result.end());
-    // current_result.insert(current_result.begin(),location_ids[location_ids.size()-1]);
+
     double tmp = CalculatePathLength(current_result);
-    if(tmp < distance){
+    if(tmp < distance && *current_result.begin() ==location_ids[0]){
       result.push_back(current_result);
       distance = tmp;
     }
