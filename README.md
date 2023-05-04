@@ -215,7 +215,7 @@ Example:
 Input: "Chi" \
 Output: ["Chick-fil-A", "Chipotle", "Chinese Street Food"]
 
-Example:
+Example 1:
 
 ```shell
 **************************************************************
@@ -239,7 +239,40 @@ Chevron
 Time taken by function: 2 ms
 ```
 
-- What is the runtime of your algorithm? 
+Example 2:
+```shell
+**************************************************************
+* 1. Autocomplete                                             
+**************************************************************
+
+Please input a partial location:Bank of A
+*************************Results******************************
+Bank of America
+**************************************************************
+Time taken by function: 21 ms
+```
+
+Example 3:
+```shell
+**************************************************************
+* 1. Autocomplete                                             
+**************************************************************
+
+Please input a partial location:The
+*************************Results******************************
+The Hoxton
+The Mirage
+The Peoples Independent Church of Christ
+The Coffee Bean & Tea Leaf
+The Barber Shop
+The Caribbean Apartments
+The Sonshine Shop Thrift Store
+The Pearl
+The Row House
+**************************************************************
+Time taken by function: 30 ms
+```
+- What is the runtime of your algorithm? O(n)
 - (Optional) Can you do it faster than `O(n)`?
 
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
@@ -250,7 +283,9 @@ std::pair<double, double> GetPosition(std::string name);
 
 Given a location name, return the latitude and longitude. There are no duplicated location names. You should mark the given locations on the map. If the location does not exist, return (-1, -1). The algorithm is case-sensitive.
 
-Example:
+Time complexity:O(n)
+
+Example 1:
 
 Input: "Target" \
 Output: (34.0257016, -118.2843512)
@@ -264,13 +299,40 @@ Please input a location:Target
 *************************Results******************************
 Latitude: 34.0257 Longitude: -118.284
 **************************************************************
-Time taken by function: 1 ms
+Time taken by function: 20 ms
 ```
-
 <p align="center"><img src="img/Target.png" alt="Target" width="500"/></p>
 
+Example 2:
+```shell
+**************************************************************
+* 2. Find the location                                        
+**************************************************************
+
+Please input a location:The Row House
+*************************Results******************************
+Latitude: 34.0264 Longitude: -118.279
+**************************************************************
+Time taken by function: 31 ms
+```
+<p align="center"><img src="img/The Row House.png" alt="The Row House" width="500"/></p>
+
+Example 3:
+```shell
+**************************************************************
+* 2. Find the location                                        
+**************************************************************
+
+Please input a location:Trojan Grounds (Starbucks)
+*************************Results******************************
+Latitude: 34.0213 Longitude: -118.282
+**************************************************************
+Time taken by function: 34 ms
+```
+<p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
+Time Complexity:O(mn) m:length of name1, n:length of name2
 ```c++
 int CalculateEditDistance(std::string name1, std::string name2);
 ```
@@ -287,7 +349,7 @@ If the exact match is found, it will be shown on the map. Otherwise, the map wil
 For example, if I type *Rolphs*, I should get a warning like "Did you mean *Ralphs* instead of *Rolphs*?". 
 
 Write a dynamic programming solution to calculate edit distance. 
-
+Time Complexity:O(Nmn)
 ```c++
 std::string FindClosestName(std::string name);
 ```
@@ -304,7 +366,7 @@ Output: 1
 
 In the user interface of your program, you should show the names that have the minimum edit distance to the name that the user entered.
 
-Example:
+Example 1:
 
 Input: "Rolphs"\
 Output: "Ralphs"
@@ -320,11 +382,42 @@ No matched locations.
 Did you mean Ralphs instead of Rolphs? [y/n]y
 Latitude: 34.0318 Longitude: -118.291
 **************************************************************
-Time taken by function: 2 ms
+Time taken by function: 20 ms
+```
+
+Example 2:
+
+```shell
+**************************************************************
+* 2. Find the location                                        
+**************************************************************
+
+Please input a location:Hand
+*************************Results******************************
+No matched locations.
+Did you mean Honda instead of Hand? [y/n]y
+Latitude: 34.0377 Longitude: -118.269
+**************************************************************
+Time taken by function: 19 ms
+```
+
+Example 3:
+```shell
+**************************************************************
+* 2. Find the location                                        
+**************************************************************
+
+Please input a location:Hon
+*************************Results******************************
+No matched locations.
+Did you mean Honda instead of Hon? [y/n]y
+Latitude: 34.0377 Longitude: -118.269
+**************************************************************
+Time taken by function: 17 ms
 ```
 
 ## Item 3: Get All Categories (Phase 2)
-
+Time Complexity:O(mn)
 ```c++
 std::vector<std::string> GetAllCategories();
 ```
@@ -332,9 +425,15 @@ std::vector<std::string> GetAllCategories();
 Some of the locations have category types (`attributes` field in `data.csv` file). 
 
 In this section, your program should print all available categories among all existing categories in the map. There should be no duplicates in the output.
+Example 1:
+```shell
+**************************************************************
+* 3. Find all location categories                             
+**************************************************************
 
-## Item 4: Get All Locations In A Category (Phase 2)
-
+"bank", "beauty", "restaurant", "clothes", "fast_food", "car", "parking_entrance", "fuel", "car_repair", "hotel", "optician", "post_box", "place_of_worship", "cafe", "theatre", "attraction", "social_facility", "library", "pharmacy", "convenience", "museum", "tobacco", "bicycle_rental", "school", "copyshop", "supermarket", "artwork", "mobile_phone", "post_office", "shoes", "department_store", "driving_school", "hairdresser", "music", "confectionery", "bar", "police", "beverages", "parking", "food_court", "fountain", "childcare", "car_wash", "shoe_repair", "clinic", "yoga", "bicycle", "yes", "gallery", "bus_station", "parcel_locker", "dentist", "marketplace", "bakery", "charging_station", "hospital", "fabric", "skate", TrojanMap Menu
+**************************************************************
+```
 ```c++
 std::vector<std::string> GetAllLocationsFromCategory(std::string category);
 ```
@@ -370,12 +469,21 @@ Please report and compare the time spent by these algorithms.
 | Point A to Point B      | Dijkstra | Bellman Ford| Bellman Ford optimized|
 | -------------------- | ----------- |-------|-----|
 |                      |  t1         | t2    |   t3  |
-|Chase->KFC             |   370ms      | 55ms     |
-|Chase->Ralphs    |    2851ms       |  559ms   |
-|  Target->Ralphs           |    1783ms      |  129ms   |
-|  KFC->Shell           |      5180ms    |   624ms  |
-|  Chase->Shell           |    1913ms      | 478ms    |
-|  Chase->Honda           |   3291ms       |  858ms   |
+|Chase->KFC             |   52ms      | 68ms     |
+|Chase->Bank of America             | 66ms        |68ms  |
+|KFC->Bank of America             | 72ms        |83ms  |
+|Honda->KFC             | 74ms        |304ms  |
+|Holbox->Target             |85ms        |358ms  |
+|Honda->Ralphs             | 100ms        |301ms  |
+|Honda->Target             | 111ms        |410ms  |
+|Honda->Bank of America             | 120ms        |473ms  |
+|Target->Shell             | 134ms        |524ms  |
+|Honda->Shell             | 145ms        |823ms  |
+|Chase->Ralphs    |    129ms       |  501ms   |
+|  Target->Ralphs           |    103ms      |  130ms   |
+|  KFC->Shell           |      157ms    |   595ms  |
+|  Chase->Shell           |    159ms      | 415ms    |
+|  Chase->Honda           |   135ms       |  718ms   |
 
 Your table should show have at least 15 rows.
 
@@ -433,6 +541,97 @@ Output: false
 ```
 Here we use a square area inside USC campus as our subgraph
 <p align="center"><img src="img/cycle2.png" alt="TSP" width="500"/></p>
+
+Example 3:
+```shell
+Input: square = {-118.3004, -118.3001573, 34.03456733, 34.0}
+Output: true
+```
+Here we use the whole original graph as our subgraph. 
+<p align="center"><img src="img/cycle3.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.3004000
+Please input the right bound longitude(between -118.320 and -118.250):-118.3001573
+Please input the upper bound latitude(between 34.000 and 34.040):34.0346733
+Please input the lower bound latitude(between 34.000 and 34.040):34.0
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 37 ms
+```
+
+Example 4:
+
+Input: square = {-118.290, -118.285, 34.038, 34.01}
+Output: true
+
+Here we use the whole original graph as our subgraph. 
+<p align="center"><img src="img/cycle4.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.290
+Please input the right bound longitude(between -118.320 and -118.250):-118.285
+Please input the upper bound latitude(between 34.000 and 34.040):34.038
+Please input the lower bound latitude(between 34.000 and 34.040):34.01
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 525 ms
+```
+
+Example 5:
+Input: square = {-118.299, -118.27, 34.03, 34.02}
+Output: true
+
+Here we use the whole original graph as our subgraph. 
+<p align="center"><img src="img/cycle5.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.299
+Please input the right bound longitude(between -118.320 and -118.250):-118.27
+Please input the upper bound latitude(between 34.000 and 34.040):34.03
+Please input the lower bound latitude(between 34.000 and 34.040):34.02
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 1020 ms
+```
+
+Example 6:
+
+Input: square = {-118.300, -118.288, 34.02, 34.03}
+Output: false
+
+Here we use the whole original graph as our subgraph. 
+<p align="center"><img src="img/cycle6.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.300
+Please input the right bound longitude(between -118.320 and -118.250):-118.288
+Please input the upper bound latitude(between 34.000 and 34.040):34.02
+Please input the lower bound latitude(between 34.000 and 34.040):34.03
+*************************Results******************************
+there exist no cycle in the subgraph 
+**************************************************************
+Time taken by function: 0 ms
+```
 
 ```shell
 5
@@ -520,6 +719,47 @@ Time taken by function: 2 ms
 
 In the user interface, we read the locations and dependencies from `topologicalsort_dependencies.csv` and `topologicalsort_locations.csv` to modify your input there.
 
+Example1:
+```shell
+*************************Results******************************
+Topological Sorting Results:
+Ralphs
+Bank of America
+KFC
+Chick-fil-A
+**************************************************************
+Time taken by function: 0 ms
+```
+<p align="center"><img src="img/TopologicalSort1.png" alt="TSP" width="500"/></p>
+
+Example2:
+```shell
+*************************Results******************************
+Topological Sorting Results:
+Ralphs
+Bank of America
+Target
+Chick-fil-A
+KFC
+**************************************************************
+Time taken by function: 0 ms
+```
+<p align="center"><img src="img/TopologicalSort2.png" alt="TSP" width="500"/></p>
+
+Example3:
+```shell
+*************************Results******************************
+Topological Sorting Results:
+Honda
+Bank of America
+Target
+Chick-fil-A
+KFC
+Ralphs
+**************************************************************
+Time taken by function: 0 ms
+```
+<p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
 
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
@@ -562,39 +802,47 @@ We will randomly select N points in the map and run your program.
 In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
 
 Please input the number of the places:8
-"8201681442","6197156485","7786565237","6820972477","6807600525","1832234142","6819144993","1873055949",
+"6807927343","1614922716","6790236614","304903656","3659478911","2873934661","7811845041","703503312",
 Calculating ...
 *************************Results******************************
 TravelingTrojan_Brute_force
-"8201681442","1873055949","6197156485","1832234142","6807600525","6819144993","7786565237","6820972477","8201681442",
-The distance of the path is:7.94756 miles
+"6807927343","304903656","6790236614","703503312","2873934661","7811845041","1614922716","3659478911","6807927343",
+The distance of the path is:10.2329 miles
 **************************************************************
-You could find your animation at src/lib/output.avi.          
-Time taken by function: 59 ms
+You could find your animation at src/lib/output0.avi.          
+Time taken by function: 215 ms
 
 Calculating ...
 *************************Results******************************
 TravelingTrojan_Backtracking
-"8201681442","6820972477","7786565237","6819144993","6807600525","1832234142","6197156485","1873055949","8201681442",
-The distance of the path is:7.94756 miles
+"6807927343","304903656","3659478911","1614922716","7811845041","2873934661","703503312","6790236614","6807927343",
+The distance of the path is:10.6679 miles
 **************************************************************
-You could find your animation at src/lib/output_backtracking.avi.
-Time taken by function: 20 ms
+You could find your animation at src/lib/output0_backtracking.avi.
+Time taken by function: 736 ms
 
 Calculating ...
 *************************Results******************************
 TravelingTrojan_2opt
-"8201681442","1873055949","6197156485","1832234142","6807600525","6819144993","7786565237","6820972477","8201681442",
-The distance of the path is:7.94756 miles
+"6807927343","3659478911","304903656","6790236614","703503312","2873934661","7811845041","1614922716","6807927343",
+The distance of the path is:11.3332 miles
 **************************************************************
-You could find your animation at src/lib/output_2opt.avi.     
-Time taken by function: 0 ms
+You could find your animation at src/lib/output0_2opt.avi.     
+Time taken by function: 2 ms
 ```
 
 <p align="center"><img src="img/TSP.png" alt="TSP" width="500"/></p>
 
 <p align="center"><img src="img/output.gif" alt="TSP videos" width="500"/></p>
 
+| nums of nodes     | Brute_force | Backtracking| 2opt|
+| -------------------- | ----------- |-------|-----|
+|10             |14629ms|79056ms|2ms
+|9             |1582ms|7325ms|1ms
+|8             |   215ms      | 736ms     |2ms
+|7             | 50ms        |85ms  |1ms
+|6             | 5ms        |13ms  |1ms
+|5             | 0ms        |0ms  |1ms
 
 ## Item 10: Find Nearby (Phase 3)
 
@@ -622,25 +870,47 @@ All attributes:
 
 Please report and compare the time spent by this algorithm and show the points on the map.
 
+Example1:
 ```shell
 **************************************************************
-* 10. Find Nearby                                    
+* 10. Find Nearby                                              
 **************************************************************
 
-Please input the attribute:supermarket
+Please input the attribute:bank
 Please input the locations:Ralphs
 Please input radius r:10
 Please input number k:10
 *************************Results******************************
 Find Nearby Results:
-1 Trader Joes
-2 Cal Mart Beer & Wine Food Store
-3 Food 4 Less
+1 USC Credit Union
+2 Bank of America
+3 Chase
 **************************************************************
-Time taken by function: 5 ms
+Time taken by function: 60 ms
 ```
+<p align="center"><img src="img/NearBby2.png" alt="Nearby2" width="500"/></p>
 
-<p align="center"><img src="img/Nearby.png" alt="Nearby" width="500"/></p>
+
+Example2:
+```shell
+**************************************************************
+* 10. Find Nearby                                              
+**************************************************************
+
+Please input the attribute:bank
+Please input the locations:Target
+Please input radius r:10
+Please input number k:10
+*************************Results******************************
+Find Nearby Results:
+1 Bank of America
+2 USC Credit Union
+3 Chase
+**************************************************************
+Time taken by function: 78 ms
+```
+<p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
+
 
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
@@ -651,6 +921,8 @@ std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &locatio
 ```
 
 Please report and compare the time spent by this algorithm and show the points on the map.
+
+Example1:
 
 ```shell
 **************************************************************
@@ -665,6 +937,30 @@ Time taken by function: 233 ms
 ```
 
 <p align="center"><img src="img/all.png" alt="All" width="500"/></p>
+
+Example2: Ralphs->KFC->Chick-fil-A->Bank of America->Target->Honda
+```shell
+**************************************************************
+* 11. Shortest Path to Visit all Nodes                        
+**************************************************************
+
+Please input the locations filename:/home/root123/spring2023_trojanmap-WenzhePan/input/topologicalsort_locations.csv
+*************************Results******************************
+"5695174696","8898278793","4687981681","6788402762","5344542585","122665888","5344542584","7852039556","122665893","6816950650","6816950651","122665895","7863404959","7863404958","7863404960","7863404957","7863404956","7863404955","7863404954","7863404953","7863404952","7863404951","7863404950","7863404949","7863404948","7863404947","4012864457","7362236512","123241952","7362236521","123241955","123241958","6787830199","6787830192","123161907","4011837239","6817111153","8501336167","1832234141","4258846991","1832234142","6816193810","1832234144","122454252","6816959863","6816959869","5680944620","5680944619","6813565325","3398621871","6813565323","3403035498","6816193705","5556118325","5680945525","7693467754","3403035499","6813513563","4147565192","4835551080","3403034587","4835551089","8397480749","3403034588","6813565312","4835551101","4835551097","4835551100","3088547686","4835551100","4835551099","4835551098","6813565307","6813565306","6813565305","6813565295","6813565296","3402814832","4835551107","6813379403","6813379533","3402814831","6813379501","3402810298","6813565327","3398574883","6813379494","6813379495","6813379544","6813379545","6813379536","6813379546","6813379547","6814916522","6814916523","1732243620","4015372469","4015372463","6819179749","1732243544","6813405275","348121996","348121864","6813405280","1472141024","6813411590","216155217","6813411589","1837212103","1837212101","6814916516","6814916515","6820935910","4547476733","6820935910","6814916515","6814916516","1837212101","1837212103","6813411589","216155217","6813411590","1472141024","6813405280","348121864","348121996","6813405275","1732243544","6819179749","4015372463","4015372469","1732243620","6814916523","6813379550","4399697300","4399697301","4399697303","5580881629","122844997","2738332817","1673644724","2738332818","1673645147","123153544","5580883117","1472141961","2776870269","6814770345","5580882852","2776870272","6814770342","4536993735","3431300454","6814770351","3432332948","4536989636","3433701978","6818390136","6813379491","3443310465","4536989640","4536989637","6813379432","3402887075","6813379464","6813379465","6813379466","6813379467","6813360936","6813360951","6813379420","6813360952","6813360954","6814620882","6813360960","5237417651","6813360960","6813379480","6813360961","6813379584","6814769289","5237417650","6814769289","6813379584","6813379479","4015372485","7071032399","4015372486","6813405232","122719216","6813405229","4015372487","4015372488","6813405266","6813416159","122814447","4015377689","4015377690","6816193698","6807937306","6807937309","6804883323","6816193696","544693739","4015377691","6816193694","6816193693","6816193692","4015442011","6787470576","6816193770","123230412","452688931","452688933","6816193774","123408705","6816193777","452688940","123318563","6813416129","6813416130","7645318201","6813416131","8410938469","6805802087","4380040167","4380040158","4380040154","2578244375",
+The distance of the path is:3.50572 miles
+Time taken by function: 236335 ms
+```
+
+<p align="center"><img src="img/all2.png" alt="All" width="500"/></p>
+
+Example3:Ralphs->KFC->Chick-fil-A->Bank of America->Target 
+```shell
+*************************Results******************************
+"4547476733","6820935910","6814916515","6814916516","1837212101","1837212103","6813411589","216155217","6813411590","1472141024","6813405280","348121864","348121996","6813405275","1732243544","6819179749","4015372463","4015372469","1732243620","6814916523","6814916522","6813379547","6813379546","6813379536","6813379545","6813379544","6813379495","6813379494","3398574883","6813565327","3402810298","6813379501","3402814831","6813379533","6813379403","4835551107","3402814832","6813565296","6813565295","6813565305","6813565306","6813565307","4835551098","4835551099","4835551100","3088547686","4835551100","4835551097","4835551101","4835551096","2613117890","2613117915","4835551105","6813565334","2613117867","6787803635","6807905595","6813379406","2613117879","3398578893","3398574892","6813565290","3398578898","6813379398","6813379505","6813379519","4399698005","6813379511","6813379513","6813379512","4399698004","3398582608","4399698007","3398582607","6813379481","6813379480","6813360960","5237417651","6813360960","6813379480","6813360961","6813379584","6814769289","5237417650","6814769289","6813379584","6813379479","4015372485","7071032399","4015372486","6813405232","122719216","6813405229","4015372487","4015372488","6813405266","6813416159","122814447","4015377689","4015377690","6816193698","6807937306","6807937309","6804883323","6816193696","544693739","4015377691","6816193694","6816193693","6816193692","4015442011","6787470576","6816193770","123230412","452688931","452688933","6816193774","123408705","6816193777","452688940","123318563","6813416129","6813416130","7645318201","6813416131","8410938469","6805802087","4380040167","4380040158","4380040154","2578244375",
+The distance of the path is:2.288 miles
+Time taken by function: 26272 ms
+```
+<p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
 
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
 
@@ -732,7 +1028,7 @@ For the thrid query, it is possible to travel from 1 to 4 using a car with a gas
 
 Another example where the inputs are read from your program's UI:
 We use the whole map near USC as the graph! For example, if we want to start from Target to Ralphs, there are a lot of nodes on the path. We want to make sure that the distance between any two nodes on the path is smaller than the size of the gas tank! For dummy, it means if the location does not exist, we should return false.
-
+Example1:
 ```shell
 **************************************************************
 * 12. Check Exist of Path with Constrain                      
@@ -761,6 +1057,36 @@ From KFC to Target with 0.02 gallons of gas tank: No
 From dummy to dummy with 999 gallons of gas tank: No
 **************************************************************
 Time taken by function: 239 ms
+```
+Example2:
+```shell
+**************************************************************
+* 12. Check Exist of Path with Constrain                      
+**************************************************************
+
+Please input the start location:Target
+Please input the destination:Ralphs
+Please input the volumn of the gas tank:0.1
+More Query? (y/n)y
+Please input the start location:Ralphs
+Please input the destination:Target
+Please input the volumn of the gas tank:0.01
+More Query? (y/n)y
+Please input the start location:Honda
+Please input the destination:Target
+Please input the volumn of the gas tank:0.6
+More Query? (y/n)y
+Please input the start location:Ralphs
+Please input the destination:Honda 
+Please input the volumn of the gas tank:0.5
+More Query? (y/n)n
+*************************Results******************************
+From Target to Ralphs with 0.1 gallons of gas tank: Yes
+From Ralphs to Target with 0.01 gallons of gas tank: No
+From Honda to Target with 0.6 gallons of gas tank: Yes
+From Ralphs to Honda with 0.5 gallons of gas tank: Yes
+**************************************************************
+Time taken by function: 518095 ms
 ```
 
 ## Reporting Runtime:
