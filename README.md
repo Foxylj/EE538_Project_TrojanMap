@@ -1044,14 +1044,14 @@ Time taken by function: 2 ms
 
 
 
-| nums of nodes     | Brute_force | Backtracking| 2opt|
-| -------------------- | ----------- |-------|-----|
-|10             |14629ms|79056ms|2ms
-|9             |1582ms|7325ms|2ms
-|8             |   215ms      | 736ms     |2ms
-|7             | 50ms        |85ms  |1ms
-|6             | 5ms        |13ms  |1ms
-|5             | 0ms        |0ms  |1ms
+| nums of nodes     | Brute_force | Backtracking| 2opt|3opt
+| -------------------- | ----------- |-------|-----|-----|
+|10             |14629ms|79056ms|2ms|2ms
+|9             |1582ms|7325ms|2ms|2ms
+|8             |   215ms      | 736ms     |2ms|1ms
+|7             | 50ms        |85ms  |1ms|1ms
+|6             | 5ms        |13ms  |1ms|1ms
+|5             | 0ms        |0ms  |1ms|1ms
 
 ---
 ---
