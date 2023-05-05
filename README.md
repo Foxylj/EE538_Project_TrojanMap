@@ -798,7 +798,7 @@ Time taken by function: 0 ms
 std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_names,
                                             std::vector<std::vector<std::string>> &dependencies);
 ```
-### **Time Complexity:O(n^2)**
+### **Time Complexity:O(nm) n:size of location_names, m:size of dependencies**
 
 _____________________
 In Topological Sort function, we traversal "dependencies" to find the indices d_1 and d_2 of the two locations in the result vector. If the index d_1 is greater than d_2, we can get that the current order of locations are not satisfy the dependencies, for this situation, we will switch the locaiton in the vector "result" and setting "finish" to false to indicate there is at least one location's place in order do not satisfy the dependencies. After the loop, we could get the locations in expected order. 
@@ -909,22 +909,84 @@ We will use the following algorithms:
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Brute_force(
       std::vector<std::string> location_ids);
 ```
-Time Complexity: O(n)
+_______________________________
+
+In TravelingTrojan_Brute_force function, we use Brute-force algrothim. 
+
+First, we sort the "location_ids", and use std::next_permutation to get all the possible permutations. 
+
+If the location's number is less than 3, then we return the result directly.
+
+We use a do while loop to traversal all possible permutations with std::next_permutation function. Here are operations we do in the loop:
+
+1.We push the start location into the location_ids to generate a loop.
+
+2.We Caculate the current path's distance and compare it with the distance stored in the "records". "records" 's initialized value is 99999999999999999.
+
+3.if current path's length is less than records', we replace the current path and distance into the records. After one loop, we pop back the start location at the back of location list.
+
+4.After some loops, we finally get the best path with shortest distance.
+_______________________________
+### **Time Complexity: O(n*n!)**
+
 
 - Brute-force enhanced with early backtracking
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Backtracking(
       std::vector<std::string> location_ids);
 ```
-Time Complexity:O(n)
+____________________________________
+
+In TravelingTrojan_Backtracking function, we use backtracking algrothim.
+
+First, we use sort the "location_ids", and check if the number of location_ids's size is less than 3, then we return the result directly.
+
+We use a recursive function to back trace the best path.
+
+1.First, we check if the "current_result"'s size is equal with the "location_ids"'s size. If they are euqal. Then we check if the current path is less than result's path's distance, if yes, we store the current result and quit the function, it shows that we have reach the best the result.
+
+2.We traversal "location_ids" to get all permutations of path and do the recursive.
+___________________________________
+### **Time Complexity:O(n!)**
 
 - [2-opt Heuristic](https://en.wikipedia.org/wiki/2-opt). Also see [this paper](http://cs.indstate.edu/~zeeshan/aman.pdf)
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_2opt(
       std::vector<std::string> location_ids);
 ```
-Time Complexity:O(1)
+__________________________________
 
+In TravelingTrojan_2opt function, we use 2opt algorthim. we first check the size of input location_ids, if its size is less than 2, we return with 0 distance and origin locations_ids.
+If its size is 2, we return current path with its distance.
+
+Otherwise, we do the while loop for 300 times. In loop, we get two index with random value within size of locations_ids. Then we swap tow elements with two index, and calculate the distance of current path, if it is less than the path in current records, we restore the path with its distance into the records.
+
+After 300 loops, we might get the shortest path.
+__________________________________
+### **Time Complexity:O(n)**
+
+
+```c++
+std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTrojan_3opt(
+    std::vector<std::string> location_ids);
+```
+### **Time Complexity:O(n)**
+
+_______________________________
+
+In TravelingTrojan_3opt function, we use 3opt algrothim. we first check the size of input location_ids, if its size is less than 2, we return with 0 distance and origin locations_ids.
+If its size is 2, we return current path with its distance.
+
+Otherwise, we do the while loop for 300 times. In loop, we get three index with random value within size of locations_ids. Then we swap tow elements with three index, and calculate the distance of current path, if it is less than the path in current records, we restore the path with its distance into the records.
+
+After 300 loops, we might get the shortest path.
+_______________________________
+
+.
+______________________________________
+
+In conclusion, we find that according to efficiency, the algorithms with the highest operational efficiency are 3opt, 2opt, Brute_force and backtracking in order.
+_______________________________________
 We use early backtracking when the current cost is higher than current minimum.
 
 Please report and compare the time spent by these 3 algorithms. 2-opt algorithm may not get the optimal solution. Please show how far your solution is from the optimal solution.
@@ -974,10 +1036,12 @@ Time taken by function: 2 ms
 
 <p align="center"><img src="img/output.gif" alt="TSP videos" width="500"/></p>
 
+
+
 | nums of nodes     | Brute_force | Backtracking| 2opt|
 | -------------------- | ----------- |-------|-----|
 |10             |14629ms|79056ms|2ms
-|9             |1582ms|7325ms|1ms
+|9             |1582ms|7325ms|2ms
 |8             |   215ms      | 736ms     |2ms
 |7             | 50ms        |85ms  |1ms
 |6             | 5ms        |13ms  |1ms
@@ -1070,7 +1134,7 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
-### **Time Complexity:O(n!+R(SD+1)) R:the number of routes, S:the number of max number of nodes on route D:N^2 the time complexity CalculateShortestPath_Dijkstra, N is the number of nodes **
+### **Time Complexity:O(n!+R(SD+1)) n:the size of location_names R:the number of routes, S:the number of max number of nodes on route D:N^2 the time complexity CalculateShortestPath_Dijkstra, N is the number of nodes **
 
 
 Please report and compare the time spent by this algorithm and show the points on the map.
