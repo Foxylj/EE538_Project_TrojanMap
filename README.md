@@ -201,7 +201,8 @@ Please add you test in the [trojanmap_test_student.cc](tests/trojanmap_test_stud
 ```shell
 $ bazel test tests:trojanmap_test_student
 ```
-
+---
+---
 ## Item 1: Autocomplete The Location Name (Phase 1)
 
 ```c++
@@ -274,7 +275,8 @@ Time taken by function: 30 ms
 ```
 - What is the runtime of your algorithm? O(n)
 - (Optional) Can you do it faster than `O(n)`?
-
+---
+---
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
 
 ```c++
@@ -331,6 +333,11 @@ Time taken by function: 34 ms
 ```
 <p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
 
+<<<<<<< HEAD
+=======
+---
+---
+>>>>>>> 36bdb72a3901c0f04f6702437a0cb25b4fe4d046
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
 
@@ -430,7 +437,8 @@ Latitude: 34.0377 Longitude: -118.269
 **************************************************************
 Time taken by function: 17 ms
 ```
-
+---
+---
 ## Item 3: Get All Categories (Phase 2)
 
 ```c++
@@ -461,8 +469,10 @@ std::vector<std::string> GetAllLocationsFromCategory(std::string category);
 
 In this section if the user entries a category, the program prints all locations that match that category. For example, if there is a category called "bank", your program should print all location ids that match the "bank" category. 
 
+---
+---
 ## Item 5: Get Locations Using A Regular Expression (Phase 2)
-
+Time Complexity:O(n)
 ```c++
 std::vector<std::string> GetLocationRegex(std::regex location);
 ```
@@ -471,7 +481,44 @@ In this section if the user enters a [regular expression](https://en.wikipedia.o
 
 Your program should also verify if the input regular expression was correct. Return an empty vector if the regex is not valid or matches no items.
 
+Example 1:
+``` shell
+**************************************************************
+* 5. Get locations using a regular expression                 
+**************************************************************
 
+Please input a regular expression for a location:Ra.?ph.+
+*************************Results******************************
+2578244375
+**************************************************************
+Time taken by function: 41 ms
+```
+Example 2:
+``` shell
+**************************************************************
+* 5. Get locations using a regular expression                 
+**************************************************************
+
+Please input a regular expression for a location:R[A-Za-z]l[A-Za-z]hs
+*************************Results******************************
+2578244375
+**************************************************************
+Time taken by function: 37 ms
+```
+Example 3:
+``` shell
+**************************************************************
+* 5. Get locations using a regular expression                 
+**************************************************************
+
+Please input a regular expression for a location:Tar[A-Za-z]et
+*************************Results******************************
+5237417650
+**************************************************************
+Time taken by function: 39 ms
+```
+---
+---
 ## Item 6: CalculateShortestPath between two places (Phase 2)
 
 ```c++
@@ -541,7 +588,8 @@ Time taken by function: 7084 ms
 
 <p align="center"><img src="img/Routing.png" alt="Routing" width="500"/></p>
 
-
+---
+---
 ## Item 7: Cycle Detection (Phase 2)
 
 ```c++
@@ -697,6 +745,40 @@ there exist no cycle in the subgraph
 Time taken by function: 0 ms
 ```
 
+<<<<<<< HEAD
+=======
+```shell
+5
+**************************************************************
+* 5. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.299
+Please input the right bound longitude(between -118.320 and -118.250):-118.264
+Please input the upper bound latitude(between 34.000 and 34.040):34.032
+Please input the lower bound latitude(between 34.000 and 34.040):34.011
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 0 ms
+
+5
+**************************************************************
+* 5. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.290
+Please input the right bound longitude(between -118.320 and -118.250):-118.289
+Please input the upper bound latitude(between 34.000 and 34.040):34.030
+Please input the lower bound latitude(between 34.000 and 34.040):34.020
+*************************Results******************************
+there exist no cycle in the subgraph 
+**************************************************************
+Time taken by function: 0 ms
+```
+---
+---
+>>>>>>> 36bdb72a3901c0f04f6702437a0cb25b4fe4d046
 ## Item 8: Topological Sort (Phase 2)
 
 ```c++
@@ -797,6 +879,8 @@ Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
 
+---
+---
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Given a vector of location ids, assume every location can reach all other locations in the vector (i.e. assume that the vector of location ids is a complete graph).
@@ -885,6 +969,8 @@ Time taken by function: 2 ms
 |6             | 5ms        |13ms  |1ms
 |5             | 0ms        |0ms  |1ms
 
+---
+---
 ## Item 10: Find Nearby (Phase 3)
 
 Given an attribute name `C`, a location name `L` and a number `r` and `k`, find at most `k` locations in attribute `C` on the map near `L`(do not include `L`) with the range of `r` and return a vector of string ids. 
@@ -954,7 +1040,8 @@ Time taken by function: 78 ms
 ```
 <p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
 
-
+---
+---
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
 Given an vector of locations, you need to find the shortest path to visit all the locations.
@@ -1006,7 +1093,8 @@ The distance of the path is:2.288 miles
 Time taken by function: 26272 ms
 ```
 <p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
-
+---
+---
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
 
 Given a map of nodes, you need to determine if it is possible to travel from a given starting point to a destination point with a car that has a certain size of gas tank. You can refuel at any nodes. If the distance between any two nodes on the path is larger than the size of the gas tank, you cannot travel between those nodes. Assume 1 gallon of gas can travel 1 mile.
@@ -1133,7 +1221,8 @@ From Ralphs to Honda with 0.5 gallons of gas tank: Yes
 **************************************************************
 Time taken by function: 518095 ms
 ```
-
+---
+---
 ## Reporting Runtime:
 For each menu item, your program should show the time it took to finish each task.
 
