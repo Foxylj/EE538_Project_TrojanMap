@@ -201,8 +201,7 @@ Please add you test in the [trojanmap_test_student.cc](tests/trojanmap_test_stud
 ```shell
 $ bazel test tests:trojanmap_test_student
 ```
----
----
+
 ## Item 1: Autocomplete The Location Name (Phase 1)
 
 ```c++
@@ -275,8 +274,7 @@ Time taken by function: 30 ms
 ```
 - What is the runtime of your algorithm? O(n)
 - (Optional) Can you do it faster than `O(n)`?
----
----
+
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
 
 ```c++
@@ -333,11 +331,6 @@ Time taken by function: 34 ms
 ```
 <p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
 
-<<<<<<< HEAD
-=======
----
----
->>>>>>> 36bdb72a3901c0f04f6702437a0cb25b4fe4d046
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
 
@@ -437,8 +430,7 @@ Latitude: 34.0377 Longitude: -118.269
 **************************************************************
 Time taken by function: 17 ms
 ```
----
----
+
 ## Item 3: Get All Categories (Phase 2)
 
 ```c++
@@ -519,6 +511,7 @@ Time taken by function: 39 ms
 ```
 ---
 ---
+
 ## Item 6: CalculateShortestPath between two places (Phase 2)
 
 ```c++
@@ -533,9 +526,32 @@ Dijkstra: O(n^2)
 
 Bellman_Ford: O(n^2)
 _____________________________________________________________________________________
-Here, we use two algrothims to calculate the shortest path between two place. 
-First one is DijKstra, we use a priority_queue to store the nodes 
-_____________________________________________________________________________________
+Here, we use two algrothims to calculate the shortest path between two place.
+
+**DijKstra** 
+
+First one is DijKstra, we use a priority_queue to store the nodes which are waiting to process. Its elements are the pairs that include distance and ID, sort by distance from smallest to largest. When the operation is empty, we do following operations:
+1.Pop the top element of queue and pass its value into "loc_id".
+2.Check if loc_id is equal to the target location's ID. If so, break out of the loop. Otherwise, continue with the following steps.
+3.Traversal the neighboring nodes of the current node in loc_id. Calculate the distance from the current node to the neighbor node plus the distance of the current node and input it in the "update_dist". 
+4.Check if the "update_dist" is less than current distance of neighbor node "i", if it dose, we update the current distance of neighbor node(node_dist[i]) with "update_dist", and set the current node with prev node of neighbor node(P[i] = loc_id). Then, we add the neighbor node into the queue.
+
+After these operations, we add the target location's ID into the vector path.
+Starting from the target location, backtrack the shortest path using the P hashmap. Add the ID of each node passed along the way to the path vector until the starting location is reached.
+Reverse the path vector to display it in the correct order from the starting location to the target location.
+
+**Bellman_Ford**
+
+In Bellman_Ford function, we traversal map data to find the start location and set the it with distance 0, then add it into the vector "current node".
+When "current node" is not empty and loop variable "round" is less than 5, we do following operations:
+1.Traversal every nodes "curr_id" in the "curr_node"
+2.Traversal "curr_id"'s neighbor nodes "next_id". Process every "next_id", calculate the distance between "next_id" and "curr_id", and plus with the current distance("node_dist[curr_id] + CalculateDistance(curr_id, next_id)"). This is named as "update_dist".
+3.if "update_dist" is less than the distance from "next_id"("node_dist[next_id]"), we will update the neighbor node's distance as "update_dist", and set current node with the prev node of neighbor node. Then we add the neighbor node into the vector "next_node". If u is equal with next_id, then we set "dest_curr" with "update_dist".
+
+If "dest_curr" is not equal with Infinity, then we check if "dest_curr" is equal with "dest_prev", if it is equal, we do more five loops to check if there is any other better results.
+If not, we set round with 0, and set "dest_prev" with "dest_curr".
+We set the "current _node" with "next_node", and then clear "next_node".
+____________________________________________________________________________________
 Given 2 locations A and B, find the best route from A to B. The distance between 2 points is the euclidean distance using latitude and longitude. You should use both Dijkstra algorithm and Bellman-Ford algorithm. Compare the time for the different methods. Show the routes on the map. If there is no path, please return empty vector.
 
 Please report and compare the time spent by these algorithms.
@@ -588,8 +604,7 @@ Time taken by function: 7084 ms
 
 <p align="center"><img src="img/Routing.png" alt="Routing" width="500"/></p>
 
----
----
+
 ## Item 7: Cycle Detection (Phase 2)
 
 ```c++
@@ -745,40 +760,6 @@ there exist no cycle in the subgraph
 Time taken by function: 0 ms
 ```
 
-<<<<<<< HEAD
-=======
-```shell
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.299
-Please input the right bound longitude(between -118.320 and -118.250):-118.264
-Please input the upper bound latitude(between 34.000 and 34.040):34.032
-Please input the lower bound latitude(between 34.000 and 34.040):34.011
-*************************Results******************************
-there exists a cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.290
-Please input the right bound longitude(between -118.320 and -118.250):-118.289
-Please input the upper bound latitude(between 34.000 and 34.040):34.030
-Please input the lower bound latitude(between 34.000 and 34.040):34.020
-*************************Results******************************
-there exist no cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-```
----
----
->>>>>>> 36bdb72a3901c0f04f6702437a0cb25b4fe4d046
 ## Item 8: Topological Sort (Phase 2)
 
 ```c++
@@ -879,8 +860,6 @@ Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
 
----
----
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Given a vector of location ids, assume every location can reach all other locations in the vector (i.e. assume that the vector of location ids is a complete graph).
@@ -969,8 +948,6 @@ Time taken by function: 2 ms
 |6             | 5ms        |13ms  |1ms
 |5             | 0ms        |0ms  |1ms
 
----
----
 ## Item 10: Find Nearby (Phase 3)
 
 Given an attribute name `C`, a location name `L` and a number `r` and `k`, find at most `k` locations in attribute `C` on the map near `L`(do not include `L`) with the range of `r` and return a vector of string ids. 
@@ -1040,8 +1017,7 @@ Time taken by function: 78 ms
 ```
 <p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
 
----
----
+
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
 Given an vector of locations, you need to find the shortest path to visit all the locations.
@@ -1093,8 +1069,7 @@ The distance of the path is:2.288 miles
 Time taken by function: 26272 ms
 ```
 <p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
----
----
+
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
 
 Given a map of nodes, you need to determine if it is possible to travel from a given starting point to a destination point with a car that has a certain size of gas tank. You can refuel at any nodes. If the distance between any two nodes on the path is larger than the size of the gas tank, you cannot travel between those nodes. Assume 1 gallon of gas can travel 1 mile.
@@ -1221,8 +1196,7 @@ From Ralphs to Honda with 0.5 gallons of gas tank: Yes
 **************************************************************
 Time taken by function: 518095 ms
 ```
----
----
+
 ## Reporting Runtime:
 For each menu item, your program should show the time it took to finish each task.
 
