@@ -201,14 +201,19 @@ Please add you test in the [trojanmap_test_student.cc](tests/trojanmap_test_stud
 ```shell
 $ bazel test tests:trojanmap_test_student
 ```
----
----
+---------
+--------
 ## Item 1: Autocomplete The Location Name (Phase 1)
 
 ```c++
 std::vector<std::string> Autocomplete(std::string name);
 ```
+### **Time Complexity: O(n^2)**
 
+____________________
+
+In this function, we traversal the data nodes, for each node, we make the node's location name into lower case and find if there are same location name with input name in lower case.
+____________________
 We consider the names of nodes as the locations. Implement a method to type the partial name of the location and return a list of possible locations with the partial name as the prefix. Please treat uppercase and lowercase as the same character. Please return an empty output if the input string is empty.
 
 Example:
@@ -273,10 +278,10 @@ The Row House
 **************************************************************
 Time taken by function: 30 ms
 ```
-- What is the runtime of your algorithm? O(n)
+- What is the runtime of your algorithm? O(n^2)
 - (Optional) Can you do it faster than `O(n)`?
----
----
+-----------------
+-----------------
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
 
 ```c++
@@ -333,14 +338,29 @@ Time taken by function: 34 ms
 ```
 <p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
 
----
----
+-----
+-----
+
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
-Time Complexity:O(mn) m:length of name1, n:length of name2
+
 ```c++
 int CalculateEditDistance(std::string name1, std::string name2);
 ```
+### **Time Complexity:O(mn) m:length of name1, n:length of name2**
+_____________________________________________
+**In CalculateEditDistance, we use dynamic programming to get the edit distance between two strings.
+Hear is a 2D vector ed used to store the distance of subsets of two strings.**
+|   | A | B | C |
+|---|---|---|---|
+| B | 0 | 0 | 0 |
+| D | 0 | 0 | 0 |
+| E | 0 | 0 | 0 |
+
+**ed [i] [0] represents the distance between the first i characters of string1 and an empty string, so its value is equal to i.
+We use dynamic programing to find if the string1[i-1] is equal with sring2[j-1].
+If they are different, then we do insert(ed[i][j] = ed[i][j-1]+1) or delete(ed[i][j] = ed[i-1][j]+1) or repalce(ed[i][j] = ed[i-1][j-1]+1), it depends on which one could get the min value.**
+______________________________________________________________
 
 When entering a location name that does not exist in the map, your program should determine whether the input can be replaced with a "similar name" or not. By "similar names" we mean the names that exist in the map with a *smallest distance* from the original input. 
 
@@ -420,17 +440,23 @@ Latitude: 34.0377 Longitude: -118.269
 **************************************************************
 Time taken by function: 17 ms
 ```
----
----
+-----
+-----
 ## Item 3: Get All Categories (Phase 2)
-Time Complexity:O(mn)
+
 ```c++
 std::vector<std::string> GetAllCategories();
 ```
+### **Time Complexity:O(mn) m=data.size, n=number of attributes**
+____________________________________________________________________________
 
+**In GetAllCategories function, we use for loop to traversal the data set and use another for loop to traversal the all attributes.**
+___________________________________________________________________________
 Some of the locations have category types (`attributes` field in `data.csv` file). 
 
 In this section, your program should print all available categories among all existing categories in the map. There should be no duplicates in the output.
+
+## Item 4: Get All Locations In A Category (Phase 2)
 Example 1:
 ```shell
 **************************************************************
@@ -496,6 +522,7 @@ Time taken by function: 39 ms
 ```
 ---
 ---
+
 ## Item 6: CalculateShortestPath between two places (Phase 2)
 
 ```c++
@@ -504,7 +531,54 @@ std::vector<std::string> CalculateShortestPath_Dijkstra(std::string &location1_n
 std::vector<std::string> CalculateShortestPath_Bellman_Ford(std::string &location1_name,
                                                std::string &location2_name);
 ```
+**Time Complexity:**
 
+Dijkstra: O(n^2)
+
+Bellman_Ford: O(n^2)
+_____________________________________________________________________________________
+Here, we use two algrothims to calculate the shortest path between two place.
+
+**DijKstra** 
+
+First one is DijKstra, we use a priority_queue to store the nodes which are waiting to process. Its elements are the pairs that include distance and ID, sort by distance from smallest to largest. When the operation is empty, we do following operations:
+
+1.Pop the top element of queue and pass its value into "loc_id".
+
+2.Check if loc_id is equal to the target location's ID. If so, break out of the loop. Otherwise, continue with the following steps.
+
+3.Traversal the neighboring nodes of the current node in loc_id. Calculate the distance from the current node to the neighbor node plus the distance of the current node and input it in the "update_dist". 
+
+4.Check if the "update_dist" is less than current distance of neighbor node "i", if it dose, we update the current distance of neighbor node(node_dist[i]) with "update_dist", and set the current node with prev node of neighbor node(P[i] = loc_id). Then, we add the neighbor node into the queue.
+
+After these operations, we add the target location's ID into the vector path.
+
+Starting from the target location, backtrack the shortest path using the P hashmap. Add the ID of each node passed along the way to the path vector until the starting location is reached.
+Reverse the path vector to display it in the correct order from the starting location to the target location.
+
+**Bellman_Ford**
+
+In Bellman_Ford function, we traversal map data to find the start location and set the it with distance 0, then add it into the vector "current node".
+
+When "current node" is not empty and loop variable "round" is less than 5, we do following operations:
+
+1.Traversal every nodes "curr_id" in the "curr_node"
+
+2.Traversal "curr_id"'s neighbor nodes "next_id". Process every "next_id", calculate the distance between "next_id" and "curr_id", and plus with the current distance("node_dist[curr_id] + CalculateDistance(curr_id, next_id)"). This is named as "update_dist".
+
+3.if "update_dist" is less than the distance from "next_id"("node_dist[next_id]"), we will update the neighbor node's distance as "update_dist", and set current node with the prev node of neighbor node. Then we add the neighbor node into the vector "next_node". If u is equal with next_id, then we set "dest_curr" with "update_dist".
+
+If "dest_curr" is not equal with Infinity, then we check if "dest_curr" is equal with "dest_prev", if it is equal, we do more five loops to check if there is any other better results.
+If not, we set round with 0, and set "dest_prev" with "dest_curr".
+
+We set the "current _node" with "next_node", and then clear "next_node".
+
+The we add the target location's ID into the path vector. Tracing back the shortest path from the target node by using the P hash map. While P[u] is not empty, set P[u] to u and add it to the path vector.
+
+Since the order of nodes in path is from the target location to the starting location. We need do reverse operation to the path elements.
+
+Finally, we get the shortest path from result.
+____________________________________________________________________________________
 Given 2 locations A and B, find the best route from A to B. The distance between 2 points is the euclidean distance using latitude and longitude. You should use both Dijkstra algorithm and Bellman-Ford algorithm. Compare the time for the different methods. Show the routes on the map. If there is no path, please return empty vector.
 
 Please report and compare the time spent by these algorithms.
@@ -514,21 +588,21 @@ Please report and compare the time spent by these algorithms.
 | Point A to Point B      | Dijkstra | Bellman Ford| Bellman Ford optimized|
 | -------------------- | ----------- |-------|-----|
 |                      |  t1         | t2    |   t3  |
-|Chase->KFC             |   52ms      | 68ms     |
-|Chase->Bank of America             | 66ms        |68ms  |
-|KFC->Bank of America             | 72ms        |83ms  |
-|Honda->KFC             | 74ms        |304ms  |
-|Holbox->Target             |85ms        |358ms  |
-|Honda->Ralphs             | 100ms        |301ms  |
-|Honda->Target             | 111ms        |410ms  |
-|Honda->Bank of America             | 120ms        |473ms  |
-|Target->Shell             | 134ms        |524ms  |
-|Honda->Shell             | 145ms        |823ms  |
-|Chase->Ralphs    |    129ms       |  501ms   |
-|  Target->Ralphs           |    103ms      |  130ms   |
-|  KFC->Shell           |      157ms    |   595ms  |
-|  Chase->Shell           |    159ms      | 415ms    |
-|  Chase->Honda           |   135ms       |  718ms   |
+|Chase->KFC             |   52ms      | 68ms     |68ms
+|Chase->Bank of America             | 66ms        |68ms  |68ms
+|KFC->Bank of America             | 72ms        |83ms  |83ms
+|Honda->KFC             | 74ms        |304ms  |304ms
+|Holbox->Target             |85ms        |358ms  |358ms
+|Honda->Ralphs             | 100ms        |301ms  |301ms
+|Honda->Target             | 111ms        |410ms  |410ms
+|Honda->Bank of America             | 120ms        |473ms  |473ms
+|Target->Shell             | 134ms        |524ms  |524ms
+|Honda->Shell             | 145ms        |823ms  |823ms
+|Chase->Ralphs    |    129ms       |  501ms   |501ms
+|  Target->Ralphs           |    103ms      |  130ms   |130ms
+|  KFC->Shell           |      157ms    |   595ms  |595ms
+|  Chase->Shell           |    159ms      | 415ms    |415ms
+|  Chase->Honda           |   135ms       |  718ms   |718ms
 
 Your table should show have at least 15 rows.
 
@@ -564,7 +638,11 @@ Time taken by function: 7084 ms
 ```c++
 bool CycleDetection(std::vector<double> &square);
 ```
+### **Time Complexity:O(mn) m:subgraph.size n:data.size**
+____________
 
+In CycleDection function, we traversal the subgraph, checking if each node is a named location in data. If we find more than 2 named locations, we judge that there is cycle in subgraph. 
+____________
 In this section, we use a square-shaped subgraph of the original graph by using four coordinates stored in ```std::vector<double> square```, which follows the order of left, right, upper, and lower bounds. 
 
 Then try to determine if there is a cycle path in the that subgraph.
@@ -576,6 +654,19 @@ Example 1:
 ```shell
 Input: square = {-118.299, -118.264, 34.032, 34.011}
 Output: true
+
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.299
+Please input the right bound longitude(between -118.320 and -118.250):-118.264
+Please input the upper bound latitude(between 34.000 and 34.040):34.032
+Please input the lower bound latitude(between 34.000 and 34.040):34.011
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 2759 ms
 ```
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle1.png" alt="TSP" width="500"/></p>
@@ -587,6 +678,21 @@ Output: false
 ```
 Here we use a square area inside USC campus as our subgraph
 <p align="center"><img src="img/cycle2.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.290
+Please input the right bound longitude(between -118.320 and -118.250):-118.289
+Please input the upper bound latitude(between 34.000 and 34.040):34.03
+Please input the lower bound latitude(between 34.000 and 34.040):34.02
+*************************Results******************************
+there exist no cycle in the subgraph 
+**************************************************************
+Time taken by function: 23 ms
+```
 
 Example 3:
 ```shell
@@ -613,8 +719,10 @@ Time taken by function: 37 ms
 
 Example 4:
 
+```shell
 Input: square = {-118.290, -118.285, 34.038, 34.01}
 Output: true
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle4.png" alt="TSP" width="500"/></p>
@@ -635,8 +743,10 @@ Time taken by function: 525 ms
 ```
 
 Example 5:
+```shell
 Input: square = {-118.299, -118.27, 34.03, 34.02}
 Output: true
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle5.png" alt="TSP" width="500"/></p>
@@ -658,8 +768,10 @@ Time taken by function: 1020 ms
 
 Example 6:
 
+```shell
 Input: square = {-118.300, -118.288, 34.02, 34.03}
 Output: false
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle6.png" alt="TSP" width="500"/></p>
@@ -678,44 +790,19 @@ there exist no cycle in the subgraph
 **************************************************************
 Time taken by function: 0 ms
 ```
-
-```shell
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.299
-Please input the right bound longitude(between -118.320 and -118.250):-118.264
-Please input the upper bound latitude(between 34.000 and 34.040):34.032
-Please input the lower bound latitude(between 34.000 and 34.040):34.011
-*************************Results******************************
-there exists a cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.290
-Please input the right bound longitude(between -118.320 and -118.250):-118.289
-Please input the upper bound latitude(between 34.000 and 34.040):34.030
-Please input the lower bound latitude(between 34.000 and 34.040):34.020
-*************************Results******************************
-there exist no cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-```
----
----
+----
+----
 ## Item 8: Topological Sort (Phase 2)
 
 ```c++
 std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_names,
                                             std::vector<std::vector<std::string>> &dependencies);
 ```
+### **Time Complexity:O(n^2)**
+
+_____________________
+In Topological Sort function, we traversal "dependencies" to find the indices d_1 and d_2 of the two locations in the result vector. If the index d_1 is greater than d_2, we can get that the current order of locations are not satisfy the dependencies, for this situation, we will switch the locaiton in the vector "result" and setting "finish" to false to indicate there is at least one location's place in order do not satisfy the dependencies. After the loop, we could get the locations in expected order. 
+_____________________
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Tommy Trojan got a part-time job from TrojanEats, for which he needs to pick up and deliver food from local restaurants to various location near the campus. Tommy needs to visit a few different location near the campus with certain order, since there are some constraints. For example, he must first get the food from the restaurant before arriving at the delivery point. 
 
 The TrojanEats app will have some instructions about these constraints. So, Tommy asks you to help him figure out the feasible route!
@@ -723,9 +810,7 @@ The TrojanEats app will have some instructions about these constraints. So, Tomm
 Here we will give you a vector of location names that Tommy needs to visit, and also some dependencies between those locations.
 
 
-For example, 
-
-```shell
+For example, s
 Input: 
 location_names = {"Ralphs", "Chick-fil-A", "KFC"}
 dependencies = {{"Ralphs","KFC"}, {"Ralphs","Chick-fil-A"}, {"Chick-fil-A", "KFC"}}
@@ -807,9 +892,9 @@ Ralphs
 Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
+------
+------
 
----
----
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Given a vector of location ids, assume every location can reach all other locations in the vector (i.e. assume that the vector of location ids is a complete graph).
@@ -824,16 +909,21 @@ We will use the following algorithms:
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Brute_force(
       std::vector<std::string> location_ids);
 ```
+Time Complexity: O(n)
+
 - Brute-force enhanced with early backtracking
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Backtracking(
       std::vector<std::string> location_ids);
 ```
+Time Complexity:O(n)
+
 - [2-opt Heuristic](https://en.wikipedia.org/wiki/2-opt). Also see [this paper](http://cs.indstate.edu/~zeeshan/aman.pdf)
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_2opt(
       std::vector<std::string> location_ids);
 ```
+Time Complexity:O(1)
 
 We use early backtracking when the current cost is higher than current minimum.
 
@@ -893,8 +983,9 @@ Time taken by function: 2 ms
 |6             | 5ms        |13ms  |1ms
 |5             | 0ms        |0ms  |1ms
 
----
----
+--------------
+---------------
+
 ## Item 10: Find Nearby (Phase 3)
 
 Given an attribute name `C`, a location name `L` and a number `r` and `k`, find at most `k` locations in attribute `C` on the map near `L`(do not include `L`) with the range of `r` and return a vector of string ids. 
@@ -905,6 +996,13 @@ nearest to farthest, and you should not include the current location.
 ```c++
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k);
 ```
+
+### **Time Complexity:O(n^2)**
+
+_________________________________
+
+In this function, we traversal the data nodes, for each node, we check if there exists the location with same attributeName with input, and check if the location is inside the circle with the input search radius "r" based on origin "input location". Then we input all location we found into the set loc to order them in distance from close to far. Finally we pick k most close locations to output the result. 
+________________________________
 
 All attributes:
 ```
@@ -962,8 +1060,8 @@ Time taken by function: 78 ms
 ```
 <p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
 
----
----
+--------
+--------
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
 Given an vector of locations, you need to find the shortest path to visit all the locations.
@@ -971,6 +1069,8 @@ Given an vector of locations, you need to find the shortest path to visit all th
 ```c++
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
+
+Time Complexity:O(n^2)
 
 Please report and compare the time spent by this algorithm and show the points on the map.
 
@@ -1014,8 +1114,11 @@ Time taken by function: 26272 ms
 ```
 <p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
 
+<<<<<<< HEAD
 ---
 ---
+=======
+>>>>>>> 55f5aae3afb0a5e6db8d5623a057992bd7023797
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
 
 Given a map of nodes, you need to determine if it is possible to travel from a given starting point to a destination point with a car that has a certain size of gas tank. You can refuel at any nodes. If the distance between any two nodes on the path is larger than the size of the gas tank, you cannot travel between those nodes. Assume 1 gallon of gas can travel 1 mile.
@@ -1032,7 +1135,7 @@ Otherwise, you get 8 points.
 // Returns the result of each query in a vector.
 std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
 ```
-
+Time Complexity: O(mn)
 Please report and compare the time spent by this algorithm and show the points on the map.
 
 **Example:**
@@ -1142,8 +1245,7 @@ From Ralphs to Honda with 0.5 gallons of gas tank: Yes
 **************************************************************
 Time taken by function: 518095 ms
 ```
----
----
+
 ## Reporting Runtime:
 For each menu item, your program should show the time it took to finish each task.
 
