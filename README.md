@@ -1408,13 +1408,23 @@ https://youtu.be/_tnvSLdy9gY
 ## Extra credit items: Maximum of 20 points:
    1. Implementation of [3-opt](http://cs.indstate.edu/~zeeshan/aman.pdf): 10 points.
    2. [Genetic algorithm](https://www.geeksforgeeks.org/traveling-salesman-problem-using-genetic-algorithm/) implementation for Traveling Trojan: 10 points
+   ---
+   ---
    3. Create dynamic and animated UI using [ncurses](https://en.wikipedia.org/wiki/Ncurses): 10 points
+   
       - Uncomment #define NCURSES in main.cc and mapui.h
       - Create your menu in DynamicPrintMenu().
       - You could check https://github.com/ourarash/ncurses_bazel
       - Please develope your own UI.
       - Example
          <p align="center"><img src="img/ncurses example.gif" alt="example" width="500"/></p>
+   **Based on the provided sample in DynamicprintMenu(), we have developed a UI consisting of 13 options. In addition, we have incorporated an extra credit feature called "3-opt" to solve the Traveling Salesman Problem. Below is the image of our UI's initial interface.**
+
+   - Our UI
+         <p align="center"><img src="img/UI.png" alt="UI" width="500"/></p>
+
+   ---
+   ---
                
    4. Accurate measurement of your algorithm runtime using [Google Benchmark](https://www.youtube.com/watch?v=9VKR8u9odrA) while sweeping the input size and providing a diagram of how the runtime grows based on the input size: 10 points.
 
