@@ -201,13 +201,19 @@ Please add you test in the [trojanmap_test_student.cc](tests/trojanmap_test_stud
 ```shell
 $ bazel test tests:trojanmap_test_student
 ```
-
+---------
+--------
 ## Item 1: Autocomplete The Location Name (Phase 1)
 
 ```c++
 std::vector<std::string> Autocomplete(std::string name);
 ```
+### **Time Complexity: O(n^2)**
 
+____________________
+
+In this function, we traversal the data nodes, for each node, we make the node's location name into lower case and find if there are same location name with input name in lower case.
+____________________
 We consider the names of nodes as the locations. Implement a method to type the partial name of the location and return a list of possible locations with the partial name as the prefix. Please treat uppercase and lowercase as the same character. Please return an empty output if the input string is empty.
 
 Example:
@@ -272,9 +278,10 @@ The Row House
 **************************************************************
 Time taken by function: 30 ms
 ```
-- What is the runtime of your algorithm? O(n)
+- What is the runtime of your algorithm? O(n^2)
 - (Optional) Can you do it faster than `O(n)`?
-
+-----------------
+-----------------
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
 
 ```c++
@@ -330,6 +337,9 @@ Latitude: 34.0213 Longitude: -118.282
 Time taken by function: 34 ms
 ```
 <p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
+
+-----
+-----
 
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
@@ -430,7 +440,8 @@ Latitude: 34.0377 Longitude: -118.269
 **************************************************************
 Time taken by function: 17 ms
 ```
-
+-----
+-----
 ## Item 3: Get All Categories (Phase 2)
 
 ```c++
@@ -531,26 +542,42 @@ Here, we use two algrothims to calculate the shortest path between two place.
 **DijKstra** 
 
 First one is DijKstra, we use a priority_queue to store the nodes which are waiting to process. Its elements are the pairs that include distance and ID, sort by distance from smallest to largest. When the operation is empty, we do following operations:
+
 1.Pop the top element of queue and pass its value into "loc_id".
+
 2.Check if loc_id is equal to the target location's ID. If so, break out of the loop. Otherwise, continue with the following steps.
+
 3.Traversal the neighboring nodes of the current node in loc_id. Calculate the distance from the current node to the neighbor node plus the distance of the current node and input it in the "update_dist". 
+
 4.Check if the "update_dist" is less than current distance of neighbor node "i", if it dose, we update the current distance of neighbor node(node_dist[i]) with "update_dist", and set the current node with prev node of neighbor node(P[i] = loc_id). Then, we add the neighbor node into the queue.
 
 After these operations, we add the target location's ID into the vector path.
+
 Starting from the target location, backtrack the shortest path using the P hashmap. Add the ID of each node passed along the way to the path vector until the starting location is reached.
 Reverse the path vector to display it in the correct order from the starting location to the target location.
 
 **Bellman_Ford**
 
 In Bellman_Ford function, we traversal map data to find the start location and set the it with distance 0, then add it into the vector "current node".
+
 When "current node" is not empty and loop variable "round" is less than 5, we do following operations:
+
 1.Traversal every nodes "curr_id" in the "curr_node"
+
 2.Traversal "curr_id"'s neighbor nodes "next_id". Process every "next_id", calculate the distance between "next_id" and "curr_id", and plus with the current distance("node_dist[curr_id] + CalculateDistance(curr_id, next_id)"). This is named as "update_dist".
+
 3.if "update_dist" is less than the distance from "next_id"("node_dist[next_id]"), we will update the neighbor node's distance as "update_dist", and set current node with the prev node of neighbor node. Then we add the neighbor node into the vector "next_node". If u is equal with next_id, then we set "dest_curr" with "update_dist".
 
 If "dest_curr" is not equal with Infinity, then we check if "dest_curr" is equal with "dest_prev", if it is equal, we do more five loops to check if there is any other better results.
 If not, we set round with 0, and set "dest_prev" with "dest_curr".
+
 We set the "current _node" with "next_node", and then clear "next_node".
+
+The we add the target location's ID into the path vector. Tracing back the shortest path from the target node by using the P hash map. While P[u] is not empty, set P[u] to u and add it to the path vector.
+
+Since the order of nodes in path is from the target location to the starting location. We need do reverse operation to the path elements.
+
+Finally, we get the shortest path from result.
 ____________________________________________________________________________________
 Given 2 locations A and B, find the best route from A to B. The distance between 2 points is the euclidean distance using latitude and longitude. You should use both Dijkstra algorithm and Bellman-Ford algorithm. Compare the time for the different methods. Show the routes on the map. If there is no path, please return empty vector.
 
@@ -604,14 +631,18 @@ Time taken by function: 7084 ms
 
 <p align="center"><img src="img/Routing.png" alt="Routing" width="500"/></p>
 
-
+---
+---
 ## Item 7: Cycle Detection (Phase 2)
 
 ```c++
 bool CycleDetection(std::vector<double> &square);
 ```
-TimeComplexity:O(n)
+### **Time Complexity:O(mn) m:subgraph.size n:data.size**
+____________
 
+In CycleDection function, we traversal the subgraph, checking if each node is a named location in data. If we find more than 2 named locations, we judge that there is cycle in subgraph. 
+____________
 In this section, we use a square-shaped subgraph of the original graph by using four coordinates stored in ```std::vector<double> square```, which follows the order of left, right, upper, and lower bounds. 
 
 Then try to determine if there is a cycle path in the that subgraph.
@@ -759,15 +790,19 @@ there exist no cycle in the subgraph
 **************************************************************
 Time taken by function: 0 ms
 ```
-
+----
+----
 ## Item 8: Topological Sort (Phase 2)
 
 ```c++
 std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_names,
                                             std::vector<std::vector<std::string>> &dependencies);
 ```
-Time Complexity:O(n^2)
+### **Time Complexity:O(n^2)**
 
+_____________________
+In Topological Sort function, we traversal "dependencies" to find the indices d_1 and d_2 of the two locations in the result vector. If the index d_1 is greater than d_2, we can get that the current order of locations are not satisfy the dependencies, for this situation, we will switch the locaiton in the vector "result" and setting "finish" to false to indicate there is at least one location's place in order do not satisfy the dependencies. After the loop, we could get the locations in expected order. 
+_____________________
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Tommy Trojan got a part-time job from TrojanEats, for which he needs to pick up and deliver food from local restaurants to various location near the campus. Tommy needs to visit a few different location near the campus with certain order, since there are some constraints. For example, he must first get the food from the restaurant before arriving at the delivery point. 
 
 The TrojanEats app will have some instructions about these constraints. So, Tommy asks you to help him figure out the feasible route!
@@ -775,9 +810,7 @@ The TrojanEats app will have some instructions about these constraints. So, Tomm
 Here we will give you a vector of location names that Tommy needs to visit, and also some dependencies between those locations.
 
 
-For example, 
-
-```shell
+For example, s
 Input: 
 location_names = {"Ralphs", "Chick-fil-A", "KFC"}
 dependencies = {{"Ralphs","KFC"}, {"Ralphs","Chick-fil-A"}, {"Chick-fil-A", "KFC"}}
@@ -859,6 +892,8 @@ Ralphs
 Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
+------
+------
 
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
