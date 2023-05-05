@@ -997,7 +997,7 @@ nearest to farthest, and you should not include the current location.
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k);
 ```
 
-### **Time Complexity:O(n^2)**
+### **Time Complexity:O(n^2) n: size of data**
 
 _________________________________
 
@@ -1070,7 +1070,8 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
-Time Complexity:O(n^2)
+### **Time Complexity:O(n!+R(SD+1)) R:the number of routes, S:the number of max number of nodes on route D:N^2 the time complexity CalculateShortestPath_Dijkstra, N is the number of nodes **
+
 
 Please report and compare the time spent by this algorithm and show the points on the map.
 
@@ -1130,7 +1131,7 @@ Otherwise, you get 8 points.
 // Returns the result of each query in a vector.
 std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
 ```
-Time Complexity: O(mn)
+### **Time Complexity: O((V+E)N) N:size of list of queries V:number of nodes in pathbool, E:number of egdes in pathbool**
 Please report and compare the time spent by this algorithm and show the points on the map.
 
 **Example:**
