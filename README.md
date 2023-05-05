@@ -330,12 +330,27 @@ Latitude: 34.0213 Longitude: -118.282
 Time taken by function: 34 ms
 ```
 <p align="center"><img src="img/Starbucks.png" alt="Starbucks" width="500"/></p>
+
 ## Item 2-2: Check Edit Distance Between Two Location Names (Phase 2)
 
-Time Complexity:O(mn) m:length of name1, n:length of name2
+
 ```c++
 int CalculateEditDistance(std::string name1, std::string name2);
 ```
+### **Time Complexity:O(mn) m:length of name1, n:length of name2**
+_____________________________________________
+**In CalculateEditDistance, we use dynamic programming to get the edit distance between two strings.
+Hear is a 2D vector ed used to store the distance of subsets of two strings.**
+|   | A | B | C |
+|---|---|---|---|
+| B | 0 | 0 | 0 |
+| D | 0 | 0 | 0 |
+| E | 0 | 0 | 0 |
+
+**ed [i] [0] represents the distance between the first i characters of string1 and an empty string, so its value is equal to i.
+We use dynamic programing to find if the string1[i-1] is equal with sring2[j-1].
+If they are different, then we do insert(ed[i][j] = ed[i][j-1]+1) or delete(ed[i][j] = ed[i-1][j]+1) or repalce(ed[i][j] = ed[i-1][j-1]+1), it depends on which one could get the min value.**
+______________________________________________________________
 
 When entering a location name that does not exist in the map, your program should determine whether the input can be replaced with a "similar name" or not. By "similar names" we mean the names that exist in the map with a *smallest distance* from the original input. 
 
@@ -417,14 +432,20 @@ Time taken by function: 17 ms
 ```
 
 ## Item 3: Get All Categories (Phase 2)
-Time Complexity:O(mn)
+
 ```c++
 std::vector<std::string> GetAllCategories();
 ```
+### **Time Complexity:O(mn) m=data.size, n=number of attributes**
+____________________________________________________________________________
 
+**In GetAllCategories function, we use for loop to traversal the data set and use another for loop to traversal the all attributes.**
+___________________________________________________________________________
 Some of the locations have category types (`attributes` field in `data.csv` file). 
 
 In this section, your program should print all available categories among all existing categories in the map. There should be no duplicates in the output.
+
+## Item 4: Get All Locations In A Category (Phase 2)
 Example 1:
 ```shell
 **************************************************************
@@ -459,7 +480,15 @@ std::vector<std::string> CalculateShortestPath_Dijkstra(std::string &location1_n
 std::vector<std::string> CalculateShortestPath_Bellman_Ford(std::string &location1_name,
                                                std::string &location2_name);
 ```
+**Time Complexity:**
 
+Dijkstra: O(n^2)
+
+Bellman_Ford: O(n^2)
+_____________________________________________________________________________________
+Here, we use two algrothims to calculate the shortest path between two place. 
+First one is DijKstra, we use a priority_queue to store the nodes 
+_____________________________________________________________________________________
 Given 2 locations A and B, find the best route from A to B. The distance between 2 points is the euclidean distance using latitude and longitude. You should use both Dijkstra algorithm and Bellman-Ford algorithm. Compare the time for the different methods. Show the routes on the map. If there is no path, please return empty vector.
 
 Please report and compare the time spent by these algorithms.
@@ -469,21 +498,21 @@ Please report and compare the time spent by these algorithms.
 | Point A to Point B      | Dijkstra | Bellman Ford| Bellman Ford optimized|
 | -------------------- | ----------- |-------|-----|
 |                      |  t1         | t2    |   t3  |
-|Chase->KFC             |   52ms      | 68ms     |
-|Chase->Bank of America             | 66ms        |68ms  |
-|KFC->Bank of America             | 72ms        |83ms  |
-|Honda->KFC             | 74ms        |304ms  |
-|Holbox->Target             |85ms        |358ms  |
-|Honda->Ralphs             | 100ms        |301ms  |
-|Honda->Target             | 111ms        |410ms  |
-|Honda->Bank of America             | 120ms        |473ms  |
-|Target->Shell             | 134ms        |524ms  |
-|Honda->Shell             | 145ms        |823ms  |
-|Chase->Ralphs    |    129ms       |  501ms   |
-|  Target->Ralphs           |    103ms      |  130ms   |
-|  KFC->Shell           |      157ms    |   595ms  |
-|  Chase->Shell           |    159ms      | 415ms    |
-|  Chase->Honda           |   135ms       |  718ms   |
+|Chase->KFC             |   52ms      | 68ms     |68ms
+|Chase->Bank of America             | 66ms        |68ms  |68ms
+|KFC->Bank of America             | 72ms        |83ms  |83ms
+|Honda->KFC             | 74ms        |304ms  |304ms
+|Holbox->Target             |85ms        |358ms  |358ms
+|Honda->Ralphs             | 100ms        |301ms  |301ms
+|Honda->Target             | 111ms        |410ms  |410ms
+|Honda->Bank of America             | 120ms        |473ms  |473ms
+|Target->Shell             | 134ms        |524ms  |524ms
+|Honda->Shell             | 145ms        |823ms  |823ms
+|Chase->Ralphs    |    129ms       |  501ms   |501ms
+|  Target->Ralphs           |    103ms      |  130ms   |130ms
+|  KFC->Shell           |      157ms    |   595ms  |595ms
+|  Chase->Shell           |    159ms      | 415ms    |415ms
+|  Chase->Honda           |   135ms       |  718ms   |718ms
 
 Your table should show have at least 15 rows.
 
@@ -518,6 +547,7 @@ Time taken by function: 7084 ms
 ```c++
 bool CycleDetection(std::vector<double> &square);
 ```
+TimeComplexity:O(n)
 
 In this section, we use a square-shaped subgraph of the original graph by using four coordinates stored in ```std::vector<double> square```, which follows the order of left, right, upper, and lower bounds. 
 
@@ -530,6 +560,19 @@ Example 1:
 ```shell
 Input: square = {-118.299, -118.264, 34.032, 34.011}
 Output: true
+
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.299
+Please input the right bound longitude(between -118.320 and -118.250):-118.264
+Please input the upper bound latitude(between 34.000 and 34.040):34.032
+Please input the lower bound latitude(between 34.000 and 34.040):34.011
+*************************Results******************************
+there exists a cycle in the subgraph 
+**************************************************************
+Time taken by function: 2759 ms
 ```
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle1.png" alt="TSP" width="500"/></p>
@@ -541,6 +584,21 @@ Output: false
 ```
 Here we use a square area inside USC campus as our subgraph
 <p align="center"><img src="img/cycle2.png" alt="TSP" width="500"/></p>
+
+```shell
+**************************************************************
+* 7. Cycle Detection                                          
+**************************************************************
+
+Please input the left bound longitude(between -118.320 and -118.250):-118.290
+Please input the right bound longitude(between -118.320 and -118.250):-118.289
+Please input the upper bound latitude(between 34.000 and 34.040):34.03
+Please input the lower bound latitude(between 34.000 and 34.040):34.02
+*************************Results******************************
+there exist no cycle in the subgraph 
+**************************************************************
+Time taken by function: 23 ms
+```
 
 Example 3:
 ```shell
@@ -567,8 +625,10 @@ Time taken by function: 37 ms
 
 Example 4:
 
+```shell
 Input: square = {-118.290, -118.285, 34.038, 34.01}
 Output: true
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle4.png" alt="TSP" width="500"/></p>
@@ -589,8 +649,10 @@ Time taken by function: 525 ms
 ```
 
 Example 5:
+```shell
 Input: square = {-118.299, -118.27, 34.03, 34.02}
 Output: true
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle5.png" alt="TSP" width="500"/></p>
@@ -612,8 +674,10 @@ Time taken by function: 1020 ms
 
 Example 6:
 
+```shell
 Input: square = {-118.300, -118.288, 34.02, 34.03}
 Output: false
+```
 
 Here we use the whole original graph as our subgraph. 
 <p align="center"><img src="img/cycle6.png" alt="TSP" width="500"/></p>
@@ -633,42 +697,14 @@ there exist no cycle in the subgraph
 Time taken by function: 0 ms
 ```
 
-```shell
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.299
-Please input the right bound longitude(between -118.320 and -118.250):-118.264
-Please input the upper bound latitude(between 34.000 and 34.040):34.032
-Please input the lower bound latitude(between 34.000 and 34.040):34.011
-*************************Results******************************
-there exists a cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-
-5
-**************************************************************
-* 5. Cycle Detection                                          
-**************************************************************
-
-Please input the left bound longitude(between -118.320 and -118.250):-118.290
-Please input the right bound longitude(between -118.320 and -118.250):-118.289
-Please input the upper bound latitude(between 34.000 and 34.040):34.030
-Please input the lower bound latitude(between 34.000 and 34.040):34.020
-*************************Results******************************
-there exist no cycle in the subgraph 
-**************************************************************
-Time taken by function: 0 ms
-```
-
 ## Item 8: Topological Sort (Phase 2)
 
 ```c++
 std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_names,
                                             std::vector<std::vector<std::string>> &dependencies);
 ```
+Time Complexity:O(n^2)
+
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Tommy Trojan got a part-time job from TrojanEats, for which he needs to pick up and deliver food from local restaurants to various location near the campus. Tommy needs to visit a few different location near the campus with certain order, since there are some constraints. For example, he must first get the food from the restaurant before arriving at the delivery point. 
 
 The TrojanEats app will have some instructions about these constraints. So, Tommy asks you to help him figure out the feasible route!
@@ -775,16 +811,21 @@ We will use the following algorithms:
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Brute_force(
       std::vector<std::string> location_ids);
 ```
+Time Complexity: O(n)
+
 - Brute-force enhanced with early backtracking
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Backtracking(
       std::vector<std::string> location_ids);
 ```
+Time Complexity:O(n)
+
 - [2-opt Heuristic](https://en.wikipedia.org/wiki/2-opt). Also see [this paper](http://cs.indstate.edu/~zeeshan/aman.pdf)
 ```c++
 std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_2opt(
       std::vector<std::string> location_ids);
 ```
+Time Complexity:O(1)
 
 We use early backtracking when the current cost is higher than current minimum.
 
@@ -855,6 +896,8 @@ nearest to farthest, and you should not include the current location.
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k);
 ```
 
+Time Complexity:O(n^2)
+
 All attributes:
 ```
 'artwork', 'attraction', 'bakery', 'bank', 'bar', 'beauty', 'beverages', 'bicycle', 'bicycle_rental', 'bus_station', 
@@ -920,6 +963,8 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
+Time Complexity:O(n^2)
+
 Please report and compare the time spent by this algorithm and show the points on the map.
 
 Example1:
@@ -978,7 +1023,7 @@ Otherwise, you get 8 points.
 // Returns the result of each query in a vector.
 std::vector<bool> Queries(const std::vector<std::pair<double, std::vector<std::string>>> &q);
 ```
-
+Time Complexity: O(mn)
 Please report and compare the time spent by this algorithm and show the points on the map.
 
 **Example:**
