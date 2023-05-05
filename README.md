@@ -983,6 +983,9 @@ Time taken by function: 2 ms
 |6             | 5ms        |13ms  |1ms
 |5             | 0ms        |0ms  |1ms
 
+--------------
+---------------
+
 ## Item 10: Find Nearby (Phase 3)
 
 Given an attribute name `C`, a location name `L` and a number `r` and `k`, find at most `k` locations in attribute `C` on the map near `L`(do not include `L`) with the range of `r` and return a vector of string ids. 
@@ -994,7 +997,12 @@ nearest to farthest, and you should not include the current location.
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k);
 ```
 
-Time Complexity:O(n^2)
+### **Time Complexity:O(n^2)**
+
+_________________________________
+
+In this function, we traversal the data nodes, for each node, we check if there exists the location with same attributeName with input, and check if the location is inside the circle with the input search radius "r" based on origin "input location". Then we input all location we found into the set loc to order them in distance from close to far. Finally we pick k most close locations to output the result. 
+________________________________
 
 All attributes:
 ```
@@ -1052,7 +1060,8 @@ Time taken by function: 78 ms
 ```
 <p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
 
-
+--------
+--------
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
 Given an vector of locations, you need to find the shortest path to visit all the locations.
