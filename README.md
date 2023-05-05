@@ -1076,17 +1076,14 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
-<<<<<<< HEAD
-### **Time Complexity:O(n!+R(SD+L)) R:the number of routes, S:the number of max number of nodes on route, D: the time complexity CalculateShortestPath_Dijkstra which is N^2, N: the number of nodes **
+
+### **Time Complexity:O(n!+R(SD+L)) R:the number of routes, S:the number of max number of nodes on route, D: the time complexity CalculateShortestPath_Dijkstra which is N^2, N: the number of nodes**
 
 ---
 **In the TrojanPath function, we first use the FindAllRoute function to generate all possible route combinations. Then, we use CalculateShortestPath_Dijkstra to compute the distance of each combination and update the path with the shortest distance. Finally, we return the path with the shortest distance as a vector of node.**
 
 ---
-=======
-### **Time Complexity:O(n!+R(SD+1)) R:the number of routes, S:the number of max number of nodes on route D:N^2 the time complexity CalculateShortestPath_Dijkstra, N is the number of nodes **
 
->>>>>>> 7410abeceee621e9ee1bbe2be9e0c3262f27aa47
 
 Please report and compare the time spent by this algorithm and show the points on the map.
 
