@@ -209,13 +209,12 @@ $ bazel test tests:trojanmap_test_student
 std::vector<std::string> Autocomplete(std::string name);
 ```
 ### **Time Complexity: O(n^2)**
+---
+**In this function, we traversal the data nodes, for each node, we make the node's location name into lower case and find if there are same location name with input name in lower case.**
 
-____________________
+**We consider the names of nodes as the locations. Implement a method to type the partial name of the location and return a list of possible locations with the partial name as the prefix. Please treat uppercase and lowercase as the same character. Please return an empty output if the input string is empty.**
 
-In this function, we traversal the data nodes, for each node, we make the node's location name into lower case and find if there are same location name with input name in lower case.
-____________________
-We consider the names of nodes as the locations. Implement a method to type the partial name of the location and return a list of possible locations with the partial name as the prefix. Please treat uppercase and lowercase as the same character. Please return an empty output if the input string is empty.
-
+---
 Example:
 
 Input: "Chi" \
@@ -280,18 +279,18 @@ Time taken by function: 30 ms
 ```
 - What is the runtime of your algorithm? O(n^2)
 - (Optional) Can you do it faster than `O(n)`?
------------------
------------------
+---
+---
 ## Item 2-1: Find the place's coordinates in the Map (Phase 1)
 
 ```c++
 std::pair<double, double> GetPosition(std::string name);
 ```
+### **Time Complexity: O(n)**
+---
+**Given a location name, return the latitude and longitude. There are no duplicated location names. You should mark the given locations on the map. If the location does not exist, return (-1, -1). The algorithm is case-sensitive.**
 
-Given a location name, return the latitude and longitude. There are no duplicated location names. You should mark the given locations on the map. If the location does not exist, return (-1, -1). The algorithm is case-sensitive.
-
-Time complexity:O(n)
-
+---
 Example 1:
 
 Input: "Target" \
@@ -349,8 +348,9 @@ int CalculateEditDistance(std::string name1, std::string name2);
 ```
 ### **Time Complexity:O(mn) m:length of name1, n:length of name2**
 _____________________________________________
-**In CalculateEditDistance, we use dynamic programming to get the edit distance between two strings.
-Hear is a 2D vector ed used to store the distance of subsets of two strings.**
+**In CalculateEditDistance, we use dynamic programming to get the edit distance between two strings.**
+
+**Hear is a 2D vector ed used to store the distance of subsets of two strings.**
 |   | A | B | C |
 |---|---|---|---|
 | B | 0 | 0 | 0 |
@@ -475,10 +475,15 @@ In this section if the user entries a category, the program prints all locations
 ---
 ---
 ## Item 5: Get Locations Using A Regular Expression (Phase 2)
-Time Complexity:O(n)
+### **Time Complexity:O(n)**
 ```c++
 std::vector<std::string> GetLocationRegex(std::regex location);
 ```
+
+---
+**The GetLocationRegex function iterates through all the nodes in the data and applies the regex_match() function to the name of each node, comparing it with the input Regular Expression. If a match is found, the function stores the corresponding node ID in the result vector. Finally, the function returns the result vector containing all the node IDs that matched the Regular Expression.**
+
+---
 
 In this section if the user enters a [regular expression](https://en.wikipedia.org/wiki/Regular_expression), they should see all location ids that match that regular expression.
 
@@ -641,7 +646,7 @@ bool CycleDetection(std::vector<double> &square);
 ### **Time Complexity:O(mn) m:subgraph.size n:data.size**
 ____________
 
-In CycleDection function, we traversal the subgraph, checking if each node is a named location in data. If we find more than 2 named locations, we judge that there is cycle in subgraph. 
+**In CycleDection function, we traversal the subgraph, checking if each node is a named location in data. If we find more than 2 named locations, we judge that there is cycle in subgraph.**
 ____________
 In this section, we use a square-shaped subgraph of the original graph by using four coordinates stored in ```std::vector<double> square```, which follows the order of left, right, upper, and lower bounds. 
 
@@ -801,7 +806,7 @@ std::vector<std::string> DeliveringTrojan(std::vector<std::string> &location_nam
 ### **Time Complexity:O(n^2)**
 
 _____________________
-In Topological Sort function, we traversal "dependencies" to find the indices d_1 and d_2 of the two locations in the result vector. If the index d_1 is greater than d_2, we can get that the current order of locations are not satisfy the dependencies, for this situation, we will switch the locaiton in the vector "result" and setting "finish" to false to indicate there is at least one location's place in order do not satisfy the dependencies. After the loop, we could get the locations in expected order. 
+**In Topological Sort function, we traversal "dependencies" to find the indices d_1 and d_2 of the two locations in the result vector. If the index d_1 is greater than d_2, we can get that the current order of locations are not satisfy the dependencies, for this situation, we will switch the locaiton in the vector "result" and setting "finish" to false to indicate there is at least one location's place in order do not satisfy the dependencies. After the loop, we could get the locations in expected order.**
 _____________________
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Tommy Trojan got a part-time job from TrojanEats, for which he needs to pick up and deliver food from local restaurants to various location near the campus. Tommy needs to visit a few different location near the campus with certain order, since there are some constraints. For example, he must first get the food from the restaurant before arriving at the delivery point. 
 
@@ -892,8 +897,9 @@ Ralphs
 Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
-------
-------
+
+---
+---
 
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
@@ -983,8 +989,8 @@ Time taken by function: 2 ms
 |6             | 5ms        |13ms  |1ms
 |5             | 0ms        |0ms  |1ms
 
---------------
----------------
+---
+---
 
 ## Item 10: Find Nearby (Phase 3)
 
@@ -1001,7 +1007,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
 
 _________________________________
 
-In this function, we traversal the data nodes, for each node, we check if there exists the location with same attributeName with input, and check if the location is inside the circle with the input search radius "r" based on origin "input location". Then we input all location we found into the set loc to order them in distance from close to far. Finally we pick k most close locations to output the result. 
+**In this function, we traversal the data nodes, for each node, we check if there exists the location with same attributeName with input, and check if the location is inside the circle with the input search radius "r" based on origin "input location". Then we input all location we found into the set loc to order them in distance from close to far. Finally we pick k most close locations to output the result.**
 ________________________________
 
 All attributes:
@@ -1070,7 +1076,12 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
-Time Complexity:O(n^2)
+### **Time Complexity:O(n!+R(SD+L)) R:the number of routes, S:the number of max number of nodes on route, D: the time complexity CalculateShortestPath_Dijkstra which is N^2, N: the number of nodes **
+
+---
+**In the TrojanPath function, we first use the FindAllRoute function to generate all possible route combinations. Then, we use CalculateShortestPath_Dijkstra to compute the distance of each combination and update the path with the shortest distance. Finally, we return the path with the shortest distance as a vector of node.**
+
+---
 
 Please report and compare the time spent by this algorithm and show the points on the map.
 
@@ -1114,12 +1125,18 @@ Time taken by function: 26272 ms
 ```
 <p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
 
-<<<<<<< HEAD
 ---
 ---
-=======
->>>>>>> 55f5aae3afb0a5e6db8d5623a057992bd7023797
+
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
+
+### **Time Complexity: O((V+E)N) N:size of list of queries V:number of nodes in pathbool, E:number of egdes in pathbool**
+
+---
+**The Queries formula utilizes a strategy similar to the Bellman-Ford algorithm. The approach is to traverse the nodes from the starting point, and explore each node that can be reached within the fuel tank's volume until the end point is reached. Unlike the Bellman-Ford algorithm, we use a recursive function to traverse each node and halt as soon as we locate the end point. This strategy leads to faster processing times compared to Bellman-Ford algorithm.**
+
+---
+
 
 Given a map of nodes, you need to determine if it is possible to travel from a given starting point to a destination point with a car that has a certain size of gas tank. You can refuel at any nodes. If the distance between any two nodes on the path is larger than the size of the gas tank, you cannot travel between those nodes. Assume 1 gallon of gas can travel 1 mile.
 
