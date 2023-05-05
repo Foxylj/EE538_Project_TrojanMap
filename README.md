@@ -1013,6 +1013,7 @@ The distance of the path is:2.288 miles
 Time taken by function: 26272 ms
 ```
 <p align="center"><img src="img/all3.png" alt="All" width="500"/></p>
+
 ---
 ---
 ## Item 12: Check the existence of the path with a constrained gas tank (Phase 3)
