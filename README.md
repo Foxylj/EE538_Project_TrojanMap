@@ -463,6 +463,7 @@ Example 1:
 **************************************************************
 
 "bank", "beauty", "restaurant", "clothes", "fast_food", "car", "parking_entrance", "fuel", "car_repair", "hotel", "optician", "post_box", "place_of_worship", "cafe", "theatre", "attraction", "social_facility", "library", "pharmacy", "convenience", "museum", "tobacco", "bicycle_rental", "school", "copyshop", "supermarket", "artwork", "mobile_phone", "post_office", "shoes", "department_store", "driving_school", "hairdresser", "music", "confectionery", "bar", "police", "beverages", "parking", "food_court", "fountain", "childcare", "car_wash", "shoe_repair", "clinic", "yoga", "bicycle", "yes", "gallery", "bus_station", "parcel_locker", "dentist", "marketplace", "bakery", "charging_station", "hospital", "fabric", "skate",
+Time taken by function: 21 ms
 **************************************************************
 ```
 ---
@@ -486,6 +487,7 @@ Example 1:
 
 Please input the category:bank
 "9591449441", "9591449465", "5237417651",
+Time taken by function: 3472 ms
 ```
 
 Example 2:
@@ -496,6 +498,7 @@ Example 2:
 
 Please input the category:cafe  
 "9307516740", "5261316290", "4547476734", "4399693642", "4162647227", "3810143804", "4540761794", "5567718696", "614990288", "4089614984"
+Time taken by function: 2046 ms
 **************************************************************
 ```
 
@@ -507,6 +510,7 @@ Example 3:
 
 Please input the category:fuel
 "9462770200", "9462723984", "3577173133", "3854179745", "1759017533", "1759017532", "591042107", "3390316852", "1759017535",
+Time taken by function: 1640 ms
 **************************************************************
 ```
 
@@ -541,7 +545,7 @@ Time taken by function: 41 ms
 ```
 Example 2:
 ``` shell
-**************************************************************
+******************************Time taken by function: 21 ms********************************
 * 5. Get locations using a regular expression                 
 **************************************************************
 
