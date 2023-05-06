@@ -611,7 +611,7 @@ Please report and compare the time spent by these algorithms.
 
 Your table should show have at least 15 rows.
 
-Example
+Example 1
 ```
 **************************************************************
 * 6. CalculateShortestPath                                    
@@ -631,10 +631,60 @@ Time taken by function: 39 ms
 "2578244375","4380040154","4380040158","4380040167","6805802087","8410938469","6813416131","7645318201","6813416130","6813416129","123318563","452688940","6816193777","123408705","6816193774","452688933","452688931","123230412","6816193770","6787470576","4015442011","6816193692","6816193693","6816193694","4015377691","544693739","6816193696","6804883323","6807937309","6807937306","6816193698","4015377690","4015377689","122814447","6813416159","6813405266","4015372488","4015372487","6813405229","122719216","6813405232","4015372486","7071032399","4015372485","6813379479","6813379584","6814769289","5237417650",
 The distance of the path is:0.927969 miles
 **************************************************************
-Time taken by function: 7084 ms
+Time taken by function: 95 ms
 ```
 
 <p align="center"><img src="img/Routing.png" alt="Routing" width="500"/></p>
+
+Example 2:
+```shell
+**************************************************************
+* 6. CalculateShortestPath                                    
+**************************************************************
+
+Please input the start location:KFC
+Please input the destination:Shell
+*************************Dijkstra*****************************
+*************************Results******************************
+"3088547686","4835551100","4835551099","4835551098","6813565307","6813565306","6813565305","6813565295","6813565296","3402814832","4835551107","6813379403","6813379533","3402814831","6813379501","3402810298","6813565327","3398574883","6813379494","6813379495","6813379544","6813379545","6813379536","6813379546","6813379547","6814916522","6814916523","1732243620","4015372469","4015372463","6819179749","1732243544","6813405275","348121996","348121864","6813405280","1472141024","6813411590","216155217","6813411589","1837212103","1837212101","6820935911","932416162","4060015482","4020099365","6820972450","1732243549","6820972451","1836105028","9118747759","4060015481","4020099358","6814990127","932378141","932378142","1869431093","9118747761","1869431099","1870800157","1870800154","1869431097","1869431098","1870800443","6814990114","6814990115","1630951245","6814990116","1855150084","6814990117","9118747760","1855170219","1855143774","1855143754","1855170195","1855169988","1855169972","1855169924","1855173102","5617977523","5617977524","5617977529","5617977530","7174763275","5617977531","5617977535","5617977536","5617977539","5617977540","5617977542","5617977543","5707890487","5617977549","8895445999","8895445992","5617977550","5617977551","5617977552","5617977556","5617977557","5617977558","8410844688","5617977560","5617977561","5617977562","7852800905","8410844676","8410844684","5617977563","5617977571","5617977564","6790587877","6790587872","1759017532",
+The distance of the path is:1.68315 miles
+**************************************************************
+Time taken by function: 144 ms
+
+*************************Bellman_Ford*************************
+*************************Results******************************
+"3088547686","4835551100","4835551099","4835551098","6813565307","6813565306","6813565305","6813565295","6813565296","3402814832","4835551107","6813379403","6813379533","3402814831","6813379501","3402810298","6813565327","3398574883","6813379494","6813379495","6813379544","6813379545","6814916520","6814916521","4015372478","1732243576","6813379548","4015372476","4015372474","6814916503","6813405272","4399914056","4399914054","4399914050","4399914041","4399914039","4399914038","4399914036","4399914034","4399914030","6814916497","4399914028","6820972462","6820972463","6820972455","6820972456","269633045","269633572","9559677956","6820982920","4015405537","348122770","4020099361","4020099357","348122773","348122788","348122789","348122791","6815812997","4020099341","5768963658","1613487054","1618274479","1613487052","4020099316","4020099312","1614922599","1614922596","6790587880","1720047670","7385045335","7385045336","7385045337","7385045338","7385045339","7385045340","7385045341","6790587871","6790587872","1759017532",
+The distance of the path is:1.80131 miles
+**************************************************************
+Time taken by function: 488 ms
+```
+
+<p align="center"><img src="img/KFC_SHELL.png" alt="Routing" width="500"/></p>
+
+Example3:
+```shell
+**************************************************************
+* 6. CalculateShortestPath                                    
+**************************************************************
+
+Please input the start location:Honda
+Please input the destination:Ralphs
+*************************Dijkstra*****************************
+*************************Results******************************
+"5695174696","8898278793","4687981681","6788402762","5344542585","122665888","348128956","60957897","7642589440","4020001608","122420459","7883292498","7883292495","5558619999","123165413","1614656028","7362236505","7362236507","25522209","4019956954","123315776","123261489","123689317","7226309209","123132702","7226309208","7226309201","7249602265","4019957020","7249602275","123656778","277328163","7249602283","6807262772","6807487606","123454993","123250860","123250863","6816193730","6816180153","122740200","6816180152","6816193731","6816193736","6042989996","122817177","123183847","2514541299","6380132759","6816180169","6816180168","1922565218","8768681004","1922565213","1922565221","1922565220","1841016364","6816193776","6816193777","452688940","123318563","6813416129","6813416130","7645318201","6813416131","8410938469","6805802087","4380040167","4380040158","4380040154","2578244375",
+The distance of the path is:1.77531 miles
+**************************************************************
+Time taken by function: 146 ms
+
+*************************Bellman_Ford*************************
+*************************Results******************************
+"5695174696","8898278793","4687981681","6788402762","5344542585","122665888","348128956","60957897","7642589440","4020001608","122420459","7883292498","7883292495","5558619999","123165413","1614656028","7362236505","7362236507","25522209","4019956954","123315776","123261489","123689317","7226309209","123132702","7226309208","7226309201","7249602265","4019957020","7249602275","123656778","277328163","7249602283","6807262772","6807487606","123454993","123250860","123250863","6816193730","6816180153","122740200","6816180152","6816193731","6816193736","6042989996","122817177","123183847","2514541299","6380132759","6816180169","6816180168","1922565218","8768681004","1922565213","1922565221","1922565220","1841016364","6816193776","6816193777","452688940","123318563","6813416129","6813416130","7645318201","6813416131","8410938469","6805802087","4380040167","4380040158","4380040154","2578244375",
+The distance of the path is:1.77531 miles
+**************************************************************
+Time taken by function: 317 ms
+```
+
+<p align="center"><img src="img/Honda_RALPHS.png" alt="HONDA_RALPHS" width="500"/></p>
 
 ---
 ---
@@ -898,6 +948,62 @@ Time taken by function: 0 ms
 ```
 <p align="center"><img src="img/TopologicalSort3.png" alt="TSP" width="500"/></p>
 
+Example4:
+
+10 nodes
+```shell
+**************************************************************
+* 8. Topological Sort                                         
+**************************************************************
+
+Please input the locations filename:/home/root123/spring2023_trojanmap-WenzhePan/input/topologicalsort_locations.csv
+Please input the dependencies filename:/home/root123/spring2023_trojanmap-WenzhePan/input/topologicalsort_dependencies.csv
+*************************Results******************************
+Topological Sorting Results:
+Chinese Street Food
+City Tacos
+Chase
+Chevron 2
+Cognoscenti Coffee Roastery
+Chucks Chicken & Waffles
+Cheebos Burger
+Crosswalk 1
+CAVA
+Cosmo Plaza
+
+**************************************************************
+Time taken by function: 0 ms
+```
+<p align="center"><img src="img/10nodes.png" alt="10nodes" width="500"/></p>
+
+Example5:
+
+9 nodes
+
+```shell
+**************************************************************
+* 8. Topological Sort                                         
+**************************************************************
+
+Please input the locations filename:/home/root123/spring2023_trojanmap-WenzhePan/input/topologicalsort_locations.csv
+Please input the dependencies filename:/home/root123/spring2023_trojanmap-WenzhePan/input/topologicalsort_dependencies.csv
+*************************Results******************************
+Topological Sorting Results:
+Chinese Street Food
+City Tacos
+Chase
+Chevron 2
+Cognoscenti Coffee Roastery
+Chucks Chicken & Waffles
+Cheebos Burger
+Crosswalk 1
+CAVA
+
+**************************************************************
+Time taken by function: 0 ms
+
+```
+<p align="center"><img src="img/9 nodes.png" alt="9 nodes" width="500"/></p>
 ---
 ---
 
@@ -1026,7 +1132,7 @@ TravelingTrojan_Backtracking
 The distance of the path is:10.6679 miles
 **************************************************************
 You could find your animation at src/lib/output0_backtracking.avi.
-Time taken by function: 736 ms
+Time taken by function: 690 ms
 
 Calculating ...
 *************************Results******************************
@@ -1042,16 +1148,180 @@ Time taken by function: 2 ms
 
 <p align="center"><img src="img/output.gif" alt="TSP videos" width="500"/></p>
 
+Example1:
 
+```shell
+**************************************************************
+* 9. Traveling salesman problem                              
+**************************************************************
+
+In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
+
+Please input the number of the places:8
+"7200139036","1613487112","7853031378","3403035507","2607729574","7249602278","6042952605","6278441228",
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"7249602278","1613487112","2607729574","6278441228","6042952605","7200139036","7853031378","3403035507","7249602278",
+The distance of the path is:10.1721 miles
+**************************************************************
+You could find your animation at src/lib/output0.avi.          
+Time taken by function: 189 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"7249602278","1613487112","2607729574","6278441228","6042952605","7200139036","7853031378","3403035507","7249602278",
+The distance of the path is:10.1721 miles
+**************************************************************
+You could find your animation at src/lib/output0_backtracking.avi.
+Time taken by function: 686 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_2opt
+"7200139036","3403035507","7853031378","6042952605","6278441228","2607729574","1613487112","7249602278","7200139036",
+The distance of the path is:10.3659 miles
+**************************************************************
+You could find your animation at src/lib/output0_2opt.avi.     
+Time taken by function: 1 ms
+```
+
+<p align="center"><img src="src/lib/output0.avi" alt="TSP videos" width="500"/></p>
+Example2:
+
+```shell
+**************************************************************
+* 9. Traveling salesman problem                              
+**************************************************************
+
+In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
+
+Please input the number of the places:7
+"8460176033","6813405280","277327274","123302806","7384967736","7087294960","7424270452",
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"8460176033","277327274","7087294960","123302806","7424270452","6813405280","7384967736","8460176033",
+The distance of the path is:8.26196 miles
+**************************************************************
+You could find your animation at src/lib/output0.avi.          
+Time taken by function: 11 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Backtracking
+"8460176033","277327274","7087294960","123302806","7424270452","6813405280","7384967736","8460176033",
+The distance of the path is:8.26196 miles
+**************************************************************
+You could find your animation at src/lib/output0_backtracking.avi.
+Time taken by function: 87 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_2opt
+"8460176033","277327274","7087294960","123302806","7424270452","6813405280","7384967736","8460176033",
+The distance of the path is:8.26196 miles
+**************************************************************
+You could find your animation at src/lib/output0_2opt.avi.     
+Time taken by function: 1 ms
+```
+Example3:
+```shell
+**************************************************************
+* 9. Traveling salesman problem                              
+**************************************************************
+
+In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
+
+Please input the number of the places:6
+"9586979154","304903831","6818403585","7197941279","713030337","7197963997",
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"9586979154","6818403585","713030337","304903831","7197941279","7197963997","9586979154",
+The distance of the path is:5.98273 miles
+**************************************************************
+You could find your animation at src/lib/output0.avi.          
+Time taken by function: 1 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"9586979154","6818403585","713030337","304903831","7197941279","7197963997","9586979154",
+The distance of the path is:5.98273 miles
+**************************************************************
+You could find your animation at src/lib/output0_backtracking.avi.
+Time taken by function: 14 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_2opt
+"9586979154","7197963997","6818403585","713030337","304903831","7197941279","9586979154",
+The distance of the path is:6.24189 miles
+**************************************************************
+You could find your animation at src/lib/output0_2opt.avi.     
+Time taken by function: 2 ms
+
+TrojanMap Menu
+**************************************************************
+```
+
+Example4:
+```shell
+**************************************************************
+* 9. Traveling salesman problem                              
+**************************************************************
+
+In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
+
+Please input the number of the places:9
+"6816800244","4010398543","9596557994","7812038819","8385899145","1855150064","9000146129","6279600810","348128762",
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"8385899145","6279600810","348128762","7812038819","9000146129","1855150064","6816800244","9596557994","4010398543","8385899145",
+The distance of the path is:9.80466 miles
+**************************************************************
+You could find your animation at src/lib/output0.avi.          
+Time taken by function: 2227 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_Brute_force
+"8385899145","6279600810","348128762","7812038819","9000146129","1855150064","6816800244","9596557994","4010398543","8385899145",
+The distance of the path is:9.80466 miles
+**************************************************************
+You could find your animation at src/lib/output0_backtracking.avi.
+Time taken by function: 6671 ms
+
+Calculating ...
+*************************Results******************************
+TravelingTrojan_2opt
+"6816800244","8385899145","4010398543","1855150064","9000146129","7812038819","348128762","6279600810","9596557994","6816800244",
+The distance of the path is:13.5964 miles
+**************************************************************
+You could find your animation at src/lib/output0_2opt.avi.     
+Time taken by function: 1 ms
+```
 
 | nums of nodes     | Brute_force | Backtracking| 2opt|3opt
 | -------------------- | ----------- |-------|-----|-----|
+|16             |run out of time|run out of time|2ms|2ms
+|15             |run out of time|run out of time|2ms|2ms
+|14             |run out of time|run out of time|2ms|2ms
+|13             |run out of time|run out of time|2ms|2ms
+|12             |run out of time|run out of time|2ms|1ms
+|11             |run out of time|run out of time|2ms|2ms
 |10             |14629ms|79056ms|2ms|2ms
 |9             |1582ms|7325ms|2ms|2ms
 |8             |   215ms      | 736ms     |2ms|1ms
 |7             | 50ms        |85ms  |1ms|1ms
 |6             | 5ms        |13ms  |1ms|1ms
-|5             | 0ms        |0ms  |1ms|1ms
+|5             | 0ms        |1ms  |0ms|0ms
+|4             | 0ms        |0ms  |0ms|0ms
+|3             | 0ms        |0ms  |0ms|0ms
+|2             | 0ms        |0ms  |0ms|0ms
 
 ---
 ---
@@ -1328,6 +1598,32 @@ From Honda to Target with 0.6 gallons of gas tank: Yes
 From Ralphs to Honda with 0.5 gallons of gas tank: Yes
 **************************************************************
 Time taken by function: 518095 ms
+```
+Example3:
+```shell
+**************************************************************
+* 12. Check Exist of Path with Constrain                      
+**************************************************************
+
+Please input the start location:Target
+Please input the destination:Honda
+Please input the volumn of the gas tank:0.6
+More Query? (y/n)y
+Please input the start location:Ralphs
+Please input the destination:Honda
+Please input the volumn of the gas tank:0.5
+More Query? (y/n)y
+Please input the start location:Chase
+Please input the destination:Target
+Please input the volumn of the gas tank:0.8
+More Query? (y/n)n
+*************************Results******************************
+From Target to Honda with 0.6 gallons of gas tank: Yes
+From Ralphs to Honda with 0.5 gallons of gas tank: Yes
+From Chase to Target with 0.8 gallons of gas tank: Yes
+**************************************************************
+Time taken by function: 533908 ms
+
 ```
 
 ## Reporting Runtime:
