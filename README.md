@@ -456,21 +456,59 @@ Some of the locations have category types (`attributes` field in `data.csv` file
 
 In this section, your program should print all available categories among all existing categories in the map. There should be no duplicates in the output.
 
-## Item 4: Get All Locations In A Category (Phase 2)
 Example 1:
 ```shell
 **************************************************************
 * 3. Find all location categories                             
 **************************************************************
 
-"bank", "beauty", "restaurant", "clothes", "fast_food", "car", "parking_entrance", "fuel", "car_repair", "hotel", "optician", "post_box", "place_of_worship", "cafe", "theatre", "attraction", "social_facility", "library", "pharmacy", "convenience", "museum", "tobacco", "bicycle_rental", "school", "copyshop", "supermarket", "artwork", "mobile_phone", "post_office", "shoes", "department_store", "driving_school", "hairdresser", "music", "confectionery", "bar", "police", "beverages", "parking", "food_court", "fountain", "childcare", "car_wash", "shoe_repair", "clinic", "yoga", "bicycle", "yes", "gallery", "bus_station", "parcel_locker", "dentist", "marketplace", "bakery", "charging_station", "hospital", "fabric", "skate", TrojanMap Menu
+"bank", "beauty", "restaurant", "clothes", "fast_food", "car", "parking_entrance", "fuel", "car_repair", "hotel", "optician", "post_box", "place_of_worship", "cafe", "theatre", "attraction", "social_facility", "library", "pharmacy", "convenience", "museum", "tobacco", "bicycle_rental", "school", "copyshop", "supermarket", "artwork", "mobile_phone", "post_office", "shoes", "department_store", "driving_school", "hairdresser", "music", "confectionery", "bar", "police", "beverages", "parking", "food_court", "fountain", "childcare", "car_wash", "shoe_repair", "clinic", "yoga", "bicycle", "yes", "gallery", "bus_station", "parcel_locker", "dentist", "marketplace", "bakery", "charging_station", "hospital", "fabric", "skate",
 **************************************************************
 ```
+---
+---
+## Item 4: Get All Locations In A Category (Phase 2)
 ```c++
 std::vector<std::string> GetAllLocationsFromCategory(std::string category);
 ```
+### **Time Complexity:O(n)**
+---
+**In the function GetAllLocationsFromCategory(), the input is a category and we iterate through all the data to check if the input category matches the category of that data. If there is a match, we return the ID of all the locations that belong to this category.**
 
+---
 In this section if the user entries a category, the program prints all locations that match that category. For example, if there is a category called "bank", your program should print all location ids that match the "bank" category. 
+
+Example 1:
+```shell
+**************************************************************
+* 4. Get all locations in a category                           
+**************************************************************
+
+Please input the category:bank
+"9591449441", "9591449465", "5237417651",
+```
+
+Example 2:
+```shell
+**************************************************************
+* 4. Get all locations in a category                           
+**************************************************************
+
+Please input the category:cafe  
+"9307516740", "5261316290", "4547476734", "4399693642", "4162647227", "3810143804", "4540761794", "5567718696", "614990288", "4089614984"
+**************************************************************
+```
+
+Example 3:
+```shell
+**************************************************************
+* 4. Get all locations in a category                           
+**************************************************************
+
+Please input the category:fuel
+"9462770200", "9462723984", "3577173133", "3854179745", "1759017533", "1759017532", "591042107", "3390316852", "1759017535",
+**************************************************************
+```
 
 ---
 ---
@@ -890,7 +928,9 @@ The TrojanEats app will have some instructions about these constraints. So, Tomm
 Here we will give you a vector of location names that Tommy needs to visit, and also some dependencies between those locations.
 
 
-For example, s
+For example, 
+
+```shell
 Input: 
 location_names = {"Ralphs", "Chick-fil-A", "KFC"}
 dependencies = {{"Ralphs","KFC"}, {"Ralphs","Chick-fil-A"}, {"Chick-fil-A", "KFC"}}
@@ -1029,6 +1069,7 @@ Time taken by function: 0 ms
 
 ```
 <p align="center"><img src="img/9 nodes.png" alt="9 nodes" width="500"/></p>
+
 ---
 ---
 
@@ -1443,6 +1484,8 @@ Find Nearby Results:
 Time taken by function: 61 ms
 ```
 
+<p align="center"><img src="img/NearBy4.png" alt="Nearby4" width="500"/></p>
+
 --------
 --------
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
@@ -1453,9 +1496,7 @@ Given an vector of locations, you need to find the shortest path to visit all th
 std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
 ```
 
-### **Time Complexity:O(n!+R(SD+1)) R:the number of routes, S:the number of max number of nodes on route D:N^2 the time complexity CalculateShortestPath_Dijkstra, N is the number of nodes **
-
-### **Time Complexity:O(n!+R(SD+L)) R:the number of routes, S:the number of max number of nodes on route, D: the time complexity CalculateShortestPath_Dijkstra which is N^2, N: the number of nodes**
+### **Time Complexity:O(n!+R(SD+1)) R:the number of routes, S:the number of max number of nodes on route, D: the time complexity CalculateShortestPath_Dijkstra which is N^2, N: the number of nodes**
 
 ---
 **In the TrojanPath function, we first use the FindAllRoute function to generate all possible route combinations. Then, we use CalculateShortestPath_Dijkstra to compute the distance of each combination and update the path with the shortest distance. Finally, we return the path with the shortest distance as a vector of node.**
@@ -1659,6 +1700,8 @@ Time taken by function: 533908 ms
 ## Conclusion
 **In conclusion, this project provided an excellent opportunity for us to apply the theoretical concepts and algorithms we learned in the course to a real-life scenario. Through the implementation of a map software, we were able to solidify our understanding of recursive functions , Dijkstra , Bellman Ford, and other important algorithms. We gained practical experience in coding and problem-solving, which will be invaluable in our future careers as software engineers. Furthermore, we challenged ourselves by completing two Extra Credits, 3-OPT and UI design to further improve our skills and broaden our knowledge. Overall, this project was a valuable learning experience that allowed us to bridge the gap between theory and practice while pushing ourselves to go above and beyond the initial requirements.**
 
+### Presentation-v1: https://youtu.be/_tnvSLdy9gY
+### Presentation-v2 (Final): https://youtu.be/HsKA3kkkSZg
 ---
 ---
 
