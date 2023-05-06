@@ -612,7 +612,7 @@ Please report and compare the time spent by these algorithms.
 Your table should show have at least 15 rows.
 
 Example 1
-```
+```shell
 **************************************************************
 * 6. CalculateShortestPath                                    
 **************************************************************
@@ -686,8 +686,33 @@ Time taken by function: 317 ms
 
 <p align="center"><img src="img/Honda_RALPHS.png" alt="HONDA_RALPHS" width="500"/></p>
 
+Example4:
+```shell
+**************************************************************
+* 6. CalculateShortestPath                                    
+**************************************************************
+
+Please input the start location:Honda
+Please input the destination:Bank of America
+*************************Dijkstra*****************************
+*************************Results******************************
+"5695174696","8898278793","4687981681","6788402762","5344542585","122665888","5344542584","7852039556","122665893","6816950650","6816950651","122665895","7863404959","7863404958","7863404960","7863404957","7863404956","7863404955","7863404954","7863404953","7863404952","7863404951","7863404950","7863404949","7863404948","7863404947","4012864457","7362236512","123241952","7362236521","123241955","123241958","6787830199","6787830192","123161907","4011837239","6817111153","8501336167","1832234141","4258846991","1832234142","6816193810","1832234144","122454252","6816959863","6816959869","5680944620","5680944619","6813565325","3398621871","6813565323","3403035498","6816193705","5556118325","5680945525","7693467754","3403035499","3403035500","7863689394","7863689395","4835551084","2613117900","3403034586","4835551093","2613117862","3403034590","2613117890","2613117915","4835551105","6813565334","2613117867","6787803635","6807905595","6813379406","2613117879","3398578893","3398574892","6813565290","3398578898","6813379398","6813379505","6813379519","4399698005","6813379511","6813379513","6813379512","4399698004","3398582608","4399698007","3398582607","6813379481","6813379480","6813360960","5237417651",
+The distance of the path is:1.51238 miles
+**************************************************************
+Time taken by function: 98 ms
+
+*************************Bellman_Ford*************************
+*************************Results******************************
+"5695174696","8898278793","4687981681","6788402762","5344542585","122665888","5344542584","7852039556","122665893","6816950650","6816950651","122665895","7863404959","7863404958","7863404960","7863404957","7863404956","7863404955","7863404954","7863404953","7863404952","7863404951","7863404950","7863404949","7863404948","7863404947","4012864457","7362236512","123241952","7362236521","123241955","123241958","6787830199","6787830192","123161907","4011837239","6817111153","8501336167","1832234141","4258846991","1832234142","6816193810","1832234144","122454252","6816959863","6816959869","5680944620","5680944619","6813565325","3398621871","6813565323","3403035498","6816193705","5556118325","5680945525","7693467754","3403035499","3403035500","7863689394","7863689395","4835551084","2613117900","3403034586","4835551093","2613117862","3403034590","2613117890","2613117915","4835551105","6813565334","2613117867","6787803635","6807905595","6813379406","2613117879","3398578893","3398574892","6813565290","3398578898","6813379398","6813379505","6813379519","4399698005","6813379511","6813379513","6813379512","4399698004","3398582608","4399698007","3398582607","6813379481","6813379480","6813360960","5237417651",
+The distance of the path is:1.51238 miles
+**************************************************************
+Time taken by function: 379 ms
+```
+<p align="center"><img src="img/HB.png" alt="HONDA_RALPHS" width="500"/></p>
+
 ---
 ---
+
 ## Item 7: Cycle Detection (Phase 2)
 
 ```c++
@@ -1127,9 +1152,9 @@ Time taken by function: 215 ms
 
 Calculating ...
 *************************Results******************************
-TravelingTrojan_Backtracking
-"6807927343","304903656","3659478911","1614922716","7811845041","2873934661","703503312","6790236614","6807927343",
-The distance of the path is:10.6679 miles
+TravelingTrojan_Brute_force
+"6807927343","304903656","6790236614","703503312","2873934661","7811845041","1614922716","3659478911","6807927343",
+The distance of the path is:10.2329 miles
 **************************************************************
 You could find your animation at src/lib/output0_backtracking.avi.
 Time taken by function: 690 ms
@@ -1187,7 +1212,6 @@ You could find your animation at src/lib/output0_2opt.avi.
 Time taken by function: 1 ms
 ```
 
-<p align="center"><img src="src/lib/output0.avi" alt="TSP videos" width="500"/></p>
 Example2:
 
 ```shell
@@ -1400,6 +1424,25 @@ Time taken by function: 78 ms
 ```
 <p align="center"><img src="img/NearBby3.png" alt="Nearby3" width="500"/></p>
 
+Example3:
+```shell
+**************************************************************
+* 10. Find Nearby                                              
+**************************************************************
+
+Please input the attribute:bar
+Please input the locations:Target
+Please input radius r:5
+Please input number k:5
+*************************Results******************************
+Find Nearby Results:
+1 Rock & Reillys
+2 The Pearl
+3 901 Bar & Grill
+**************************************************************
+Time taken by function: 61 ms
+```
+
 --------
 --------
 ## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
@@ -1546,28 +1589,13 @@ Example1:
 **************************************************************
 
 Please input the start location:Target
-Please input the destination:Ralphs
+Please input the destination:Bank of America
 Please input the volumn of the gas tank:0.05
-More Query? (y/n)y
-Please input the start location:Ralphs
-Please input the destination:Target 
-Please input the volumn of the gas tank:0.01
-More Query? (y/n)y
-Please input the start location:KFC
-Please input the destination:Target
-Please input the volumn of the gas tank:0.02
-More Query? (y/n)y
-Please input the start location:dummy
-Please input the destination:dummy
-Please input the volumn of the gas tank:999
 More Query? (y/n)n
 *************************Results******************************
-From Target to Ralphs with 0.05 gallons of gas tank: Yes
-From Ralphs to Target with 0.01 gallons of gas tank: No
-From KFC to Target with 0.02 gallons of gas tank: No
-From dummy to dummy with 999 gallons of gas tank: No
+From Target to Bank of America with 0.05 gallons of gas tank: Yes
 **************************************************************
-Time taken by function: 239 ms
+Time taken by function: 4933 ms
 ```
 Example2:
 ```shell
@@ -1625,7 +1653,11 @@ From Chase to Target with 0.8 gallons of gas tank: Yes
 Time taken by function: 533908 ms
 
 ```
+# Conclusion:
 
+
+
+----------
 ## Reporting Runtime:
 For each menu item, your program should show the time it took to finish each task.
 
@@ -1704,23 +1736,13 @@ https://youtu.be/_tnvSLdy9gY
 ## Extra credit items: Maximum of 20 points:
    1. Implementation of [3-opt](http://cs.indstate.edu/~zeeshan/aman.pdf): 10 points.
    2. [Genetic algorithm](https://www.geeksforgeeks.org/traveling-salesman-problem-using-genetic-algorithm/) implementation for Traveling Trojan: 10 points
-   ---
-   ---
    3. Create dynamic and animated UI using [ncurses](https://en.wikipedia.org/wiki/Ncurses): 10 points
-   
       - Uncomment #define NCURSES in main.cc and mapui.h
       - Create your menu in DynamicPrintMenu().
       - You could check https://github.com/ourarash/ncurses_bazel
       - Please develope your own UI.
       - Example
          <p align="center"><img src="img/ncurses example.gif" alt="example" width="500"/></p>
-   **Based on the provided sample in DynamicprintMenu(), we have developed a UI consisting of 13 options. In addition, we have incorporated an extra credit feature called "3-opt" to solve the Traveling Salesman Problem. Below is the image of our UI's initial interface.**
-
-   - Our UI
-         <p align="center"><img src="img/UI.png" alt="UI" width="500"/></p>
-
-   ---
-   ---
                
    4. Accurate measurement of your algorithm runtime using [Google Benchmark](https://www.youtube.com/watch?v=9VKR8u9odrA) while sweeping the input size and providing a diagram of how the runtime grows based on the input size: 10 points.
 
