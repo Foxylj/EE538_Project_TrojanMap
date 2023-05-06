@@ -1653,11 +1653,15 @@ From Chase to Target with 0.8 gallons of gas tank: Yes
 Time taken by function: 533908 ms
 
 ```
-# Conclusion:
 
+---
+---
+## Conclusion
+**In conclusion, this project provided an excellent opportunity for us to apply the theoretical concepts and algorithms we learned in the course to a real-life scenario. Through the implementation of a map software, we were able to solidify our understanding of recursive functions , Dijkstra , Bellman Ford, and other important algorithms. We gained practical experience in coding and problem-solving, which will be invaluable in our future careers as software engineers. Furthermore, we challenged ourselves by completing two Extra Credits, 3-OPT and UI design to further improve our skills and broaden our knowledge. Overall, this project was a valuable learning experience that allowed us to bridge the gap between theory and practice while pushing ourselves to go above and beyond the initial requirements.**
 
+---
+---
 
-----------
 ## Reporting Runtime:
 For each menu item, your program should show the time it took to finish each task.
 
